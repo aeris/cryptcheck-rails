@@ -1,0 +1,9 @@
+#!/usr/bin/env ruby
+require 'sidekiq'
+options      = {
+		url:       ENV['REDIS_URL'],
+		namespace: :cryptcheck
+}
+client       = Sidekiq::Client.new Sidekiq::RedisConnection.create options
+clazz, *args = ARGV
+client.push({ 'class' => clazz, 'args' => args })

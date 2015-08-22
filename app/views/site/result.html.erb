@@ -1,0 +1,104 @@
+<div class="container">
+	<div class="row">
+		<div class="col-sm-11">
+			<h1>
+				Résultats pour <%= @host %> <span class="small">(<%= l @result.date %>)</span>
+				<%= rank_label @result.score.rank %>
+			</h1>
+		</div>
+		<% if Time.now - @result.date >= Rails.configuration.refresh_delay %>
+		<div class="col-sm-1">
+			<%= link_to 'Rafraîchir', refresh_path, class: %i(btn btn-default) %>
+		</div>
+		<% end %>
+	</div>
+	<br/>
+	<div class="row">
+		<div class="col-sm-6">
+			<% scores = @result.score.details %>
+			<table class="table table-bordered table-condensed table-striped">
+				<thead>
+					<tr>
+						<th colspan="2">
+							Scores
+							<%= rank_label @result.score.rank %>
+						</th>
+					</tr>
+				</thead>
+				<tbody>
+					<%
+					   { 'Protocole' => 'protocol',
+						 'Échange de clef' => 'key_exchange',
+						 'Chiffrement' => 'cipher_strengths',
+						 'Total' => 'score'}.each do |name, v| %>
+					<tr>
+						<th class="col-sm-4"><%= name %></th>
+						<td class="col-sm-8"><%= score_progress scores[v] %></td>
+					</tr>
+					<% end %>
+				</tbody>
+			</table>
+		</div>
+		<div class="col-sm-6">
+			<table class="table table-bordered table-condensed table-striped">
+				<tbody>
+					<tr>
+						<th class="col-sm-4">Protocoles</th>
+						<td class="col-sm-8"><%= protocol_labels @result.protocols %></td>
+					</tr>
+					<tr>
+						<th>Clefs</th>
+						<td>
+							<p>Certificat : <%= key_label @result[:key] %></p>
+							<p>Diffie Hellman : <%= key_labels @result.dh %></p>
+						</td>
+					</tr>
+					<% { 'Bonnes pratiques' => ['success', 'success'],
+					 'Alertes' => ['warning', 'warning'],
+					 'Erreurs' => ['error', 'danger'] }.each do |name, v| %>
+					<tr>
+						<th><%= name %></th>
+						<td>
+							<% item, color = v
+							(@result.score[item] || []).each do |item| %>
+							<span class="label label-<%= color %>"><%= item.upcase %></span>
+							<% end %>
+						</td>
+					</tr>
+				<% end %>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-sm-12">
+			<table class="table table-bordered table-condensed table-striped">
+				<thead>
+					<tr>
+						<th class="col-sm-3">Algorithme</th>
+						<th class="col-sm-1">Clef</th>
+						<th class="col-sm-1">DH</th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody>
+					<% %w(TLSv1_2 TLSv1_1 TLSv1 SSLv3 SSLv2).each do |protocol|
+						ciphers = @result.ciphers.select { |c| c.protocol == protocol }
+								.sort { |a, b| -1 * (a['size'] <=> b['size']) }
+						unless ciphers.empty? %>
+					<tr>
+						<th colspan="3"><%= protocol_label protocol %></th>
+					</tr>
+							<% ciphers.each do |cipher| %>
+					<tr>
+						<td><%= cipher.name %></td>
+						<td><%= cipher_label cipher %></td>
+						<td><%= key_label cipher.dh if cipher.dh %></td>
+						<td><%= cipher_labels cipher %></td>
+					</tr>
+					<% 	end end end %>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>

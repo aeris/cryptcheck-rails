@@ -1,0 +1,5 @@
+$ ->
+	$('#check_form').submit ->
+		host = $('#check_host').val()
+		window.location.href = "<%= path :result, %i(host) %>"
+		false

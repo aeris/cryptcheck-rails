@@ -1,0 +1,18 @@
+<div id="flash" class="container">
+	<% [:danger, :warning, :success, :info].each do |level|
+		message = flash[level]
+		unless message.nil? %>
+			<%= content_tag :div, class: %(alert alert-#{level}) do %>
+				<% if message.is_a? Enumerable %>
+					<ul>
+						<% message.each do |m| %>
+							<li><%= m %></li>
+						<% end %>
+					</ul>
+				<% else %>
+					<%= message %>
+				<% end %>
+			<% end
+			   end
+			   end %>
+</div>
