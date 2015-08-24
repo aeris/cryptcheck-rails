@@ -81,4 +81,4 @@ EXPOSE 9292:9292
 ADD docker/entrypoint.sh /entrypoint.sh
 
 # entrypoint
-ENTRYPOINT['./entrypoint.sh']
+ENTRYPOINT["./entrypoint.sh"]
