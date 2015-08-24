@@ -77,8 +77,5 @@ ENV RAILS_SERVE_STATIC_FILES=true
 # EXPOSE
 EXPOSE 9292:9292
 
-# copy entrypoint
-ADD docker/entrypoint.sh /entrypoint.sh
-
 # entrypoint
-ENTRYPOINT["./entrypoint.sh"]
+ENTRYPOINT ["/opt/cryptcheck-rails/docker/entrypoint.sh"]
