@@ -8,7 +8,7 @@ MAINTAINER Yann Verry <docker@verry.org>
 # install build env
 RUN apt-get update && \
     apt-get dist-upgrade -y && \
-    apt-get -y install wget git build-essential zlib1g-dev zlib1g zlibc locales ca-certificates libssl-dev libsqlite3-dev
+    apt-get -y install wget git build-essential zlib1g-dev zlib1g zlibc locales ca-certificates libssl-dev libreadline-dev
    
 # clone cryptcheck, cryptcheck-rails
 RUN cd /opt && \
