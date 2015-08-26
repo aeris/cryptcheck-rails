@@ -2,11 +2,9 @@ source 'https://rubygems.org'
 
 gem 'rails', '4.2.1'
 
-gem 'sqlite3'
 gem 'cryptcheck', '~> 1.0.0', path: File.expand_path(File.join File.dirname(__FILE__), '../cryptcheck')
 gem 'sidekiq', '~> 3.4.2'
 gem 'stretcher', '~> 1.21.1'
-#gem 'mongo', '~> 2.0.6'
 gem 'faraday', '~> 0.8.9' # For stretcher compatibility
 gem 'simpleidn', '~> 0.0.5'
 

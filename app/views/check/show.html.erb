@@ -8,7 +8,7 @@
 		</div>
 		<% if Time.now - @result.date >= Rails.configuration.refresh_delay %>
 		<div class="col-sm-1">
-			<%= link_to 'Rafraîchir', refresh_path, class: %i(btn btn-default) %>
+			<%= link_to 'Rafraîchir', {action: :refresh}, class: %i(btn btn-default) %>
 		</div>
 		<% end %>
 	</div>
@@ -92,7 +92,7 @@
 							<% ciphers.each do |cipher| %>
 					<tr>
 						<td><%= cipher.name %></td>
-						<td><%= cipher_label cipher %></td>
+						<td><%= cipher_size_label cipher %></td>
 						<td><%= key_label cipher.dh if cipher.dh %></td>
 						<td><%= cipher_labels cipher %></td>
 					</tr>

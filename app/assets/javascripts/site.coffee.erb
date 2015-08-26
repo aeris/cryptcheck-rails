@@ -1,5 +1,12 @@
 $ ->
-	$('#check_form').submit ->
+	submit = ->
 		host = $('#check_host').val()
-		window.location.href = "<%= path :result, %i(host) %>"
-		false
+		type = $('#check_type').val()
+		window.location.href = "<%= Rails.configuration.relative_url_root %>/#{type}/#{host}"
+
+	$('#check_host').keypress (e) ->
+		submit() if e.which == 13
+		return
+	$('#check_submit').click ->
+		submit()
+		return

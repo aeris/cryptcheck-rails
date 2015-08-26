@@ -1,0 +1,2 @@
+module SmtpHelper
+end

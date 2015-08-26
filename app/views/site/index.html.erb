@@ -1,17 +1,18 @@
 <div id="check" class="container">
 	<div class="row">
-		<div class="col-sm-8 col-sm-offset-2">
+		<div class="col-sm-12">
 			<h1>Vérifier votre domaine</h1>
-			<form id="check_form" class="form form-horizontal">
-				<div class="form-group">
-					<div class="col-sm-9">
-						<%= text_field_tag :check_host, nil, class: %i(form-control input-lg), placeholder: 'your-site.com' %>
-					</div>
-					<div class="col-sm-3">
-						<%= submit_tag 'Test-moi !', class: %i(form-control btn btn-primary input-lg pull-right) %>
-					</div>
+			<div class="form-group">
+				<div class="col-sm-8">
+					<%= text_field_tag :check_host, nil, class: %i(form-control input-lg), placeholder: 'your-site.com' %>
 				</div>
-			</form>
+				<div class="col-sm-2">
+					<%= select_tag :check_type, options_for_select({'HTTPS' => :https, 'SMTP' => :smtp, 'XMPP' => :xmpp}), class: %i(form-control input-lg) %>
+				</div>
+				<div class="col-sm-2">
+					<%= submit_tag 'Test-moi !', id: 'check_submit', class: %i(form-control btn btn-primary input-lg pull-right) %>
+				</div>
+			</div>
 		</div>
 	</div>
 </div>
