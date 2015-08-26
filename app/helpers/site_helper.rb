@@ -35,7 +35,7 @@ module SiteHelper
 	end
 
 	def protocol_label(protocol)
-		color = case protocol
+		color = case protocol.to_s
 			when 'TLSv1_2' then :success
 			when 'SSLv3', 'SSLv2' then :danger
 			else :default
@@ -57,8 +57,9 @@ module SiteHelper
 		keys.sort { |a, b| -1 * (a.rsa_size <=> b.rsa_size)} .collect { |k| key_label k }.join("\n").html_safe
 	end
 
-	def cipher_label(cipher)
-		"<span class=\"label label-#{cipher_color cipher['size']} %>\">#{cipher['size']} bits</span>".html_safe
+	def cipher_size_label(cipher)
+		size = cipher.kind_of?(CryptCheck::Tls::Cipher) ? cipher.size : cipher['size']
+		"<span class=\"label label-#{cipher_color size} %>\">#{size} bits</span>".html_safe
 	end
 
 	def color_key(key)
@@ -72,20 +73,38 @@ module SiteHelper
 
 	def cipher_color(key)
 		case key
-			when 0...112 then :error
+			when 0...112 then :danger
 			when 112...128 then :warning
 			when 128...256 then :success
 			else :primary
 		end
 	end
 
+	def cipher_name_label(cipher, state)
+		color = case
+			when !state[:danger].empty? then :danger
+			when !state[:warning].empty? then :warning
+			when !state[:success].empty? then :success
+			else :default
+		end
+		color = :primary if color == :success and cipher.size >= 256
+		"<span class=\"label label-#{color} %>\">#{cipher.name}</span>".html_safe
+	end
+
 	def cipher_labels(cipher)
-		{ success: %i(pfs),
-		  warning: %i(des3 sha1),
-		  danger: %i(md5 psk srp anonymous null export des rc2 rc4)
-		}.collect do |color, types|
-			types.select { |t| CryptCheck::Tls::Cipher.send "#{t}?", cipher.name }
-					.collect { |t| "<span class=\"label label-#{color}\">#{t.upcase}</span>" }
-		end.flatten(1).join("\n").html_safe
+		case cipher
+			when Hashie::Mash
+				{ success: %i(pfs),
+				  warning: %i(des3 sha1),
+				  danger: %i(md5 psk srp anonymous null export des rc2 rc4)
+				}.collect do |c, ts|
+					ts.select { |t| CryptCheck::Tls::Cipher.send "#{t}?", cipher.name }.collect { |t| [c, t] }
+				end
+			when Hash
+				cipher.collect { |c, ts| ts.collect { |t| [c, t] } }
+		end
+		.flatten(1)
+		.collect { |c, t| "<span class=\"label label-#{c}\">#{t.upcase}</span>" }
+		.join("\n").html_safe
 	end
 end

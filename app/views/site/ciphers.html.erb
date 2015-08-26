@@ -1,0 +1,35 @@
+<div class="container">
+	<div class="row">
+		<table class="table-bordered table-condensed table-striped col-sm-12">
+			<thead>
+				<tr>
+					<th class="col-sm-4">Algorithme</th>
+					<th class="col-sm-1">Taille</th>
+					<td class="col-sm-7"></td>
+				</tr>
+			</thead>
+			<tbody>
+			<% %i(TLSv1_2).each do |protocol|
+				context = OpenSSL::SSL::SSLContext.new protocol rescue next
+			%>
+				<!--
+				<tr>
+					<th colspan="3"><h1><%= protocol %><h1></th>
+				</tr>
+				-->
+				<%
+				   context.ciphers = 'ALL:COMPLEMENTOFALL'
+				   context.ciphers.collect { |c| CryptCheck::Tls::Cipher.new protocol, c }
+						   .sort { |a, b| -1 * (a.size <=> b.size)}.each do |cipher| %>
+				<tr>
+					<% state = cipher.state %>
+					<th><%= cipher_name_label cipher, state %></th>
+					<th><%= cipher_size_label cipher %></th>
+					<th><%= cipher_labels state %></th>
+				</tr>
+				   <% end %>
+			<% end %>
+			</tbody>
+		</table>
+	</div>
+</div>
