@@ -1,0 +1,67 @@
+<div class="container">
+	<div class="row">
+		<div class="col-sm-11">
+			<h1>
+				[SSH] <%= @host %> <span class="small">(<%= l @result.date %>)</span>
+			</h1>
+		</div>
+		<% if Time.now - @result.date >= Rails.configuration.refresh_delay %>
+		<div class="col-sm-1">
+			<%= link_to 'Rafraîchir', {action: :refresh}, class: %i(btn btn-default) %>
+		</div>
+		<% end %>
+	</div>
+	<br/>
+	<div class="row">
+		<div class="col-sm-12">
+			<table class="table table-bordered table-condensed table-striped">
+				<tbody>
+					<tr>
+						<th>Échange de clef</th>
+					</tr>
+					<% @result.kex.each do |kex| %>
+					<tr>
+						<td><%= kex_label kex %></td>
+					</tr>
+					<% end %>
+
+					<tr>
+						<th>Chiffrement</th>
+					</tr>
+					<% @result.encryption.each do |cipher| %>
+					<tr>
+						<td><%= cipher_label cipher %></td>
+					</tr>
+					<% end %>
+
+					<tr>
+						<th>HMAC</th>
+					</tr>
+					<% @result.hmac.each do |hmac| %>
+						<tr>
+							<td><%= hmac_label hmac %></td>
+						</tr>
+					<% end %>
+
+					<tr>
+						<th>Compression</th>
+					</tr>
+					<% @result.compression.each do |compression| %>
+						<tr>
+							<td><%= compression_label compression %></td>
+						</tr>
+					<% end %>
+
+					<tr>
+						<th>Clefs</th>
+					</tr>
+					<% @result['key'].each do |key| %>
+					<tr>
+						<td><%= key_label key %></td>
+					</tr>
+					<% end %>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>

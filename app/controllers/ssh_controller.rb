@@ -1,22 +1,25 @@
-class CheckController < ApplicationController
-	before_action :check_host
-	helper_method :tls_type, :type
+class SshController < ApplicationController
+	before_action :check_host, except: %i(index)
 
 	def check_host
-		@host = params[:id]
-		@idn  = SimpleIDN.to_ascii @host
+		@host, @port = params[:id].split ':'
+		@idn         = SimpleIDN.to_ascii @host
 		if /[^a-zA-Z0-9.-]/.match @idn
 			flash[:danger] = "Hôte #{@host} invalide"
-			redirect_to :root
+			redirect_to :index
 			return false
 		end
-		@result = Datastore.host self.type, @idn
+		@host   = "#{@idn}:#{@port}"
+		@result = Datastore.host :ssh, @host
+	end
+
+	def index
 	end
 
 	def show
 		enqueue_host unless @result
 		return render :processing if @result.pending
-		return render :no_tls if @result.no_tls
+		return render :no_ssh if @result.no_ssh
 	end
 
 	def refresh
@@ -33,8 +36,8 @@ class CheckController < ApplicationController
 
 	protected
 	def enqueue_host
-		Datastore.pending self.type, @host
-		self.worker.perform_async @idn
-		@result = OpenStruct.new pending: true , date: Time.now
+		Datastore.pending :ssh, @host
+		SSHWorker.perform_async @idn, @port
+		@result = OpenStruct.new pending: true, date: Time.now
 	end
 end

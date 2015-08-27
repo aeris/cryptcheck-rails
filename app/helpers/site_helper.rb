@@ -96,7 +96,7 @@ module SiteHelper
 			when Hashie::Mash
 				{ success: %i(pfs),
 				  warning: %i(des3 sha1),
-				  danger: %i(md5 psk srp anonymous null export des rc2 rc4)
+				  danger: %i(dss md5 psk srp anonymous null export des rc2 rc4)
 				}.collect do |c, ts|
 					ts.select { |t| CryptCheck::Tls::Cipher.send "#{t}?", cipher.name }.collect { |t| [c, t] }
 				end

@@ -7,4 +7,8 @@ class HttpsController < CheckController
 	def worker
 		HTTPSWorker
 	end
+
+	def tls_type
+		'HTTPS'
+	end
 end

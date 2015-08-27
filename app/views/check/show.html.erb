@@ -2,7 +2,7 @@
 	<div class="row">
 		<div class="col-sm-11">
 			<h1>
-				Résultats pour <%= @host %> <span class="small">(<%= l @result.date %>)</span>
+				[<%= self.type.to_s.upcase %>] <%= @host %> <span class="small">(<%= l @result.date %>)</span>
 				<%= rank_label @result.score.rank %>
 			</h1>
 		</div>

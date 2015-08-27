@@ -7,4 +7,8 @@ class SmtpController < CheckController
 	def worker
 		SMTPWorker
 	end
+
+	def tls_type
+		'STARTTLS'
+	end
 end
