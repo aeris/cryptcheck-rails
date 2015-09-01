@@ -1,8 +1,4 @@
 Rails.application.routes.draw do
-  get 'ssh/show'
-
-  get 'ssh/index'
-
 	namespace :https, id: /[^\/]*/ do
 		get ':id/', action: :show
 		get ':id/refresh', action: :refresh, as: :refresh

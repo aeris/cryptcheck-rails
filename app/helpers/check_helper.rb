@@ -1,17 +1,27 @@
 module CheckHelper
+	def label(value, color)
+		"<span class=\"label label-#{color} %>\">#{value}</span>".html_safe
+	end
+
 	def rank_color(rank)
 		case rank
-			when 'A+' then :primary
-			when 'A' then :success
-			when 'B' then :default
-			when 'C', 'D' then :warning
-			when 'E', 'F' then :danger
-			else :error
+			when 'A+' then
+				:primary
+			when 'A' then
+				:success
+			when 'B' then
+				:default
+			when 'C', 'D' then
+				:warning
+			when 'E', 'F' then
+				:danger
+			else
+				:error
 		end
 	end
 
 	def rank_label(rank)
-		"<span class=\"label label-#{rank_color rank}\">#{rank}</span>".html_safe
+		label rank, rank_color(rank)
 	end
 
 	def progress_color(percentage)
@@ -37,10 +47,10 @@ module CheckHelper
 	def protocol_label(protocol)
 		color = case protocol.to_s
 					when 'TLSv1_2' then :success
-					when 'SSLv3', 'SSLv2' then :danger
+					when 'SSLv3', 'SSLv2' then :error
 					else :default
 				end
-		"<span class=\"label label-#{color}\">#{protocol}</span>".html_safe
+		label protocol, color
 	end
 
 	def protocol_labels(protocols)
@@ -48,18 +58,18 @@ module CheckHelper
 	end
 
 	def key_label(key)
-		return '<span class="label label-error">Aucune</span>'.html_safe unless key
-		"<span class=\"label label-#{color_key key}\">#{key.type.upcase} #{key[:size]} bits</span>".html_safe
+		return label('Aucune', :error) unless key
+		label "#{key.type.upcase} #{key[:size]} bits", color_key(key)
 	end
 
 	def key_labels(keys)
-		return '<span class="label label-error">Aucune</span>'.html_safe if keys.empty?
-		keys.sort { |a, b| -1 * (a.rsa_size <=> b.rsa_size)} .collect { |k| key_label k }.join("\n").html_safe
+		return label('Aucune', :error) if keys.empty?
+		keys.sort { |a, b| -1 * (a.rsa_size <=> b.rsa_size) }.collect { |k| key_label k }.join("\n").html_safe
 	end
 
 	def cipher_size_label(cipher)
-		size = cipher.kind_of?(CryptCheck::Tls::Cipher) ? cipher.size : cipher['size']
-		"<span class=\"label label-#{cipher_color size} %>\">#{size} bits</span>".html_safe
+		size = cipher.size
+		label "#{size} bits", cipher_color(size)
 	end
 
 	def color_key(key)
@@ -73,8 +83,8 @@ module CheckHelper
 
 	def cipher_color(key)
 		case key
-			when 0...112 then :danger
-			when 112...128 then :warning
+			when 0...112 then :error
+			when 112...128 then :danger
 			when 128...256 then :success
 			else :primary
 		end
@@ -82,29 +92,18 @@ module CheckHelper
 
 	def cipher_name_label(cipher, state)
 		color = case
+					when !state[:error].empty? then :error
 					when !state[:danger].empty? then :danger
 					when !state[:warning].empty? then :warning
 					when !state[:success].empty? then :success
 					else :default
 				end
 		color = :primary if color == :success and cipher.size >= 256
-		"<span class=\"label label-#{color} %>\">#{cipher.name}</span>".html_safe
+		label("&nbsp;", color) + "&nbsp;#{cipher.name}".html_safe
 	end
 
 	def cipher_labels(cipher)
-		case cipher
-			when Hashie::Mash
-				{ success: %i(pfs),
-				  warning: %i(des3 sha1),
-				  danger: %i(dss md5 psk srp anonymous null export des rc2 rc4)
-				}.collect do |c, ts|
-					ts.select { |t| CryptCheck::Tls::Cipher.send "#{t}?", cipher.name }.collect { |t| [c, t] }
-				end
-			when Hash
-				cipher.collect { |c, ts| ts.collect { |t| [c, t] } }
-		end
-				.flatten(1)
-				.collect { |c, t| "<span class=\"label label-#{c}\">#{t.upcase}</span>" }
-				.join("\n").html_safe
+		cipher.state.collect { |c, ls| ls.collect { |l| label l.upcase, c } }
+		.flatten(1).join("\n").html_safe
 	end
 end

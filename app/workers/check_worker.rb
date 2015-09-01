@@ -28,6 +28,7 @@ class CheckWorker
 									cipher_strengths: grade.cipher_strengths_score
 							},
 							error:   grade.error,
+							danger:  grade.danger,
 							warning: grade.warning,
 							success: grade.success
 					}

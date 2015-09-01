@@ -27,7 +27,7 @@ class SshController < ApplicationController
 			refresh_allowed = @result.date + Rails.configuration.refresh_delay
 			if Time.now < refresh_allowed
 				flash[:warning] = "Merci d’attendre au moins #{l refresh_allowed} pour rafraîchir"
-				return redirect_to result_path @host
+				return redirect_to action: :show, id: @host
 			end
 			enqueue_host
 		end
