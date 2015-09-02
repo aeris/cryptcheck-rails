@@ -63,8 +63,10 @@ RUN	bundle install --without development && \
 	echo "production:\n  secret_key_base: $(rake secret)" > config/secrets.yml 
 
 # Cleanup
-RUN apt-get -y purge build-essential zlib1g-dev krb5-locales && \
-    apt-get -y autoremove
+RUN apt-get -y purge build-essential zlib1g-dev krb5-locales manpages manpages-dev git && \
+    apt-get -y autoremove && \
+	rm -rf /usr/src && \
+
 
 # Set the locale
 ENV LC_ALL C.UTF-8
