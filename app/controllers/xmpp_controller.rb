@@ -7,4 +7,8 @@ class XmppController < CheckController
 	def worker
 		XMPPWorker
 	end
+
+	def tls_type
+		'STARTTLS'
+	end
 end

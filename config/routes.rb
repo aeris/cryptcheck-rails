@@ -14,6 +14,12 @@ Rails.application.routes.draw do
 		get ':id/refresh', action: :refresh, as: :refresh
 	end
 
+	namespace :ssh, id: /[^\/]*/ do
+		get '/', action: :index
+		get ':id/', action: :show
+		get ':id/refresh', action: :refresh, as: :refresh
+	end
+
 	root 'site#index'
 	get '/ciphers' => 'site#ciphers'
 end
