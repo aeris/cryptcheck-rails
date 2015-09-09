@@ -2,8 +2,11 @@ class HTTPSWorker < CheckWorker
 	sidekiq_options retry: false
 
 	protected
-	def module
-		CryptCheck::Tls::Https
+	def server
+		CryptCheck::Tls::Https::Server
+	end
+	def grade
+		CryptCheck::Tls::Https::Grade
 	end
 
 	def type

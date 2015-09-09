@@ -2,8 +2,11 @@ class SMTPWorker < CheckWorker
 	sidekiq_options retry: false
 
 	protected
-	def module
-		CryptCheck::Tls::Smtp
+	def server
+		CryptCheck::Tls::Smtp::Server
+	end
+	def grade
+		CryptCheck::Tls::Smtp::Grade
 	end
 
 	def type

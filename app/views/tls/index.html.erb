@@ -1,0 +1,18 @@
+<div id="tls_check" class="container">
+	<div class="row">
+		<div class="col-sm-12">
+			<h1>Vérifier votre serveur TLS</h1>
+			<div class="form-group">
+				<div class="col-sm-8">
+					<%= text_field_tag :tls_check_host, nil, class: %i(form-control input-lg), placeholder: 'your-site.com' %>
+				</div>
+				<div class="col-sm-2">
+					<%= text_field_tag :tls_check_port, nil, class: %i(form-control input-lg), placeholder: 'port' %>
+				</div>
+				<div class="col-sm-2">
+					<%= submit_tag 'Test-moi !', id: 'tls_check_submit', class: %i(form-control btn btn-primary input-lg pull-right) %>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

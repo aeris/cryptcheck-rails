@@ -9,11 +9,12 @@ class CheckWorker
 		key.nil? ? nil : { type: key.type, size: key.size, rsa_size: key.rsa_equivalent_size }
 	end
 
-	def perform(host)
+	def perform(host, port=nil)
 		idn    = SimpleIDN.to_ascii host
+		host = "#{host}:#{port}" if port
 		result = begin
-			server = self.module::Server.new idn
-			grade  = self.module::Grade.new server
+			server = self.server.new *(port ? [idn, port] : [idn])
+			grade  = self.grade.new server
 			result = {
 					key:       key_to_json(server.key),
 					dh:        server.dh.collect { |k| key_to_json k },
@@ -33,7 +34,6 @@ class CheckWorker
 							success: grade.success
 					}
 			}
-
 
 			self.result server, grade, result
 		rescue CryptCheck::Tls::Server::TLSNotAvailableException

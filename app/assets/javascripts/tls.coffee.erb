@@ -1,0 +1,18 @@
+$ ->
+	tls_submit = ->
+		host = $('#tls_check_host').val()
+		port = $('#tls_check_port').val()
+		if port == ''
+			alert 'Veuillez saisir un port'
+			return
+		window.location.href = "<%= Rails.configuration.relative_url_root %>/tls/#{host}:#{port}"
+
+	$('#tls_check_host').keypress (e) ->
+		tls_submit() if e.which == 13
+		return
+	$('#tls_check_port').keypress (e) ->
+		tls_submit() if e.which == 13
+		return
+	$('#tls_check_submit').click ->
+		tls_submit()
+		return
