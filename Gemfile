@@ -21,12 +21,8 @@ end
 
 group :development, :test do
 	gem 'puma'
-	gem 'byebug'
 	gem 'web-console'
-	gem 'spring'
 
-	gem 'debase'
-	gem 'ruby-debug-ide'
 	gem 'pry-rails'
 
 	gem 'better_errors'
