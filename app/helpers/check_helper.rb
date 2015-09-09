@@ -90,7 +90,8 @@ module CheckHelper
 		end
 	end
 
-	def cipher_name_label(cipher, state)
+	def cipher_name_label(cipher)
+		state = cipher.state
 		color = case
 					when !state[:error].empty? then :error
 					when !state[:danger].empty? then :danger

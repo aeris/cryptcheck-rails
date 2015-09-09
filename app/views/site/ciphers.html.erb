@@ -19,13 +19,12 @@
 				-->
 				<%
 				   context.ciphers = 'ALL:COMPLEMENTOFALL'
-				   context.ciphers.collect { |c| CryptCheck::Tls::Cipher.new protocol, c }
-						   .sort { |a, b| -1 * (a.size <=> b.size)}.each do |cipher| %>
+				   ciphers = context.ciphers.collect { |c| CryptCheck::Tls::Cipher.new protocol, c }
+				   CryptCheck::Tls::Cipher.sort(ciphers).each do |cipher| %>
 				<tr>
-					<% state = cipher.state %>
-					<th><%= cipher_name_label cipher, state %></th>
+					<th><%= cipher_name_label cipher %></th>
 					<th><%= cipher_size_label cipher %></th>
-					<th><%= cipher_labels state %></th>
+					<th><%= cipher_labels cipher %></th>
 				</tr>
 				   <% end %>
 			<% end %>
