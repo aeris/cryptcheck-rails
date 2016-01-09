@@ -1,6 +1,3 @@
-require 'simpleidn'
-require 'cryptcheck'
-
 class CheckWorker
 	include Sidekiq::Worker
 	sidekiq_options retry: false
@@ -10,10 +7,9 @@ class CheckWorker
 	end
 
 	def perform(host, port=nil)
-		idn    = SimpleIDN.to_ascii host
-		host = "#{host}:#{port}" if port
+		host    = SimpleIDN.to_ascii host.downcase
 		result = begin
-			server = self.server.new *(port ? [idn, port] : [idn])
+			server = self.server.new *(port ? [host, port] : [host])
 			grade  = self.grade.new server
 			result = {
 					key:       key_to_json(server.key),
@@ -39,6 +35,7 @@ class CheckWorker
 		rescue CryptCheck::Tls::Server::TLSNotAvailableException
 			{ no_tls: true }
 		end
+		host = "#{host}:#{port}" if port
 		Datastore.post self.type, host, result
 	end
 
