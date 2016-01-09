@@ -1,0 +1,17 @@
+<div id="check" class="container">
+	<div class="row">
+		<div class="col-sm-12">
+			<h1>Compatibilités des user agents</h1>
+			<%= form_tag suite_path do %>
+				<div class="form-group">
+					<div class="col-sm-10">
+						<%= text_field_tag :suite, nil, class: %i(form-control input-lg), placeholder: 'EECDH+AES' %>
+					</div>
+					<div class="col-sm-2">
+						<%= submit_tag 'Test-moi !', class: %i(form-control btn btn-primary input-lg pull-right) %>
+					</div>
+				</div>
+			<% end %>
+		</div>
+	</div>
+</div>

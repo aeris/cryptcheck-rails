@@ -1,0 +1,57 @@
+<div class="container">
+	<div class="row">
+		<div class="col-sm-12">
+			<h1>Cipher suite : <%= @suite %></h1>
+		</div>
+	</div>
+	<div class="row">
+		<table class="table-bordered table-condensed table-striped col-sm-12">
+			<thead>
+				<tr>
+					<th class="col-sm-4">Navigateur</th>
+					<th class="col-sm-8" colspan="3">Cipher</th>
+				</tr>
+			</thead>
+			<tbody>
+			<%
+			   iana_ciphers = Hash[@ciphers.collect { |c| [Rails.application.config.openssl_ciphers[c.name], c] }]
+			   Rails.application.config.user_agents_ciphers.each do |ua, support|
+				   cipher = (support['ciphers'].collect(&:first) & iana_ciphers.keys).first
+				   cipher = iana_ciphers[cipher] if cipher
+			%>
+				<tr>
+					<th><%= ua %></th>
+					<% if cipher %>
+					<td><%= cipher_name_label cipher %></td>
+					<td><%= cipher_size_label cipher %></td>
+					<td><%= cipher_labels cipher %></td>
+					<% else %>
+					<td colspan="3"><%= label('Non supporté', :error) %></td>
+					<% end %>
+				</tr>
+			<% end %>
+			</tbody>
+		</table>
+	</div>
+	<br/>
+	<div class="row">
+		<table class="table-bordered table-condensed table-striped col-sm-12">
+			<thead>
+			<tr>
+				<th class="col-sm-4">Algorithme</th>
+				<th class="col-sm-1">Taille</th>
+				<td class="col-sm-7"></td>
+			</tr>
+			</thead>
+			<tbody>
+			<% @ciphers.each do |cipher| %>
+				<tr>
+					<th><%= cipher_name_label cipher %></th>
+					<th><%= cipher_size_label cipher %></th>
+					<th><%= cipher_labels cipher %></th>
+				</tr>
+			<% end %>
+			</tbody>
+		</table>
+	</div>
+</div>
