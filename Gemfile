@@ -29,6 +29,7 @@ group :development, :test do
 	gem 'binding_of_caller'
 	gem 'quiet_assets'
 
+	gem 'guard', require: false
 	gem 'guard-livereload', require: false
 	gem 'rack-livereload'
 end
