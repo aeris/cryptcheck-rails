@@ -9,25 +9,13 @@
 				</tr>
 			</thead>
 			<tbody>
-			<% %i(TLSv1_2).each do |protocol|
-				context = OpenSSL::SSL::SSLContext.new protocol rescue next
-			%>
-				<!--
-				<tr>
-					<th colspan="3"><h1><%= protocol %><h1></th>
-				</tr>
-				-->
-				<%
-				   context.ciphers = 'ALL:COMPLEMENTOFALL'
-				   ciphers = context.ciphers.collect { |c| CryptCheck::Tls::Cipher.new protocol, c }
-				   CryptCheck::Tls::Cipher.sort(ciphers).each do |cipher| %>
+				<% CryptCheck::Tls::Cipher.list.each do |cipher| %>
 				<tr>
 					<th><%= cipher_name_label cipher %></th>
 					<th><%= cipher_size_label cipher %></th>
 					<th><%= cipher_labels cipher %></th>
 				</tr>
-				   <% end %>
-			<% end %>
+				<% end %>
 			</tbody>
 		</table>
 	</div>
