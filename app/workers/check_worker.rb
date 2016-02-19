@@ -35,8 +35,7 @@ class CheckWorker
 		rescue CryptCheck::Tls::Server::TLSNotAvailableException
 			{ no_tls: true }
 		end
-		host = "#{host}:#{port}" if port
-		Datastore.post self.type, host, result
+		Datastore.post self.type, host, port, result
 	end
 
 	protected

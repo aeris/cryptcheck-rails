@@ -23,7 +23,7 @@ class CheckController < ApplicationController
 
 	protected
 	def enqueue_host
-		Datastore.pending self.type, @id
+		Datastore.pending self.type, @id, @port
 		self.worker.perform_async *(@port.blank? ? [@host] : [@host, @port])
 		@result = OpenStruct.new pending: true , date: Time.now
 	end
@@ -37,6 +37,6 @@ class CheckController < ApplicationController
 			redirect_to action: :index
 			return false
 		end
-		@result = Datastore.host self.type, @id
+		@result = Datastore.host self.type, @host, @port
 	end
 end

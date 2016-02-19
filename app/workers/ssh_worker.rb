@@ -16,6 +16,6 @@ class SSHWorker
 		rescue CryptCheck::Ssh::Server::SshNotAvailableException
 			{ no_tls: true }
 		end
-		Datastore.post :ssh, "#{host}:#{port}", result
+		Datastore.post :ssh, host, port, result
 	end
 end
