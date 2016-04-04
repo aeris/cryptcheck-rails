@@ -1,0 +1,19 @@
+#!/usr/bin/env ruby
+require 'open-uri'
+require 'json'
+
+PROTOCOLS = {
+	768 => 'SSL 3',
+	769 => 'TLS 1.0',
+	770 => 'TLS 1.1',
+	771 => 'TLS 1.2'
+}
+
+uas = JSON.load open 'https://api.dev.ssllabs.com/api/v3/getClients'
+uas = uas.collect do |ua|
+	name = [ua['name'], ua['version'], ua['platform']].compact.join ' '
+	protocols = ua['lowestProtocol'].upto(ua['highestProtocol']).collect { |n| PROTOCOLS[n] }
+	ciphers = ua['suiteIds'].zip(ua['suiteNames']).collect { |i, n| ["0x#{i.to_s(16).upcase.rjust(2, '0')}", n]}.to_h
+	[name, { protocols: protocols, ciphers: ciphers }]
+end
+File.write 'config/user-agents-ciphers.json', JSON.pretty_generate(uas, {indent: "\t"})
