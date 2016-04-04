@@ -5,7 +5,7 @@ class SSHWorker
 	def perform(host, port=nil)
 		host    = SimpleIDN.to_ascii host.downcase
 		result = begin
-			server = CryptCheck::Ssh::Server.new *(port ? [host, port] : [host])
+			server = CryptCheck::Ssh.analyze host, port
 			{
 					kex:         server.kex,
 					encryption:  server.encryption,

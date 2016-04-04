@@ -2,11 +2,8 @@ class TLSWorker < CheckWorker
 	sidekiq_options retry: false
 
 	protected
-	def server
-		CryptCheck::Tls::TcpServer
-	end
-	def grade
-		CryptCheck::Tls::Grade
+	def analyze(host, port)
+		CryptCheck::Tls.analyze host, port
 	end
 
 	def type

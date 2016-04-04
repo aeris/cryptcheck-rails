@@ -2,11 +2,8 @@ class XMPPWorker < CheckWorker
 	sidekiq_options retry: false
 
 	protected
-	def server
-		CryptCheck::Tls::Xmpp::Server
-	end
-	def grade
-		CryptCheck::Tls::Xmpp::Grade
+	def analyze(host)
+		CryptCheck::Tls::Xmpp.analyze host
 	end
 
 	def type

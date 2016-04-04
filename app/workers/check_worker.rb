@@ -9,8 +9,8 @@ class CheckWorker
 	def perform(host, port=nil)
 		host    = SimpleIDN.to_ascii host.downcase
 		result = begin
-			server = self.server.new *(port ? [host, port] : [host])
-			grade  = self.grade.new server
+			grade  = self.analyze *(port ? [host, port] : [host])
+			server = grade.server
 			result = {
 					key:       key_to_json(server.key),
 					dh:        server.dh.collect { |k| key_to_json k },

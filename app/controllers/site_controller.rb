@@ -31,7 +31,7 @@ class SiteController < ApplicationController
 	end
 
 	def suite
-		@suite = params.require :suite
+		@suite = params[:id] || params.require(:suite)
 		@ciphers = CryptCheck::Tls::Cipher.list @suite
 	end
 end

@@ -2,11 +2,8 @@ class HTTPSWorker < CheckWorker
 	sidekiq_options retry: false
 
 	protected
-	def server
-		CryptCheck::Tls::Https::Server
-	end
-	def grade
-		CryptCheck::Tls::Https::Grade
+	def analyze(host, port=443)
+		CryptCheck::Tls::Https.analyze host, port
 	end
 
 	def type
