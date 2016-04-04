@@ -28,6 +28,7 @@ Rails.application.routes.draw do
 
 	get 'ciphers' => 'site#ciphers'
 	get 'suite' => 'site#suite_index'
+	get 'suite/:id' => 'site#suite'
 	post 'suite' => 'site#suite'
 	root 'site#index'
 	post '/' => 'site#check'
