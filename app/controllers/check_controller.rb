@@ -5,8 +5,19 @@ class CheckController < ApplicationController
 	def show
 		enqueue_host unless @result
 		@host = SimpleIDN.to_unicode @host
-		return render :processing if @result.pending
-		return render :no_tls if @result.no_tls
+		respond_to do |format|
+			format.html do
+				return render :processing if @result.pending
+				return render :no_tls if @result.no_tls
+			end
+			format.json do
+				render json: case
+					when @result.pending then :pending
+					when @result.no_tls then :no_tls
+					else @result
+				end
+			end
+		end
 	end
 
 	def refresh
@@ -30,6 +41,12 @@ class CheckController < ApplicationController
 
 	def check_host
 		@id = params[:id]
+
+		if @id.end_with? '.json'
+			@id = @id.sub /\.json$/, ''
+			request.format = :json
+		end
+
 		@host, @port = @id.split ':'
 		@host = SimpleIDN.to_ascii @host.downcase
 		if /[^a-zA-Z0-9.-]/.match @host
