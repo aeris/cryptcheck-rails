@@ -10,6 +10,7 @@ class CheckWorker
 		host    = SimpleIDN.to_ascii host.downcase
 		result = begin
 			grade  = self.analyze *(port ? [host, port] : [host])
+			raise CryptCheck::Tls::Server::TLSNotAvailableException if grade.is_a? CryptCheck::Tls::TlsNotSupportedGrade
 			server = grade.server
 			result = {
 					key:       key_to_json(server.key),
