@@ -75,29 +75,58 @@
 	</div>
 	<div class="row">
 		<div class="col-sm-12">
-			<table class="table table-bordered table-condensed table-striped">
+			<table class="table table-bordered table-condensed table-striped center">
 				<thead>
 					<tr>
-						<th class="col-sm-5">Algorithme</th>
-						<th class="col-sm-1">Clef</th>
-						<th class="col-sm-1">DH</th>
-						<th></th>
+						<th rowspan="2">Name</th>
+						<th colspan="2">Key exchange</th>
+						<th colspan="2">Authentification</th>
+						<th colspan="4">Encryption</th>
+						<th colspan="2">MAC</th>
+						<th rowspan="2">PFS</th>
+					</tr>
+					<tr>
+						<th>Type</th>
+						<th>Key size</th>
+						<th>Type</th>
+						<th>Key size</th>
+						<th>Type</th>
+						<th>Key size</th>
+						<th>Block size</th>
+						<th>Mode</th>
+						<th>Type</th>
+						<th>Size</th>
 					</tr>
 				</thead>
 				<tbody>
-					<% %w(TLSv1_2 TLSv1_1 TLSv1 SSLv3 SSLv2).each do |protocol|
-						ciphers = CryptCheck::Tls::Cipher.sort(@result.ciphers.select { |c| c.protocol == protocol }
-								.collect { |c| CryptCheck::Tls::Cipher.new protocol, [c.name, nil, c[:size]], c.dh })
+					<% CryptCheck::Tls::Server::EXISTING_METHODS.each do |protocol|
+						ciphers = CryptCheck::Tls::Cipher.sort(@result.ciphers.select { |c| c.protocol == protocol.to_s }
+								.collect { |c| CryptCheck::Tls::Cipher.new protocol, [c.name, nil, c[:size]], c.dh, @result[:key] })
 						unless ciphers.empty? %>
 					<tr>
-						<th colspan="3"><%= protocol_label protocol %></th>
+						<th colspan="12"><%= protocol_label protocol %></th>
 					</tr>
-						<% ciphers.each do |cipher| %>
+						<% ciphers.each do |cipher|
+							params = cipher.params
+							kex = params[:kex]
+							auth = params[:auth]
+							enc = params[:enc]
+							mac = params[:mac]
+							pfs = params[:pfs]
+						%>
 					<tr>
 						<th><%= cipher_name_label cipher %></th>
-						<td><%= cipher_size_label cipher %></td>
-						<td><%= key_label cipher.dh if cipher.dh %></td>
-						<td><%= cipher_labels cipher %></td>
+						<%= cipher_kex_type_cell kex&.first %>
+						<%= cipher_kex_size_cell kex&.last %>
+						<%= cipher_auth_type_cell auth&.first %>
+						<%= cipher_auth_size_cell auth&.last %>
+						<%= cipher_enc_type_cell enc&.first %>
+						<%= cipher_enc_key_size_cell enc&.[] 1 %>
+						<%= cipher_enc_block_size_cell enc&.[] 2 %>
+						<%= cipher_enc_mode_cell enc&.last %>
+						<%= cipher_mac_type_cell mac&.first %>
+						<%= cipher_mac_size_cell mac&.last %>
+						<%= cipher_pfs_cell pfs %>
 					</tr>
 					<% 	end end end %>
 				</tbody>

@@ -5,11 +5,24 @@
 		</div>
 	</div>
 	<div class="row">
-		<table class="table-bordered table-condensed table-striped col-sm-12">
+		<table class="table table-bordered table-condensed table-striped col-sm-12">
 			<thead>
 				<tr>
-					<th class="col-sm-4">Navigateur</th>
-					<th class="col-sm-8" colspan="3">Cipher</th>
+					<th rowspan="2">Navigateur</th>
+					<th rowspan="2">Name</th>
+					<th rowspan="2">Key exchange</th>
+					<th rowspan="2">Authentification</th>
+					<th colspan="4">Encryption</th>
+					<th colspan="2">MAC</th>
+					<th rowspan="2">PFS</th>
+				</tr>
+				<tr>
+					<th>Type</th>
+					<th>Key size</th>
+					<th>Block size</th>
+					<th>Mode</th>
+					<th>Type</th>
+					<th>Size</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -17,16 +30,31 @@
 			   iana_ciphers = Hash[@ciphers.collect { |c| [Rails.application.config.openssl_ciphers[c.name], c] }]
 			   Rails.application.config.user_agents_ciphers.each do |ua, support|
 				   cipher = (support['ciphers'].collect(&:first) & iana_ciphers.keys).first
-				   cipher = iana_ciphers[cipher] if cipher
+				   if cipher
+					   cipher = iana_ciphers[cipher]
+					   params = cipher.params
+					   kex = params[:kex]
+					   auth = params[:auth]
+					   enc = params[:enc]
+					   mac = params[:mac]
+					   pfs = params[:pfs]
+				   end
 			%>
 				<tr>
 					<th><%= ua %></th>
 					<% if cipher %>
-					<td><%= cipher_name_label cipher %></td>
-					<td><%= cipher_size_label cipher %></td>
-					<td><%= cipher_labels cipher %></td>
+					<th><%= cipher_name_label cipher %></th>
+					<%= cipher_kex_type_cell kex&.first %>
+					<%= cipher_auth_type_cell auth&.first %>
+					<%= cipher_enc_type_cell enc&.first %>
+					<%= cipher_enc_key_size_cell enc&.[] 1 %>
+					<%= cipher_enc_block_size_cell enc&.[] 2 %>
+					<%= cipher_enc_mode_cell enc&.last %>
+					<%= cipher_mac_type_cell mac&.first %>
+					<%= cipher_mac_size_cell mac&.last %>
+					<%= cipher_pfs_cell pfs %>
 					<% else %>
-					<td colspan="3"><%= label('Non supporté', :error) %></td>
+					<td colspan="10"><%= label('Non supporté', :error) %></td>
 					<% end %>
 				</tr>
 			<% end %>
@@ -35,23 +63,48 @@
 	</div>
 	<br/>
 	<div class="row">
-		<table class="table-bordered table-condensed table-striped col-sm-12">
+		<table class="table table-bordered table-condensed table-striped center col-sm-12">
 			<thead>
-			<tr>
-				<th class="col-sm-4">Algorithme</th>
-				<th class="col-sm-1">Taille</th>
-				<td class="col-sm-7"></td>
-			</tr>
+				<tr>
+					<th rowspan="2">Name</th>
+					<th rowspan="2">Key exchange</th>
+					<th rowspan="2">Authentification</th>
+					<th colspan="4">Encryption</th>
+					<th colspan="2">MAC</th>
+					<th rowspan="2">PFS</th>
+				</tr>
+				<tr>
+					<th>Type</th>
+					<th>Key size</th>
+					<th>Block size</th>
+					<th>Mode</th>
+					<th>Type</th>
+					<th>Size</th>
+				</tr>
 			</thead>
 			<tbody>
-			<% @ciphers.each do |cipher| %>
+				<% @ciphers.each do |cipher|
+					params = cipher.params
+					kex = params[:kex]
+					auth = params[:auth]
+					enc = params[:enc]
+					mac = params[:mac]
+					pfs = params[:pfs]
+				%>
 				<tr>
 					<th><%= cipher_name_label cipher %></th>
-					<th><%= cipher_size_label cipher %></th>
-					<th><%= cipher_labels cipher %></th>
+					<%= cipher_kex_type_cell kex&.first %>
+					<%= cipher_auth_type_cell auth&.first %>
+					<%= cipher_enc_type_cell enc&.first %>
+					<%= cipher_enc_key_size_cell enc&.[] 1 %>
+					<%= cipher_enc_block_size_cell enc&.[] 2 %>
+					<%= cipher_enc_mode_cell enc&.last %>
+					<%= cipher_mac_type_cell mac&.first %>
+					<%= cipher_mac_size_cell mac&.last %>
+					<%= cipher_pfs_cell pfs %>
 				</tr>
-			<% end %>
-			</tbody>
+				<% end %>
+				</tbody>
 		</table>
 	</div>
 </div>

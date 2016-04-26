@@ -37,6 +37,18 @@ body {
 	background-color: #000;
 }
 
+table.center td {
+	text-align: center;
+}
+
+td.error {
+	background-color: #ddd;
+}
+
+td.primary {
+	background-color: $state-info-bg;
+}
+
 .progress-bar-default {
 	background-color: $label-default-bg;
 }
