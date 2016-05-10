@@ -10,8 +10,9 @@ class HTTPSWorker < CheckWorker
 		:https
 	end
 
-	def result(server, _, hash)
-		hash[:hsts] = server.hsts
-		hash
+	def to_json(server)
+		result = super
+		result[:hsts] = server.hsts
+		result
 	end
 end

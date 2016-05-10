@@ -2,8 +2,8 @@ class SMTPWorker < CheckWorker
 	sidekiq_options retry: false
 
 	protected
-	def analyze(host, port=25)
-		CryptCheck::Tls::Smtp.analyze host, port
+	def analyze(host)
+		CryptCheck::Tls::Smtp.analyze_domain host
 	end
 
 	def type

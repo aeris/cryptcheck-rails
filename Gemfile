@@ -22,6 +22,7 @@ end
 group :development, :test do
 	gem 'puma'
 	gem 'web-console'
+	gem 'awesome_print'
 
 	gem 'pry-rails'
 

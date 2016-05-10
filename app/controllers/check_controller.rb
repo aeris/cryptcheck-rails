@@ -8,12 +8,10 @@ class CheckController < ApplicationController
 		respond_to do |format|
 			format.html do
 				return render :processing if @result.pending
-				return render :no_tls if @result.no_tls
 			end
 			format.json do
 				render json: case
 					when @result.pending then :pending
-					when @result.no_tls then :no_tls
 					else @result
 				end
 			end
@@ -34,7 +32,7 @@ class CheckController < ApplicationController
 
 	protected
 	def enqueue_host
-		Datastore.pending self.type, @id, @port
+		Datastore.pending self.type, @host, @port
 		self.worker.perform_async *(@port.blank? ? [@host] : [@host, @port])
 		@result = OpenStruct.new pending: true , date: Time.now
 	end

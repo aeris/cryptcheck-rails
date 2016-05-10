@@ -1,21 +1,26 @@
-class SSHWorker
-	include Sidekiq::Worker
+class SSHWorker < CheckWorker
 	sidekiq_options retry: false
 
-	def perform(host, port=nil)
-		host    = SimpleIDN.to_ascii host.downcase
-		result = begin
-			server = CryptCheck::Ssh.analyze host, port
-			{
-					kex:         server.kex,
-					encryption:  server.encryption,
-					hmac:        server.hmac,
-					compression: server.compression,
-					key:         server.key
-			}
-		rescue CryptCheck::Ssh::Server::SshNotAvailableException
-			{ no_tls: true }
-		end
-		Datastore.post :ssh, host, port, result
+	protected
+	def analyze(host, port=22)
+		CryptCheck::Ssh.analyze host, port
+	end
+
+	def type
+		:ssh
+	end
+
+	def to_json(server)
+		{
+				kex:         server.kex,
+				encryption:  server.encryption,
+				hmac:        server.hmac,
+				compression: server.compression,
+				key_:         server.key
+		}
+	end
+
+	def grade_to_json(grade)
+		nil
 	end
 end

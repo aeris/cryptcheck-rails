@@ -11,7 +11,27 @@
 		</div>
 		<% end %>
 	</div>
-	<br/>
+	<%
+		@result.hosts.each do |host|
+			if host.error
+				error, host = host.error, host.host
+	%>
+	<div class="row">
+		<div class="col-sm-12">
+			<h2><%= host.name %> - <%= host.ip %> : <%= host.port %></h2>
+			Error during analysis :
+			<span class="label label-error"><%= error %></span>
+		</div>
+	</div>
+	<%
+		else
+			host, server = host.host, host.handshake
+	%>
+	<div class="row">
+		<div class="col-sm-12">
+			<h2><%= host.name %> - <%= host.ip %> : <%= host.port %></h2>
+		</div>
+	</div>
 	<div class="row">
 		<div class="col-sm-12">
 			<table class="table table-bordered table-condensed table-striped">
@@ -19,7 +39,7 @@
 					<tr>
 						<th>Échange de clef</th>
 					</tr>
-					<% @result.kex.each do |kex| %>
+					<% server.kex.each do |kex| %>
 					<tr>
 						<td><%= kex_label kex %></td>
 					</tr>
@@ -28,7 +48,7 @@
 					<tr>
 						<th>Chiffrement</th>
 					</tr>
-					<% @result.encryption.each do |cipher| %>
+					<% server.encryption.each do |cipher| %>
 					<tr>
 						<td><%= cipher_label cipher %></td>
 					</tr>
@@ -37,7 +57,7 @@
 					<tr>
 						<th>HMAC</th>
 					</tr>
-					<% @result.hmac.each do |hmac| %>
+					<% server.hmac.each do |hmac| %>
 						<tr>
 							<td><%= hmac_label hmac %></td>
 						</tr>
@@ -46,7 +66,7 @@
 					<tr>
 						<th>Compression</th>
 					</tr>
-					<% @result.compression.each do |compression| %>
+					<% server.compression.each do |compression| %>
 						<tr>
 							<td><%= compression_label compression %></td>
 						</tr>
@@ -55,7 +75,7 @@
 					<tr>
 						<th>Clefs</th>
 					</tr>
-					<% @result['key'].each do |key| %>
+					<% server.key_.each do |key| %>
 					<tr>
 						<td><%= key_label key %></td>
 					</tr>
@@ -64,4 +84,6 @@
 			</table>
 		</div>
 	</div>
+	<% end
+	   end %>
 </div>

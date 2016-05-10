@@ -6,4 +6,5 @@ options      = {
 }
 client       = Sidekiq::Client.new Sidekiq::RedisConnection.create options
 clazz, *args = ARGV
+clazz += 'Worker'
 client.push({ 'class' => clazz, 'args' => args })

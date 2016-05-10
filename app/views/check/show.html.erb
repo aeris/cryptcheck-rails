@@ -3,7 +3,6 @@
 		<div class="col-sm-11">
 			<h1>
 				[<%= self.type.to_s.upcase %>] <%= @host %> <span class="small">(<%= l @result.date %>)</span>
-				<%= rank_label @result.score.rank %>
 			</h1>
 		</div>
 		<% if Time.now - @result.date >= Rails.configuration.refresh_delay %>
@@ -12,16 +11,35 @@
 		</div>
 		<% end %>
 	</div>
-	<br/>
+	<%
+		@result.hosts.each do |host|
+			if host.error
+				error, host = host.error, host.host
+	%>
+	<div class="row">
+		<div class="col-sm-12">
+			<h2><%= host.name %> - <%= host.ip %> : <%= host.port %></h2>
+			Error during analysis :
+			<span class="label label-error"><%= error %></span>
+		</div>
+	</div>
+	<%
+			else
+				host, grade, handshake = host.host, host.grade, host.handshake
+	%>
+	<div class="row">
+		<div class="col-sm-12">
+			<h2><%= host.name %> - <%= host.ip %> : <%= host.port %></h2>
+		</div>
+	</div>
 	<div class="row">
 		<div class="col-sm-6">
-			<% scores = @result.score.details %>
 			<table class="table table-bordered table-condensed table-striped">
 				<thead>
 					<tr>
 						<th colspan="2">
 							Scores
-							<%= rank_label @result.score.rank %>
+							<%= rank_label grade.rank %>
 						</th>
 					</tr>
 				</thead>
@@ -33,7 +51,7 @@
 						 'Total' => 'score'}.each do |name, v| %>
 					<tr>
 						<th class="col-sm-4"><%= name %></th>
-						<td class="col-sm-8"><%= score_progress scores[v] %></td>
+						<td class="col-sm-8"><%= score_progress grade.details[v] %></td>
 					</tr>
 					<% end %>
 				</tbody>
@@ -44,20 +62,20 @@
 				<tbody>
 					<tr>
 						<th class="col-sm-4">Protocoles</th>
-						<td class="col-sm-8"><%= protocol_labels @result.protocols %></td>
+						<td class="col-sm-8"><%= protocol_labels handshake.protocols %></td>
 					</tr>
 					<tr>
 						<th>Clefs</th>
 						<td>
-							<p>Certificat : <%= key_label @result[:key] %></p>
-							<p>Diffie Hellman : <%= key_labels @result.dh %></p>
+							<p>Certificat : <%= key_label handshake[:key] %></p>
+							<p>Diffie Hellman : <%= key_labels handshake.dh %></p>
 						</td>
 					</tr>
 					<% { 'Bonnes pratiques' => :success,
 					 'Alertes' => :warning,
 					 'Dangers' => :danger,
 					 'Erreurs' => :error }.each do |name, color|
-						names = @result.score[color]
+						names = grade[color]
 						next if names.nil? or names.empty?
 					%>
 					<tr>
@@ -100,8 +118,8 @@
 				</thead>
 				<tbody>
 					<% CryptCheck::Tls::Server::EXISTING_METHODS.each do |protocol|
-						ciphers = CryptCheck::Tls::Cipher.sort(@result.ciphers.select { |c| c.protocol == protocol.to_s }
-								.collect { |c| CryptCheck::Tls::Cipher.new protocol, [c.name, nil, c[:size]], c.dh, @result[:key] })
+						ciphers = CryptCheck::Tls::Cipher.sort(handshake.ciphers.select { |c| c.protocol == protocol.to_s }
+								.collect { |c| CryptCheck::Tls::Cipher.new protocol, [c.name, nil, c[:size]], c.dh, handshake[:key] })
 						unless ciphers.empty? %>
 					<tr>
 						<th colspan="12"><%= protocol_label protocol %></th>
@@ -133,4 +151,6 @@
 			</table>
 		</div>
 	</div>
+	<% end
+	   end %>
 </div>
