@@ -11,7 +11,7 @@ fr:
 
   Currently analysing %{host}: Analyse en cours de %{host}
   "Start of analysis: %{date}": "Début de l’analyse : %{date}"
-  Please waiting…: Merci de patienter…
+  Please wait…: Merci de patienter…
   This page refreshes automatically every 10 seconds: Cette page se rafraîchit automatiquement toutes les 10 secondes
 
   "Error during analysis:": "Erreur durant l’analyse :"

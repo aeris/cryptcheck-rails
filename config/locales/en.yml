@@ -11,7 +11,7 @@ en:
 
   Currently analysing %{host}: Currently analysing %{host}
   "Start of analysis: %{date}": "Start of analysis: %{date}"
-  Please waiting…: Please waiting…
+  Please wait…: Please wait…
   This page refreshes automatically every 10 seconds: This page refreshes automatically every 10 seconds
 
   "Error during analysis:": "Error during analysis:"
