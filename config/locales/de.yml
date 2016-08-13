@@ -1,0 +1,44 @@
+de:
+  User agent compatibility: User Agent-Kompatibilität
+  Supported ciphers: Unterstützte Ciphers
+  Cipher suite: Cipher Suite
+  "Cipher suite:": "Cipher Suite:"
+
+  Check your domain: Teste Deine Domain
+  Check your SSH server: Teste Deinen SSH-Server
+  Check your SMTP server: Teste Deinen SMTP-Server
+  Test me!: Teste mich!
+
+  Currently analysing %{host}: Analysiere %{host}
+  "Start of analysis: %{date}": "Start der Analyse: %{date}"
+  Please waiting…: Bitte warten…
+  This page refreshes automatically every 10 seconds: Diese Seite aktualisiert sich automatisch alle 10 Sekunden
+
+  "Error during analysis:": "Fehler bei der Analyse:"
+  Refresh: Neu laden
+
+  Protocol: Protokoll
+  Protocols: Protokolle
+  Keys: Schlüssel
+  Key exchange: Schlüsselaustausch
+  Cipher: Cipher
+  Overall: Gesamt
+  "Certificates:": "Zertifikate:"
+  Good practices: Good-Practices
+  Warning: Warnung
+  Critical: Kritisch
+  Fatal: Fatal
+
+  User agent: User Agent
+  Name: Name
+  Authentication: Authentifizierung
+  Encryption: Verschlüsselung
+  Compression: Kompression
+  MAC: MAC
+  HMAC: HMAC
+  PFS: PFS
+  Mode: Mode
+  Type: Typ
+  Key size: Schlüsselgröße
+  Block size: Blockgröße
+  Size: Größe
