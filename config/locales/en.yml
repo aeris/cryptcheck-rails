@@ -1,1 +1,44 @@
 en:
+  User agent compatibility: User agent compatibility
+  Supported ciphers: Supported ciphers
+  Cipher suite: Cipher suite
+  "Cipher suite:": "Cipher suite:"
+
+  Check your domain: Check your domain
+  Check your SSH server: Check your SSH server
+  Check your SMTP server: Check your SMTP server
+  Test me!: Test me!
+
+  Currently analysing %{host}: Currently analysing %{host}
+  "Start of analysis: %{date}": "Start of analysis: %{date}"
+  Please waiting…: Please waiting…
+  This page refreshes automatically every 10 seconds: This page refreshes automatically every 10 seconds
+
+  "Error during analysis:": "Error during analysis:"
+  Refresh: Refresh
+
+  Protocol: Protocol
+  Protocols: Protocols
+  Keys: Keys
+  Key exchange: Key exchange
+  Cipher: Cipher
+  Overall: Overall
+  "Certificates:": "Certificats:"
+  Good practices: Good practices
+  Warning: Warning
+  Critical: Critical
+  Fatal: Fatal
+
+  User agent: User agent
+  Name: Name
+  Authentication: Authentication
+  Encryption: Encryption
+  Compression: Compression
+  MAC: MAC
+  HMAC: HMAC
+  PFS: PFS
+  Mode: Mode
+  Type: Type
+  Key size: Key size
+  Block size: Block size
+  Size: Size

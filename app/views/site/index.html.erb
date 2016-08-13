@@ -1,7 +1,7 @@
 <div id="check" class="container">
 	<div class="row">
 		<div class="col-sm-12">
-			<h1>Vérifier votre domaine</h1>
+			<h1><%= t 'Check your domain' %></h1>
 			<%= form_tag root_path do %>
 				<div class="form-group">
 					<div class="col-sm-8">
@@ -11,7 +11,7 @@
 						<%= select_tag :type, options_for_select({'HTTPS' => :https, 'SMTP' => :smtp, 'XMPP' => :xmpp}), class: %i(form-control input-lg) %>
 					</div>
 					<div class="col-sm-2">
-						<%= submit_tag 'Test-moi !', class: %i(form-control btn btn-primary input-lg pull-right) %>
+						<%= submit_tag t('Test me!'), class: %i(form-control btn btn-primary input-lg pull-right) %>
 					</div>
 				</div>
 			<% end %>

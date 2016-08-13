@@ -7,6 +7,7 @@ gem 'sidekiq', '~> 3.4.2'
 gem 'stretcher', '~> 1.21.1'
 gem 'faraday', '~> 0.8.9' # For stretcher compatibility
 gem 'simpleidn', '~> 0.0.5'
+gem 'http_accept_language'
 
 group :assets do
 	gem 'therubyracer', platforms: :ruby

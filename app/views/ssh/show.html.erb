@@ -7,7 +7,7 @@
 		</div>
 		<% if Time.now - @result.date >= Rails.configuration.refresh_delay %>
 		<div class="col-sm-1">
-			<%= link_to 'Rafraîchir', {action: :refresh}, class: %i(btn btn-default) %>
+			<%= link_to t('Refresh'), {action: :refresh}, class: %i(btn btn-default) %>
 		</div>
 		<% end %>
 	</div>
@@ -19,7 +19,7 @@
 	<div class="row">
 		<div class="col-sm-12">
 			<h2><%= host.name %> - <%= host.ip %> : <%= host.port %></h2>
-			Error during analysis :
+			<%= t 'Error during analysis:' %>
 			<span class="label label-error"><%= error %></span>
 		</div>
 	</div>
@@ -37,7 +37,7 @@
 			<table class="table table-bordered table-condensed table-striped">
 				<tbody>
 					<tr>
-						<th>Échange de clef</th>
+						<th><%= t 'Key exchange' %></th>
 					</tr>
 					<% server.kex.each do |kex| %>
 					<tr>
@@ -46,7 +46,7 @@
 					<% end %>
 
 					<tr>
-						<th>Chiffrement</th>
+						<th><%= t 'Cipher' %></th>
 					</tr>
 					<% server.encryption.each do |cipher| %>
 					<tr>
@@ -55,7 +55,7 @@
 					<% end %>
 
 					<tr>
-						<th>HMAC</th>
+						<th><%= t 'HMAC' %></th>
 					</tr>
 					<% server.hmac.each do |hmac| %>
 						<tr>
@@ -64,7 +64,7 @@
 					<% end %>
 
 					<tr>
-						<th>Compression</th>
+						<th><%= t 'Compression' %></th>
 					</tr>
 					<% server.compression.each do |compression| %>
 						<tr>
@@ -73,7 +73,7 @@
 					<% end %>
 
 					<tr>
-						<th>Clefs</th>
+						<th><%= t 'Keys' %></th>
 					</tr>
 					<% server.key_.each do |key| %>
 					<tr>

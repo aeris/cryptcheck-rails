@@ -1,4 +1,48 @@
 fr:
+  User agent compatibility: Compatibilité navigateur
+  Supported ciphers: Chiffrements supportés
+  Cipher suite: Suite de chiffrement
+  "Cipher suite:": "Suite de chiffrement :"
+
+  Check your domain: Testez votre domaine
+  Check your SSH server: Testez votre serveur SSH
+  Check your TLS server: Testez votre serveur TLS
+  Test me!: Testez-moi !
+
+  Currently analysing %{host}: Analyse en cours de %{host}
+  "Start of analysis: %{date}": "Début de l’analyse : %{date}"
+  Please waiting…: Merci de patienter…
+  This page refreshes automatically every 10 seconds: Cette page se rafraîchit automatiquement toutes les 10 secondes
+
+  "Error during analysis:": "Erreur durant l’analyse :"
+  Refresh: Rafraîchir
+
+  Protocol: Protocole
+  Protocols: Protocoles
+  Keys: Clefs
+  Key exchange: Échange de clef
+  Cipher: Chiffrement
+  Overall: Global
+  "Certificates:": "Certificats :"
+  Good practices: Bonnes pratiques
+  Warning: Attention
+  Critical: Critique
+  Fatal: Fatal
+
+  User agent: Navigateur
+  Name: Nom
+  Authentication: Authentification
+  Encryption: Chiffrement
+  Compression: Compression
+  MAC: MAC
+  HMAC: HMAC
+  PFS: PFS
+  Mode: Mode
+  Type: Type
+  Key size: Taille de clef
+  Block size: Taille de bloc
+  Size: Taille
+
   date:
     abbr_day_names:
     - dim

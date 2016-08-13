@@ -2,7 +2,9 @@
 	<nav class="navbar navbar-inverse navbar-fixed-top">
 		<div class="container">
 			<div class="navbar-header">
-				<span class="navbar-brand">CryptCheck</span>
+				<span>
+					<%= link_to 'CryptCheck', root_path, class: %i(navbar-brand) %>
+				</span>
 			</div>
 			<ul class="nav navbar-nav">
 				<li><%= link_to 'HTTPS / SMTP / XMPP', root_path %></li>
@@ -10,8 +12,8 @@
 				<li><%= link_to 'SSH', ssh_path %></li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
-				<li><%= link_to 'Cipher suite', suite_path %></li>
-				<li><%= link_to 'Ciphers', ciphers_path %></li>
+				<li><%= link_to t('User agent compatibility'), suite_path %></li>
+				<li><%= link_to t('Supported ciphers'), ciphers_path %></li>
 				<!--
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">

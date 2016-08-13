@@ -1,7 +1,7 @@
 <div id="tls_check" class="container">
 	<div class="row">
 		<div class="col-sm-12">
-			<h1>Vérifier votre serveur TLS</h1>
+			<h1><%= t 'Check your TLS server' %></h1>
 			<%= form_tag root_path do %>
 				<div class="form-group">
 					<div class="col-sm-8">
@@ -12,7 +12,7 @@
 					</div>
 					<div class="col-sm-2">
 						<%= hidden_field_tag :type, :tls %>
-						<%= submit_tag 'Test-moi !', class: %i(form-control btn btn-primary input-lg pull-right) %>
+						<%= submit_tag t('Test me!'), class: %i(form-control btn btn-primary input-lg pull-right) %>
 					</div>
 				</div>
 			<% end %>

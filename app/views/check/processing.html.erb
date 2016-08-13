@@ -6,14 +6,14 @@
 		<div class="col-sm-8 col-sm-offset-2">
 			<h1>
 				<i class="fa fa-spinner fa-pulse"></i>
-				[<%= self.type.to_s.upcase %>] Analyse en cours de <%= @host %>
+				[<%= self.type.to_s.upcase %>] <%= t 'Currently analysing %{host}', host: @host  %>
 			</h1>
 			<p class="small">
-				Début de l’analyse : <%= l @result.date %>
+				<%= t 'Start of analysis: %{date}', date: l(@result.date) %>
 			</p>
 			<p class="pull-right">
-				Merci de patienter…
-				<span class="small">(Cette page se rafraîchit automatiquement toutes les 10 secondes)</span>
+				<%= t('Please waiting…') %>
+				<span class="small">(<%= t 'Cette page se rafraîchit automatiquement toutes les 10 secondes' %>)</span>
 			</p>
 		</div>
 	</div>

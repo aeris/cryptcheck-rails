@@ -7,7 +7,7 @@
 		</div>
 		<% if Time.now - @result.date >= Rails.configuration.refresh_delay %>
 		<div class="col-sm-1">
-			<%= link_to 'Rafraîchir', {action: :refresh}, class: %i(btn btn-default) %>
+			<%= link_to t('Refresh'), {action: :refresh}, class: %i(btn btn-default) %>
 		</div>
 		<% end %>
 	</div>
@@ -19,7 +19,7 @@
 	<div class="row">
 		<div class="col-sm-12">
 			<h2><%= host.name %> - <%= host.ip %> : <%= host.port %></h2>
-			Error during analysis :
+			<%= t 'Error during analysis:' %>
 			<span class="label label-error"><%= error %></span>
 		</div>
 	</div>
@@ -45,12 +45,12 @@
 				</thead>
 				<tbody>
 					<%
-					   { 'Protocole' => 'protocol',
-						 'Échange de clef' => 'key_exchange',
-						 'Chiffrement' => 'cipher_strengths',
-						 'Total' => 'score'}.each do |name, v| %>
+					   { 'Protocol' => 'protocol',
+						 'Key exchange' => 'key_exchange',
+						 'Cipher' => 'cipher_strengths',
+						 'Overall' => 'score'}.each do |name, v| %>
 					<tr>
-						<th class="col-sm-4"><%= name %></th>
+						<th class="col-sm-4"><%= t name %></th>
 						<td class="col-sm-8"><%= score_progress grade.details[v] %></td>
 					</tr>
 					<% end %>
@@ -61,25 +61,25 @@
 			<table class="table table-bordered table-condensed table-striped">
 				<tbody>
 					<tr>
-						<th class="col-sm-4">Protocoles</th>
+						<th class="col-sm-4"><%= t 'Protocols' %></th>
 						<td class="col-sm-8"><%= protocol_labels handshake.protocols %></td>
 					</tr>
 					<tr>
-						<th>Clefs</th>
+						<th><%= t 'Keys' %></th>
 						<td>
-							<p>Certificat : <%= key_label handshake[:key] %></p>
+							<p><%= t 'Certificates:' %> <%= key_label handshake[:key] %></p>
 							<p>Diffie Hellman : <%= key_labels handshake.dh %></p>
 						</td>
 					</tr>
-					<% { 'Bonnes pratiques' => :success,
-					 'Alertes' => :warning,
-					 'Dangers' => :danger,
-					 'Erreurs' => :error }.each do |name, color|
+					<% { 'Good practices' => :success,
+					 'Warning' => :warning,
+					 'Critical' => :danger,
+					 'Fatal' => :error }.each do |name, color|
 						names = grade[color]
 						next if names.nil? or names.empty?
 					%>
 					<tr>
-						<th><%= name %></th>
+						<th><%= t name %></th>
 						<td>
 							<% names.each do |name| %>
 							<span class="label label-<%= color %>"><%= name.upcase %></span>
@@ -96,24 +96,24 @@
 			<table class="table table-bordered table-condensed table-striped center">
 				<thead>
 					<tr>
-						<th rowspan="2">Name</th>
-						<th colspan="2">Key exchange</th>
-						<th colspan="2">Authentification</th>
-						<th colspan="4">Encryption</th>
-						<th colspan="2">MAC</th>
-						<th rowspan="2">PFS</th>
+						<th rowspan="2"><%= t 'Name' %></th>
+						<th colspan="2"><%= t 'Key exchange' %></th>
+						<th colspan="2"><%= t 'Authentication' %></th>
+						<th colspan="4"><%= t 'Encryption' %></th>
+						<th colspan="2"><%= t 'MAC' %></th>
+						<th rowspan="2"><%= t 'PFS' %></th>
 					</tr>
 					<tr>
-						<th>Type</th>
-						<th>Key size</th>
-						<th>Type</th>
-						<th>Key size</th>
-						<th>Type</th>
-						<th>Key size</th>
-						<th>Block size</th>
-						<th>Mode</th>
-						<th>Type</th>
-						<th>Size</th>
+						<th><%= t 'Type' %></th>
+						<th><%= t 'Key size' %></th>
+						<th><%= t 'Type' %></th>
+						<th><%= t 'Key size' %></th>
+						<th><%= t 'Type' %></th>
+						<th><%= t 'Key size' %></th>
+						<th><%= t 'Block size' %></th>
+						<th><%= t 'Mode' %></th>
+						<th><%= t 'Type' %></th>
+						<th><%= t 'Size' %></th>
 					</tr>
 				</thead>
 				<tbody>
