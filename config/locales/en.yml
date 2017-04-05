@@ -7,6 +7,7 @@ en:
   Check your domain: Check your domain
   Check your SSH server: Check your SSH server
   Check your SMTP server: Check your SMTP server
+  Check your TLS server: Check your TLS server
   Test me!: Test me!
 
   Currently analysing %{host}: Currently analysing %{host}
