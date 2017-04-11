@@ -1,0 +1,637 @@
+--- !ruby/hash:BSON::Document
+_id: !ruby/object:BSON::ObjectId
+  raw_data: !binary |-
+    WOvwM8My+sn9rVVo
+target: !ruby/hash:BSON::Document
+  hostname: localhost
+  port: 443
+hosts:
+- !ruby/hash:BSON::Document
+  hostname: localhost
+  ip: 127.0.0.1
+  port: 443
+  handshakes: !ruby/hash:BSON::Document
+    certs:
+    - !ruby/hash:BSON::Document
+      subject: "/O=imirhil.fr/CN=aeris.imirhil.fr"
+      serial: '4'
+      issuer: "/O=imirhil.fr/CN=CA"
+      lifetime: !ruby/hash:BSON::Document
+        not_before: 2011-07-03 00:00:00.000000000 Z
+        not_after: 2021-06-11 23:59:59.000000000 Z
+      fingerprint: 641b2d3ca00fea6e7f8ff6ec5bc23b6ae6c383aa892cf7a064004ffc7d681de1
+      chain:
+      - !ruby/hash:BSON::Document
+        subject: "/O=imirhil.fr/CN=aeris.imirhil.fr"
+        serial: '4'
+        issuer: "/O=imirhil.fr/CN=CA"
+        fingerprint: 641b2d3ca00fea6e7f8ff6ec5bc23b6ae6c383aa892cf7a064004ffc7d681de1
+        lifetime: !ruby/hash:BSON::Document
+          not_before: 2011-07-03 00:00:00.000000000 Z
+          not_after: 2021-06-11 23:59:59.000000000 Z
+      key: !ruby/hash:BSON::Document
+        type: :rsa
+        size: 1024
+        fingerprint: 9b6847ee48892abf517dcbb1524846b4f5ed8172a0fa389b67ff7539319f0c8f
+        states: !ruby/hash:BSON::Document
+          critical: !ruby/hash:BSON::Document
+            rsa: false
+          error: !ruby/hash:BSON::Document
+            rsa: true
+          warning: !ruby/hash:BSON::Document {}
+          good: !ruby/hash:BSON::Document {}
+          great: !ruby/hash:BSON::Document {}
+          best: !ruby/hash:BSON::Document {}
+      states: !ruby/hash:BSON::Document
+        critical: !ruby/hash:BSON::Document
+          mdc2_sign: false
+          md2_sign: false
+          md4_sign: false
+          md5_sign: false
+          sha_sign: false
+          sha1_sign: false
+          rsa: false
+        error: !ruby/hash:BSON::Document
+          rsa: true
+        warning: !ruby/hash:BSON::Document {}
+        good: !ruby/hash:BSON::Document {}
+        great: !ruby/hash:BSON::Document {}
+        best: !ruby/hash:BSON::Document {}
+    dh:
+    - !ruby/hash:BSON::Document
+      size: 1024
+      fingerprint: 2a85a641f2327b9f81991a8410a61909476571abde10c6d41031b76397a955f9
+      states: !ruby/hash:BSON::Document
+        critical: !ruby/hash:BSON::Document
+          dh: false
+        error: !ruby/hash:BSON::Document
+          dh: true
+        warning: !ruby/hash:BSON::Document {}
+        good: !ruby/hash:BSON::Document {}
+        great: !ruby/hash:BSON::Document {}
+        best: !ruby/hash:BSON::Document {}
+    protocols:
+    - !ruby/hash:BSON::Document
+      protocol: :TLSv1_2
+      states: !ruby/hash:BSON::Document
+        critical: !ruby/hash:BSON::Document
+          sslv2: false
+          sslv3: false
+        error: !ruby/hash:BSON::Document
+          tlsv1_0: false
+        warning: !ruby/hash:BSON::Document
+          tlsv1_1: false
+        good: !ruby/hash:BSON::Document {}
+        great: !ruby/hash:BSON::Document {}
+        best: !ruby/hash:BSON::Document {}
+    ciphers:
+    - !ruby/hash:BSON::Document
+      protocol: :TLSv1_2
+      name: DHE-RSA-AES128-GCM-SHA256
+      key_exchange: :dh
+      authentication: :rsa
+      encryption: !ruby/hash:BSON::Document
+        name: :aes
+        mode: :gcm
+        block_size: 128
+      hmac: !ruby/hash:BSON::Document
+        name: :sha256
+        size: 256
+      states: !ruby/hash:BSON::Document
+        critical: !ruby/hash:BSON::Document
+          dss: false
+          anonymous: false
+          'null': false
+          export: false
+          des: false
+          md5: false
+          rc4: false
+          sweet32: false
+        error: !ruby/hash:BSON::Document
+          pfs: false
+        warning: !ruby/hash:BSON::Document
+          dhe: true
+        good: !ruby/hash:BSON::Document
+          aead: true
+        great: !ruby/hash:BSON::Document {}
+        best: !ruby/hash:BSON::Document {}
+    - !ruby/hash:BSON::Document
+      protocol: :TLSv1_2
+      name: DHE-RSA-AES128-SHA
+      key_exchange: :dh
+      authentication: :rsa
+      encryption: !ruby/hash:BSON::Document
+        name: :aes
+        mode: :cbc
+        block_size: 128
+      hmac: !ruby/hash:BSON::Document
+        name: :sha1
+        size: 160
+      states: !ruby/hash:BSON::Document
+        critical: !ruby/hash:BSON::Document
+          dss: false
+          anonymous: false
+          'null': false
+          export: false
+          des: false
+          md5: false
+          rc4: false
+          sweet32: false
+        error: !ruby/hash:BSON::Document
+          pfs: false
+        warning: !ruby/hash:BSON::Document
+          dhe: true
+        good: !ruby/hash:BSON::Document
+          aead: false
+        great: !ruby/hash:BSON::Document {}
+        best: !ruby/hash:BSON::Document {}
+    - !ruby/hash:BSON::Document
+      protocol: :TLSv1_2
+      name: DHE-RSA-AES128-SHA256
+      key_exchange: :dh
+      authentication: :rsa
+      encryption: !ruby/hash:BSON::Document
+        name: :aes
+        mode: :cbc
+        block_size: 128
+      hmac: !ruby/hash:BSON::Document
+        name: :sha256
+        size: 256
+      states: !ruby/hash:BSON::Document
+        critical: !ruby/hash:BSON::Document
+          dss: false
+          anonymous: false
+          'null': false
+          export: false
+          des: false
+          md5: false
+          rc4: false
+          sweet32: false
+        error: !ruby/hash:BSON::Document
+          pfs: false
+        warning: !ruby/hash:BSON::Document
+          dhe: true
+        good: !ruby/hash:BSON::Document
+          aead: false
+        great: !ruby/hash:BSON::Document {}
+        best: !ruby/hash:BSON::Document {}
+    - !ruby/hash:BSON::Document
+      protocol: :TLSv1_2
+      name: DHE-RSA-AES256-GCM-SHA384
+      key_exchange: :dh
+      authentication: :rsa
+      encryption: !ruby/hash:BSON::Document
+        name: :aes
+        mode: :gcm
+        block_size: 128
+      hmac: !ruby/hash:BSON::Document
+        name: :sha384
+        size: 384
+      states: !ruby/hash:BSON::Document
+        critical: !ruby/hash:BSON::Document
+          dss: false
+          anonymous: false
+          'null': false
+          export: false
+          des: false
+          md5: false
+          rc4: false
+          sweet32: false
+        error: !ruby/hash:BSON::Document
+          pfs: false
+        warning: !ruby/hash:BSON::Document
+          dhe: true
+        good: !ruby/hash:BSON::Document
+          aead: true
+        great: !ruby/hash:BSON::Document {}
+        best: !ruby/hash:BSON::Document {}
+    - !ruby/hash:BSON::Document
+      protocol: :TLSv1_2
+      name: DHE-RSA-AES256-SHA
+      key_exchange: :dh
+      authentication: :rsa
+      encryption: !ruby/hash:BSON::Document
+        name: :aes
+        mode: :cbc
+        block_size: 128
+      hmac: !ruby/hash:BSON::Document
+        name: :sha1
+        size: 160
+      states: !ruby/hash:BSON::Document
+        critical: !ruby/hash:BSON::Document
+          dss: false
+          anonymous: false
+          'null': false
+          export: false
+          des: false
+          md5: false
+          rc4: false
+          sweet32: false
+        error: !ruby/hash:BSON::Document
+          pfs: false
+        warning: !ruby/hash:BSON::Document
+          dhe: true
+        good: !ruby/hash:BSON::Document
+          aead: false
+        great: !ruby/hash:BSON::Document {}
+        best: !ruby/hash:BSON::Document {}
+    - !ruby/hash:BSON::Document
+      protocol: :TLSv1_2
+      name: DHE-RSA-AES256-SHA256
+      key_exchange: :dh
+      authentication: :rsa
+      encryption: !ruby/hash:BSON::Document
+        name: :aes
+        mode: :cbc
+        block_size: 128
+      hmac: !ruby/hash:BSON::Document
+        name: :sha256
+        size: 256
+      states: !ruby/hash:BSON::Document
+        critical: !ruby/hash:BSON::Document
+          dss: false
+          anonymous: false
+          'null': false
+          export: false
+          des: false
+          md5: false
+          rc4: false
+          sweet32: false
+        error: !ruby/hash:BSON::Document
+          pfs: false
+        warning: !ruby/hash:BSON::Document
+          dhe: true
+        good: !ruby/hash:BSON::Document
+          aead: false
+        great: !ruby/hash:BSON::Document {}
+        best: !ruby/hash:BSON::Document {}
+    - !ruby/hash:BSON::Document
+      protocol: :TLSv1_2
+      name: ECDHE-RSA-AES128-SHA
+      key_exchange: :ecdh
+      authentication: :rsa
+      encryption: !ruby/hash:BSON::Document
+        name: :aes
+        mode: :cbc
+        block_size: 128
+      hmac: !ruby/hash:BSON::Document
+        name: :sha1
+        size: 160
+      states: !ruby/hash:BSON::Document
+        critical: !ruby/hash:BSON::Document
+          dss: false
+          anonymous: false
+          'null': false
+          export: false
+          des: false
+          md5: false
+          rc4: false
+          sweet32: false
+        error: !ruby/hash:BSON::Document
+          pfs: false
+        warning: !ruby/hash:BSON::Document
+          dhe: false
+        good: !ruby/hash:BSON::Document
+          aead: false
+        great: !ruby/hash:BSON::Document {}
+        best: !ruby/hash:BSON::Document {}
+    - !ruby/hash:BSON::Document
+      protocol: :TLSv1_2
+      name: ECDHE-RSA-AES128-SHA256
+      key_exchange: :ecdh
+      authentication: :rsa
+      encryption: !ruby/hash:BSON::Document
+        name: :aes
+        mode: :cbc
+        block_size: 128
+      hmac: !ruby/hash:BSON::Document
+        name: :sha256
+        size: 256
+      states: !ruby/hash:BSON::Document
+        critical: !ruby/hash:BSON::Document
+          dss: false
+          anonymous: false
+          'null': false
+          export: false
+          des: false
+          md5: false
+          rc4: false
+          sweet32: false
+        error: !ruby/hash:BSON::Document
+          pfs: false
+        warning: !ruby/hash:BSON::Document
+          dhe: false
+        good: !ruby/hash:BSON::Document
+          aead: false
+        great: !ruby/hash:BSON::Document {}
+        best: !ruby/hash:BSON::Document {}
+    - !ruby/hash:BSON::Document
+      protocol: :TLSv1_2
+      name: ECDHE-RSA-AES256-SHA
+      key_exchange: :ecdh
+      authentication: :rsa
+      encryption: !ruby/hash:BSON::Document
+        name: :aes
+        mode: :cbc
+        block_size: 128
+      hmac: !ruby/hash:BSON::Document
+        name: :sha1
+        size: 160
+      states: !ruby/hash:BSON::Document
+        critical: !ruby/hash:BSON::Document
+          dss: false
+          anonymous: false
+          'null': false
+          export: false
+          des: false
+          md5: false
+          rc4: false
+          sweet32: false
+        error: !ruby/hash:BSON::Document
+          pfs: false
+        warning: !ruby/hash:BSON::Document
+          dhe: false
+        good: !ruby/hash:BSON::Document
+          aead: false
+        great: !ruby/hash:BSON::Document {}
+        best: !ruby/hash:BSON::Document {}
+    - !ruby/hash:BSON::Document
+      protocol: :TLSv1_2
+      name: ECDHE-RSA-AES256-SHA384
+      key_exchange: :ecdh
+      authentication: :rsa
+      encryption: !ruby/hash:BSON::Document
+        name: :aes
+        mode: :cbc
+        block_size: 128
+      hmac: !ruby/hash:BSON::Document
+        name: :sha384
+        size: 384
+      states: !ruby/hash:BSON::Document
+        critical: !ruby/hash:BSON::Document
+          dss: false
+          anonymous: false
+          'null': false
+          export: false
+          des: false
+          md5: false
+          rc4: false
+          sweet32: false
+        error: !ruby/hash:BSON::Document
+          pfs: false
+        warning: !ruby/hash:BSON::Document
+          dhe: false
+        good: !ruby/hash:BSON::Document
+          aead: false
+        great: !ruby/hash:BSON::Document {}
+        best: !ruby/hash:BSON::Document {}
+    - !ruby/hash:BSON::Document
+      protocol: :TLSv1_2
+      name: ECDHE-RSA-AES128-GCM-SHA256
+      key_exchange: :ecdh
+      authentication: :rsa
+      encryption: !ruby/hash:BSON::Document
+        name: :aes
+        mode: :gcm
+        block_size: 128
+      hmac: !ruby/hash:BSON::Document
+        name: :sha256
+        size: 256
+      states: !ruby/hash:BSON::Document
+        critical: !ruby/hash:BSON::Document
+          dss: false
+          anonymous: false
+          'null': false
+          export: false
+          des: false
+          md5: false
+          rc4: false
+          sweet32: false
+        error: !ruby/hash:BSON::Document
+          pfs: false
+        warning: !ruby/hash:BSON::Document
+          dhe: false
+        good: !ruby/hash:BSON::Document
+          aead: true
+        great: !ruby/hash:BSON::Document {}
+        best: !ruby/hash:BSON::Document {}
+    - !ruby/hash:BSON::Document
+      protocol: :TLSv1_2
+      name: ECDHE-RSA-AES256-GCM-SHA384
+      key_exchange: :ecdh
+      authentication: :rsa
+      encryption: !ruby/hash:BSON::Document
+        name: :aes
+        mode: :gcm
+        block_size: 128
+      hmac: !ruby/hash:BSON::Document
+        name: :sha384
+        size: 384
+      states: !ruby/hash:BSON::Document
+        critical: !ruby/hash:BSON::Document
+          dss: false
+          anonymous: false
+          'null': false
+          export: false
+          des: false
+          md5: false
+          rc4: false
+          sweet32: false
+        error: !ruby/hash:BSON::Document
+          pfs: false
+        warning: !ruby/hash:BSON::Document
+          dhe: false
+        good: !ruby/hash:BSON::Document
+          aead: true
+        great: !ruby/hash:BSON::Document {}
+        best: !ruby/hash:BSON::Document {}
+    cipher_suites:
+    - !ruby/hash:BSON::Document
+      protocol: :TLSv1_2
+      cipher_suite:
+      - ECDHE-RSA-AES256-GCM-SHA384
+      - ECDHE-RSA-AES256-SHA384
+      - ECDHE-RSA-AES256-SHA
+      - ECDHE-RSA-AES128-GCM-SHA256
+      - ECDHE-RSA-AES128-SHA256
+      - ECDHE-RSA-AES128-SHA
+      - DHE-RSA-AES256-GCM-SHA384
+      - DHE-RSA-AES256-SHA256
+      - DHE-RSA-AES256-SHA
+      - DHE-RSA-AES128-GCM-SHA256
+      - DHE-RSA-AES128-SHA256
+      - DHE-RSA-AES128-SHA
+    curves:
+    - !ruby/hash:BSON::Document
+      name: :secp256k1
+      states: !ruby/hash:BSON::Document
+        critical: !ruby/hash:BSON::Document {}
+        error: !ruby/hash:BSON::Document {}
+        warning: !ruby/hash:BSON::Document {}
+        good: !ruby/hash:BSON::Document {}
+        great: !ruby/hash:BSON::Document {}
+        best: !ruby/hash:BSON::Document {}
+    - !ruby/hash:BSON::Document
+      name: :sect283k1
+      states: !ruby/hash:BSON::Document
+        critical: !ruby/hash:BSON::Document {}
+        error: !ruby/hash:BSON::Document {}
+        warning: !ruby/hash:BSON::Document {}
+        good: !ruby/hash:BSON::Document {}
+        great: !ruby/hash:BSON::Document {}
+        best: !ruby/hash:BSON::Document {}
+    - !ruby/hash:BSON::Document
+      name: :sect283r1
+      states: !ruby/hash:BSON::Document
+        critical: !ruby/hash:BSON::Document {}
+        error: !ruby/hash:BSON::Document {}
+        warning: !ruby/hash:BSON::Document {}
+        good: !ruby/hash:BSON::Document {}
+        great: !ruby/hash:BSON::Document {}
+        best: !ruby/hash:BSON::Document {}
+    - !ruby/hash:BSON::Document
+      name: :secp384r1
+      states: !ruby/hash:BSON::Document
+        critical: !ruby/hash:BSON::Document {}
+        error: !ruby/hash:BSON::Document {}
+        warning: !ruby/hash:BSON::Document {}
+        good: !ruby/hash:BSON::Document {}
+        great: !ruby/hash:BSON::Document {}
+        best: !ruby/hash:BSON::Document {}
+    - !ruby/hash:BSON::Document
+      name: :sect409k1
+      states: !ruby/hash:BSON::Document
+        critical: !ruby/hash:BSON::Document {}
+        error: !ruby/hash:BSON::Document {}
+        warning: !ruby/hash:BSON::Document {}
+        good: !ruby/hash:BSON::Document {}
+        great: !ruby/hash:BSON::Document {}
+        best: !ruby/hash:BSON::Document {}
+    - !ruby/hash:BSON::Document
+      name: :sect409r1
+      states: !ruby/hash:BSON::Document
+        critical: !ruby/hash:BSON::Document {}
+        error: !ruby/hash:BSON::Document {}
+        warning: !ruby/hash:BSON::Document {}
+        good: !ruby/hash:BSON::Document {}
+        great: !ruby/hash:BSON::Document {}
+        best: !ruby/hash:BSON::Document {}
+    - !ruby/hash:BSON::Document
+      name: :secp521r1
+      states: !ruby/hash:BSON::Document
+        critical: !ruby/hash:BSON::Document {}
+        error: !ruby/hash:BSON::Document {}
+        warning: !ruby/hash:BSON::Document {}
+        good: !ruby/hash:BSON::Document {}
+        great: !ruby/hash:BSON::Document {}
+        best: !ruby/hash:BSON::Document {}
+    - !ruby/hash:BSON::Document
+      name: :sect571k1
+      states: !ruby/hash:BSON::Document
+        critical: !ruby/hash:BSON::Document {}
+        error: !ruby/hash:BSON::Document {}
+        warning: !ruby/hash:BSON::Document {}
+        good: !ruby/hash:BSON::Document {}
+        great: !ruby/hash:BSON::Document {}
+        best: !ruby/hash:BSON::Document {}
+    - !ruby/hash:BSON::Document
+      name: :sect571r1
+      states: !ruby/hash:BSON::Document
+        critical: !ruby/hash:BSON::Document {}
+        error: !ruby/hash:BSON::Document {}
+        warning: !ruby/hash:BSON::Document {}
+        good: !ruby/hash:BSON::Document {}
+        great: !ruby/hash:BSON::Document {}
+        best: !ruby/hash:BSON::Document {}
+    - !ruby/hash:BSON::Document
+      name: :prime256v1
+      states: !ruby/hash:BSON::Document
+        critical: !ruby/hash:BSON::Document {}
+        error: !ruby/hash:BSON::Document {}
+        warning: !ruby/hash:BSON::Document {}
+        good: !ruby/hash:BSON::Document {}
+        great: !ruby/hash:BSON::Document {}
+        best: !ruby/hash:BSON::Document {}
+    - !ruby/hash:BSON::Document
+      name: :brainpoolP256r1
+      states: !ruby/hash:BSON::Document
+        critical: !ruby/hash:BSON::Document {}
+        error: !ruby/hash:BSON::Document {}
+        warning: !ruby/hash:BSON::Document {}
+        good: !ruby/hash:BSON::Document {}
+        great: !ruby/hash:BSON::Document {}
+        best: !ruby/hash:BSON::Document {}
+    - !ruby/hash:BSON::Document
+      name: :brainpoolP384r1
+      states: !ruby/hash:BSON::Document
+        critical: !ruby/hash:BSON::Document {}
+        error: !ruby/hash:BSON::Document {}
+        warning: !ruby/hash:BSON::Document {}
+        good: !ruby/hash:BSON::Document {}
+        great: !ruby/hash:BSON::Document {}
+        best: !ruby/hash:BSON::Document {}
+    - !ruby/hash:BSON::Document
+      name: :brainpoolP512r1
+      states: !ruby/hash:BSON::Document
+        critical: !ruby/hash:BSON::Document {}
+        error: !ruby/hash:BSON::Document {}
+        warning: !ruby/hash:BSON::Document {}
+        good: !ruby/hash:BSON::Document {}
+        great: !ruby/hash:BSON::Document {}
+        best: !ruby/hash:BSON::Document {}
+    curve_preference:
+    - :prime256v1
+    - :secp521r1
+    - :brainpoolP512r1
+    - :brainpoolP384r1
+    - :secp384r1
+    - :brainpoolP256r1
+    - :secp256k1
+    - :sect571r1
+    - :sect571k1
+    - :sect409k1
+    - :sect409r1
+    - :sect283k1
+    - :sect283r1
+    fallback_scsv: 
+    hsts: 
+  states: !ruby/hash:BSON::Document
+    critical: !ruby/hash:BSON::Document
+      mdc2_sign: false
+      md2_sign: false
+      md4_sign: false
+      md5_sign: false
+      sha_sign: false
+      sha1_sign: false
+      rsa: false
+      dh: false
+      sslv2: false
+      sslv3: false
+      dss: false
+      anonymous: false
+      'null': false
+      export: false
+      des: false
+      md5: false
+      rc4: false
+      sweet32: false
+    error: !ruby/hash:BSON::Document
+      rsa: true
+      dh: true
+      tlsv1_0: false
+      pfs: false
+    warning: !ruby/hash:BSON::Document
+      hsts: true
+      tlsv1_1: false
+      dhe: true
+    good: !ruby/hash:BSON::Document
+      fallback_scsv: 
+      hsts: false
+      aead: true
+    great: !ruby/hash:BSON::Document
+      hsts: false
+    best: !ruby/hash:BSON::Document {}
+  grade: :V
+date: 2017-04-11 11:29:21.505000000 Z
+host: localhost
+port: 

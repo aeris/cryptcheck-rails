@@ -60,9 +60,9 @@ class CheckController < ApplicationController
 		end
 		@port = @port.to_i if @port
 
-		# @result = Datastore.host self.type, @host, @port
-		file = File.join Rails.root, 'config/host.dump'
-		# open(file, 'wb') { |f| f.write Marshal.dump @result }
-		@result = Marshal.load File.read file
+		#@result = Datastore.host self.type, @host, @port
+		file = File.join Rails.root, 'config/host.yml'
+		#File.write file, YAML.dump(@result)
+		@result = YAML.load File.read file
 	end
 end
