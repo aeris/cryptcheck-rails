@@ -54,7 +54,7 @@
 					<%= cipher_mac_size_cell mac&.last %>
 					<%= cipher_pfs_cell pfs %>
 					<% else %>
-					<td colspan="10"><%= label('Non supporté', :error) %></td>
+					<td colspan="10"><%= label t('Not supported'), :error %></td>
 					<% end %>
 				</tr>
 			<% end %>

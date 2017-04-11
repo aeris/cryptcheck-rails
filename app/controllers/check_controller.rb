@@ -59,6 +59,10 @@ class CheckController < ApplicationController
 			return false
 		end
 		@port = @port.to_i if @port
-		@result = Datastore.host self.type, @host, @port
+
+		# @result = Datastore.host self.type, @host, @port
+		file = File.join Rails.root, 'config/host.dump'
+		# open(file, 'wb') { |f| f.write Marshal.dump @result }
+		@result = Marshal.load File.read file
 	end
 end

@@ -44,3 +44,5 @@ en:
   Size: Size
 
   Not supported: Not supported
+
+  "Serial: %{serial}": "Serial: %{serial}"

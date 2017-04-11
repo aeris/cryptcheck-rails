@@ -49,6 +49,10 @@ td.primary {
 	background-color: $state-info-bg;
 }
 
+.translation_missing {
+	border: 1px solid red;
+}
+
 .progress-bar-default {
 	background-color: $label-default-bg;
 }
@@ -62,3 +66,37 @@ td.primary {
 #tls_check {
 	margin-top: 100px;
 }
+
+.label-state-critical {
+  //background-color: #800000;
+  background-color: #ff0000;
+}
+
+.label-state-error {
+  //background-color: #803300;
+  background-color: #ff6600;
+}
+
+.label-state-warning {
+  //background-color: #806600;
+  background-color: #ffcc00;
+  color: $text-color;
+}
+
+.label-state-good {
+  //background-color: #668000;
+  background-color: #cbff00;
+  color: $text-color;
+}
+
+.label-state-great {
+  //background-color: #338000;
+  background-color: #65ff00;
+}
+
+.label-state-best {
+  //background-color: #008000;
+  background-color: #00ff00;
+}
+
+

@@ -45,6 +45,18 @@ fr:
 
   Not supported: Non supporté
 
+  Checks: Vérifications
+  Severity: Sévèrité
+
+  Certificates: Certificats
+  Subject: Sujet
+  Serial: Numéro de série
+  Issuer: Émetteur
+  Not before: Pas avant
+  Not after: Pas après
+  Fingerprint: Empreinte
+  "Fingerprint: %{fingerprint}": "Empreinte : %{fingerprint}"
+
   date:
     abbr_day_names:
     - dim
