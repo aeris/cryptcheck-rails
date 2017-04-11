@@ -1,13 +1,12 @@
 class Datastore
-	@@index = Stretcher::Server.new(ENV['ES_URL']).index :cryptcheck
-	@@index.create unless @@index.exists?
+	@@client = Mongo::Client.new ENV['MONGO_URL']
 
 	def self.host(type, host, port)
 		key = self.key host, port
-		result = @@index.type(type).get key
-		result.date = Time.parse result.date
-		result
-	rescue Stretcher::RequestError::NotFound
+		@@client[type].find(key).first
+#		result = @@index.type(type).get key
+#		result.date = Time.parse result.date
+#		result
 	end
 
 	def self.pending(type, host, port)
@@ -15,13 +14,16 @@ class Datastore
 	end
 
 	def self.post(type, host, port, data)
+		# entry = self.host type, host, port
+		# entry.delete if entry
+		#
 		key = self.key host, port
-		@@index.type(type).put key, data
+		data = data.merge key
+		@@client[type].update_one key, data, {upsert: true}
 	end
 
 	private
 	def self.key(host, port)
-		host = "#{host}:#{port}" if port
-		host
+		{ host: host, port: port }
 	end
 end
