@@ -7,23 +7,28 @@ class CheckController < ApplicationController
 		@host = SimpleIDN.to_unicode @host
 		respond_to do |format|
 			format.html do
-				return render :processing if @result.pending
+				return render :processing if @result[:pending]
+				@result = OpenStruct.deep @result
 			end
 			format.json do
 				render json: case
-					when @result.pending then :pending
-					else @result
-				end
+								 when @result[:pending] then
+									 :pending
+								 else
+									 JSON.pretty_generate @result
+							 end
 			end
 		end
 	end
 
 	def refresh
 		unless @result.pending
-			refresh_allowed = @result.date + Rails.configuration.refresh_delay
-			if Time.now < refresh_allowed
-				flash[:warning] = "Merci d’attendre au moins #{l refresh_allowed} pour rafraîchir"
-				return redirect_to action: :show, id: @host
+			if Rails.env == 'production'
+				refresh_allowed = @result.date + Rails.configuration.refresh_delay
+				if Time.now < refresh_allowed
+					flash[:warning] = "Merci d’attendre au moins #{l refresh_allowed} pour rafraîchir"
+					return redirect_to action: :show, id: @host
+				end
 			end
 			enqueue_host
 		end
@@ -31,10 +36,11 @@ class CheckController < ApplicationController
 	end
 
 	protected
+
 	def enqueue_host
 		Datastore.pending self.type, @host, @port
 		self.worker.perform_async *(@port.blank? ? [@host] : [@host, @port])
-		@result = OpenStruct.new pending: true , date: Time.now
+		@result = OpenStruct.new pending: true, date: Time.now
 	end
 
 	def check_host
@@ -47,11 +53,12 @@ class CheckController < ApplicationController
 
 		@host, @port = @id.split ':'
 		@host = SimpleIDN.to_ascii @host.downcase
-		if /[^a-zA-Z0-9.-]/.match @host
+		if /[^a-zA-Z0-9.-]/ =~ @host
 			flash[:danger] = "Hôte #{@host} invalide"
 			redirect_to action: :index
 			return false
 		end
+		@port = @port.to_i if @port
 		@result = Datastore.host self.type, @host, @port
 	end
 end
