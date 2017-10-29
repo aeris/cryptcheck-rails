@@ -1,0 +1,22 @@
+development:
+  clients:
+    default:
+      database: <%= ENV['MONGO_DATABASE'] %>_development
+      hosts:
+        - <%= ENV['MONGO_URL'] %>
+test:
+  clients:
+    default:
+      database: <%= ENV['MONGO_DATABASE'] %>_test
+      hosts:
+        - <%= ENV['MONGO_URL'] %>
+      options:
+        read:
+          mode: :primary
+        max_pool_size: 1
+production:
+  clients:
+    default:
+      database: <%= ENV['MONGO_DATABASE'] %>
+      hosts:
+        - <%= ENV['MONGO_URL'] %>

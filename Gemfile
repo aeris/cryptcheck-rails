@@ -6,7 +6,7 @@ gem 'cryptcheck', '~> 2.0.0', path: File.expand_path(File.join File.dirname(__FI
 
 gem 'dotenv-rails'
 gem 'http_accept_language'
-gem 'mongo'
+gem 'mongoid'
 gem 'simpleidn'
 
 gem 'redis-namespace'

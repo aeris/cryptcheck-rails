@@ -7,16 +7,11 @@ class CheckController < ApplicationController
 		@host = SimpleIDN.to_unicode @host
 		respond_to do |format|
 			format.html do
-				return render :processing if @result[:pending]
-				@result = OpenStruct.deep @result
+				return render :processing if @result.pending
 			end
 			format.json do
-				render json: case
-								 when @result[:pending] then
-									 :pending
-								 else
-									 JSON.pretty_generate @result
-							 end
+				ap @result
+				render json: JSON.pretty_generate(JSON.parse @result.to_json)
 			end
 		end
 	end
@@ -38,9 +33,8 @@ class CheckController < ApplicationController
 	protected
 
 	def enqueue_host
-		Datastore.pending self.type, @host, @port
+		@result = Analysis.pending self.type, @host, @port
 		self.worker.perform_async *(@port.blank? ? [@host] : [@host, @port])
-		@result = OpenStruct.new pending: true, date: Time.now
 	end
 
 	def check_host
@@ -60,9 +54,9 @@ class CheckController < ApplicationController
 		end
 		@port = @port.to_i if @port
 
-		#@result = Datastore.host self.type, @host, @port
-		file = File.join Rails.root, 'config/host.yml'
-		#File.write file, YAML.dump(@result)
-		@result = YAML.load File.read file
+		@result = Analysis[self.type, @host, @port]
+		# file = File.join Rails.root, 'config/host.yml'
+		# File.write file, YAML.dump(@result)
+		# @result = YAML.load File.read file
 	end
 end

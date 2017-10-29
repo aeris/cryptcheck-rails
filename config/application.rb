@@ -4,6 +4,7 @@ require File.expand_path('../boot', __FILE__)
   action_controller
   action_view
   active_job
+  active_model
   rails/test_unit
   sprockets
 ).each do |framework|
