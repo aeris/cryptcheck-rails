@@ -1,6 +1,5 @@
 //= require_tree .
 //= require_self
-
 @import 'bootstrap-sprockets';
 @import 'bootstrap';
 @import 'bootstrap/variables';
@@ -21,7 +20,6 @@
 @import 'bootstrap/alerts';
 @import 'bootstrap/utilities';
 @import 'bootstrap/responsive-utilities';
-
 @import 'font-awesome-sprockets';
 @import 'font-awesome';
 
@@ -67,36 +65,55 @@ td.primary {
 	margin-top: 100px;
 }
 
+$color-critical: #d9534f;
+$color-error: #e4804e;
+$color-warning: #f0ad4e;
+$color-good: #beb052;
+$color-best: #8db457;
+$color-great: #5cb85c;
+
 .label-state-critical {
-  //background-color: #800000;
-  background-color: #ff0000;
+	background-color: $color-critical;
 }
-
 .label-state-error {
-  //background-color: #803300;
-  background-color: #ff6600;
+	background-color: $color-error;
 }
-
 .label-state-warning {
-  //background-color: #806600;
-  background-color: #ffcc00;
-  color: $text-color;
+	background-color: $color-warning;
+	color: $text-color;
 }
-
 .label-state-good {
-  //background-color: #668000;
-  background-color: #cbff00;
-  color: $text-color;
+	background-color: $color-good;
+	color: $text-color;
 }
-
-.label-state-great {
-  //background-color: #338000;
-  background-color: #65ff00;
-}
-
 .label-state-best {
-  //background-color: #008000;
-  background-color: #00ff00;
+	background-color: $color-best;
+}
+.label-state-great {
+	background-color: $color-great;
 }
 
+.label-state-default {
+	//background-color: #008000;
+	background-color: $label-default-bg;
+}
+.label-state-success {
+	background-color: $label-success-bg;
+}
+
+.alert-critical, .alert-error {
+	background-color: $alert-danger-bg;
+	color: $alert-danger-text;
+	border-color: $alert-danger-border
+}
+.alert-warning {
+	background-color: $alert-warning-bg;
+	color: $alert-warning-text;
+	border-color: $alert-warning-border
+}
+.alert-good, .alert-great, .alert-best {
+	background-color: $alert-success-bg;
+	color: $alert-success-text;
+	border-color: $alert-success-border
+}
 

@@ -1,4 +1,4 @@
-guard 'livereload' do
+guard :livereload do
 	watch(%r{app/views/.+\.(erb|haml|slim)$})
 	watch(%r{app/helpers/.+\.rb})
 	watch(%r{public/.+\.(css|js|html)})
@@ -6,3 +6,8 @@ guard 'livereload' do
 	# Rails Assets Pipeline
 	watch(%r{(app|vendor)(/assets/\w+/(.+\.(css|js|html|png|jpg|coffee|scss))).*}) { |m| "/assets/#{m[3]}" }
 end
+
+#guard :rails do
+#	watch('Gemfile.lock')
+#	watch(%r{^(config|lib)/.*})
+#end

@@ -4,9 +4,9 @@ en:
   Cipher suite: Cipher suite
   "Cipher suite:": "Cipher suite:"
 
-  Check your domain: Check your domain
-  Check your SSH server: Check your SSH server
-  Check your SMTP server: Check your SMTP server
+  Check This domain: Check This domain
+  Check This SSH server: Check This SSH server
+  Check This SMTP server: Check This SMTP server
   Test me!: Test me!
 
   Currently analysing %{host}: Currently analysing %{host}
@@ -43,6 +43,36 @@ en:
   Block size: Block size
   Size: Size
 
+  Status: Status
   Not supported: Not supported
 
   "Serial: %{serial}": "Serial: %{serial}"
+
+  alert:
+    critical:
+      sslv2: This server supports SSLv2
+      sslv3: This server supports SSLv3
+      dh: This server supports very weak DH parameters
+      anonymous: This server supports anonymous ciphers
+      "null": This server supports NULL ciphers
+      export: This server supports EXPORT ciphers
+      des: This server supports DES ciphers
+      md5: This server supports MD5 ciphers
+      rc4: This server supports RC4 ciphers
+      sweet32: This server is vulnerable to Sweet32 attack
+    error:
+      dh: This server supports weak DH parameters
+      tlsv1_0: This server supports TLSv1.0
+      pfs: This server supports no-PFS ciphers
+    warning:
+      tlsv1_1: This server supports TLSv1.1
+      dhe: This server supports DHE ciphers
+      hsts: This server doesn't support HSTS
+    good:
+      hsts: This server supports HSTS
+      fallback_scsv: This server supports SCSV fallback
+      aead: This server supports AEAD ciphers
+    best:
+    great:
+      hsts: This server supports HSTS with long duration
+

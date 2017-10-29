@@ -3,7 +3,7 @@ class HTTPSWorker < CheckWorker
 
 	protected
 	def analyze(host, port=443)
-		CryptCheck::Tls::Https::Host.new host, port
+		CryptCheck::Tls::Https.analyze host, port
 	end
 
 	def type

@@ -1,16 +1,19 @@
 module CheckHelper
-	private def __label(value, color)
-		"<span class=\"label label-#{color} %>\">#{value}</span>"
-	end
-	def label(value, color)
-		__label(value, color).html_safe
-	end
-
-	def cell(value, color)
-		"<td class=\"#{color}\">#{value}</td>".html_safe
+	private def __label(value, color, state=true)
+		color = :default unless color
+		color = "state-#{color}" if state
+		"<span class=\"label label-#{color}\">#{value}</span>"
 	end
 
-	def labels(level, states)
+	def label(value, color, state=true)
+		__label(value, color, state).html_safe
+	end
+
+	def cell(value, color, state=true)
+		"<td class=\"label-state-#{color}\">#{value}</td>".html_safe
+	end
+
+	def labels(level, states, state=true)
 		states.each_pair.collect do |name, value|
 			color = if value.nil?
 						:default
@@ -19,32 +22,32 @@ module CheckHelper
 					else
 						value ? :success : :danger
 					end
-			__label name, color
+			__label name, color, state
 		end.join(' ').html_safe
 	end
 
 	def states(states)
 		::CryptCheck::State.collect do |level|
-			states[level].each_pair.select { |_, v| v == true }.collect do |name, _|
-				__label name, "state-#{level}"
-			end
+			states[level].each_pair
+					.select { |_, v| v == true }
+					.collect { |name, _| __label name, level }
 		end.flatten(1).join(' ').html_safe
 	end
 
 	def rank_color(rank)
 		case rank
-			when 'A+' then
-				:primary
-			when 'A' then
-				:success
-			when 'B' then
-				:default
-			when 'C', 'D' then
+			when :'A+' then
+				:great
+			when :A then
+				:best
+			when :B then
+				:good
+			when :C, :D then
 				:warning
-			when 'E', 'F' then
-				:danger
-			else
+			when :E, :F then
 				:error
+			else
+				:critical
 		end
 	end
 
@@ -79,15 +82,7 @@ module CheckHelper
 	end
 
 	def protocol_label(protocol)
-		color = case protocol.to_s
-					when 'TLSv1_2' then
-						:success
-					when 'SSLv3', 'SSLv2' then
-						:error
-					else
-						:default
-				end
-		label protocol, color
+		label protocol.to_sym, protocol.status
 	end
 
 	def protocol_labels(protocols)
@@ -140,21 +135,9 @@ module CheckHelper
 	end
 
 	def cipher_name_label(cipher)
-		state = cipher[:state]
-		color = case
-					when !state[:error].empty? then
-						:error
-					when !state[:danger].empty? then
-						:danger
-					when !state[:warning].empty? then
-						:warning
-					when !state[:success].empty? then
-						:success
-					else
-						:default
-				end
-		color = :primary if color == :success and cipher.size >= 256
-		label("&nbsp;", color) + "&nbsp;#{cipher.name}".html_safe
+		status = cipher.status
+		status = :success if status == :good
+		label("&nbsp;", status) + "&nbsp;#{cipher.name}".html_safe
 	end
 
 	def cipher_labels(cipher)
@@ -165,13 +148,13 @@ module CheckHelper
 	def cipher_kex_type_cell(kex)
 		color = case kex
 					when :ecdh then
-						:primary
+						nil
 					when :dh then
-						:success
-					when :rsa then
 						:warning
-					else
+					when :rsa then
 						:error
+					else
+						:critical
 				end
 		kex   ||= 'None'
 		cell kex.to_s.upcase, color
@@ -184,12 +167,10 @@ module CheckHelper
 
 	def cipher_auth_type_cell(auth)
 		color = case auth
-					when :ecdsa then
-						:primary
-					when :rsa then
-						:default
+					when :ecdsa, :rsa then
+						nil
 					else
-						:error
+						:critical
 				end
 		auth  ||= 'None'
 		cell auth.to_s.upcase, color
@@ -202,52 +183,55 @@ module CheckHelper
 
 	def cipher_enc_type_cell(enc)
 		color = case enc
-					when :chacha20 then
-						:primary
-					when :aes then
+					when :chacha20
 						:success
-					when :camellia, :seed then
-						:default
-					else
-						:error
+					when nil, :rc4
+						:critical
 				end
 		enc   ||= 'NONE'
 		cell enc.to_s.upcase, color
 	end
 
-	def cipher_enc_key_size_cell(enc)
-		enc   ||= 0
-		color = cipher_color enc
+	def cipher_enc_block_size_cell(enc)
+		color = case
+					when enc.nil?
+						nil
+					when enc <= 64
+						:critical
+					when enc < 128
+						:error
+				end
 		cell enc, color
 	end
 
-	def cipher_enc_block_size_cell(enc)
-		return cell '', :default unless enc
-		color = cipher_color enc
+	def cipher_enc_key_size_cell(enc)
+		color = case
+					when enc.nil?
+						nil
+					when enc < 128
+						:critical
+				end
 		cell enc, color
 	end
 
 	def cipher_enc_mode_cell(enc)
 		color = case enc
-					when :gcm, :ccm then
-						:primary
-					when :cbc then
-						:danger
+					when :gcm, :ccm, :aead
+						:success
 				end
-		enc   ||= ''
 		cell enc.to_s.upcase, color
 	end
 
 	def cipher_mac_type_cell(mac)
 		color = case mac
 					when :poly1305 then
-						:primary
-					when :sha384, :sha256 then
 						:success
+					when :sha384, :sha256 then
+						nil
 					when :sha1 then
 						:warning
-					when :md5 then
-						:error
+					else
+						:critical
 				end
 		cell mac.to_s.upcase, color
 	end
@@ -257,7 +241,7 @@ module CheckHelper
 	end
 
 	def cipher_pfs_cell(pfs)
-		return cell 'PFS', :success if pfs
-		cell 'No PFS', :warning
+		return cell 'PFS', nil if pfs
+		cell 'No PFS', :error
 	end
 end

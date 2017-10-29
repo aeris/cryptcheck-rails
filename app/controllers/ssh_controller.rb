@@ -11,4 +11,8 @@ class SshController < CheckController
 	def tls_type
 		'SSH'
 	end
+
+	def default_port
+		22
+	end
 end

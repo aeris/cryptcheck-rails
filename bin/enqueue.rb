@@ -11,12 +11,10 @@ if ENV['RAILS_ENV'] == 'development'
 end
 
 require 'sidekiq'
-options      = {
-		url:       ENV['REDIS_URL'],
-		namespace: :cryptcheck
-}
-client       = Sidekiq::Client.new Sidekiq::RedisConnection.create options
+redis = ENV['REDIS_URL']
+Sidekiq.configure_server { |c| c.redis = { url: redis } }
+Sidekiq.configure_client { |c| c.redis = { url: redis } }
 
 clazz, *args = ARGV
 clazz        += 'Worker'
-client.push({ 'class' => clazz, 'args' => args })
+Sidekiq::Client.push({ 'class' => clazz, 'args' => args, 'retry' => false })

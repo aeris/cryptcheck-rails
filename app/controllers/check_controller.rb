@@ -41,18 +41,22 @@ class CheckController < ApplicationController
 		@id = params[:id]
 
 		if @id.end_with? '.json'
-			@id = @id.sub /\.json$/, ''
+			@id            = @id.sub /\.json$/, ''
 			request.format = :json
 		end
 
 		@host, @port = @id.split ':'
-		@host = SimpleIDN.to_ascii @host.downcase
+		@host        = SimpleIDN.to_ascii @host.downcase
 		if /[^a-zA-Z0-9.-]/ =~ @host
 			flash[:danger] = "Hôte #{@host} invalide"
 			redirect_to action: :index
 			return false
 		end
-		@port = @port.to_i if @port
+		if @port
+			@port = @port.to_i
+		else
+			@port = self.default_port
+		end
 
 		@result = Analysis[self.type, @host, @port]
 		# file = File.join Rails.root, 'config/host.yml'

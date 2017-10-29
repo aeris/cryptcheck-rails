@@ -35,8 +35,9 @@ module CryptcheckRails
 
 		# The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
 		# config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
-		config.i18n.default_locale = :fr
-		config.i18n.available_locales = %w(en fr de)
+		config.i18n.default_locale = :en
+		config.i18n.available_locales = %i[en fr de]
+		config.i18n.fallbacks = true
 		config.action_controller.include_all_helpers = false
 
 		config.refresh_delay = 1.hour
