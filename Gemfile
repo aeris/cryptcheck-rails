@@ -11,6 +11,7 @@ gem 'simpleidn'
 
 gem 'redis-namespace'
 gem 'sidekiq'
+gem 'puma'
 
 group :assets do
 	gem 'therubyracer', platforms: :ruby
@@ -25,17 +26,16 @@ end
 
 group :development, :test do
 	gem 'awesome_print'
-	gem 'puma'
 	gem 'web-console'
 
 	gem 'pry-rails'
 
 	gem 'better_errors'
 	gem 'binding_of_caller'
-	gem 'quiet_assets'
 
 	gem 'guard', require: false
 	gem 'guard-livereload', require: false
 	gem 'rack-livereload'
+	gem 'guard-rails', require: false
 end
 
