@@ -37,6 +37,10 @@ body {
 
 table.center td {
 	text-align: center;
+
+	&.left {
+		text-align: left;
+	}
 }
 
 td.error {

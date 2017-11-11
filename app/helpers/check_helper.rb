@@ -36,49 +36,25 @@ module CheckHelper
 
 	def rank_color(rank)
 		case rank
-			when :'A+' then
-				:great
-			when :A then
-				:best
-			when :B then
-				:good
-			when :C, :D then
-				:warning
-			when :E, :F then
-				:error
-			else
-				:critical
+		when :'A+', :A
+			:great
+		when :'B+', :B
+			:best
+		when :'C+', :C
+			:good
+		when :D
+			nil
+		when :E
+			:warning
+		when :F
+			:error
+		else
+			:critical
 		end
 	end
 
 	def rank_label(rank)
 		label rank, rank_color(rank)
-	end
-
-	def progress_color(percentage)
-		case percentage
-			when 0...20 then
-				:error
-			when 20...40 then
-				:danger
-			when 40...60 then
-				:warning
-			when 60...80 then
-				:default
-			when 80...90 then
-				:success
-			else
-				:primary
-		end
-	end
-
-	def score_progress(score)
-		%Q(<div class="progress">
-			 <div class="progress-bar progress-bar-striped progress-bar-#{progress_color score}"
-						style="width: #{score}%">
-				#{score} / 100
-			</div>
-		</div>).html_safe
 	end
 
 	def protocol_label(protocol)
@@ -106,31 +82,31 @@ module CheckHelper
 
 	def key_color(key)
 		case key[:size]
-			when nil then
-				:default
-			when 0...1024 then
-				:error
-			when 1024...2048 then
-				:danger
-			when 2048...4096 then
-				:warning
-			else
-				:success
+		when nil then
+			:default
+		when 0...1024 then
+			:error
+		when 1024...2048 then
+			:danger
+		when 2048...4096 then
+			:warning
+		else
+			:success
 		end
 	end
 
 	def cipher_color(key)
 		case key
-			when nil then
-				:default
-			when 0...128 then
-				:error
-			when 112...128 then
-				:danger
-			when 128...256 then
-				:success
-			else
-				:primary
+		when nil then
+			:default
+		when 0...128 then
+			:error
+		when 112...128 then
+			:danger
+		when 128...256 then
+			:success
+		else
+			:primary
 		end
 	end
 
@@ -147,14 +123,14 @@ module CheckHelper
 
 	def cipher_kex_type_cell(kex)
 		color = case kex
-					when :ecdh then
-						nil
-					when :dh then
-						:warning
-					when :rsa then
-						:error
-					else
-						:critical
+				when :ecdh then
+					nil
+				when :dh then
+					:warning
+				when :rsa then
+					:error
+				else
+					:critical
 				end
 		kex   ||= 'None'
 		cell kex.to_s.upcase, color
@@ -167,10 +143,10 @@ module CheckHelper
 
 	def cipher_auth_type_cell(auth)
 		color = case auth
-					when :ecdsa, :rsa then
-						nil
-					else
-						:critical
+				when :ecdsa, :rsa then
+					nil
+				else
+					:critical
 				end
 		auth  ||= 'None'
 		cell auth.to_s.upcase, color
@@ -183,10 +159,10 @@ module CheckHelper
 
 	def cipher_enc_type_cell(enc)
 		color = case enc
-					when :chacha20
-						:success
-					when nil, :rc4
-						:critical
+				when :chacha20
+					:success
+				when nil, :rc4
+					:critical
 				end
 		enc   ||= 'NONE'
 		cell enc.to_s.upcase, color
@@ -194,44 +170,46 @@ module CheckHelper
 
 	def cipher_enc_block_size_cell(enc)
 		color = case
-					when enc.nil?
-						nil
-					when enc <= 64
-						:critical
-					when enc < 128
-						:error
+				when enc == :stream
+					nil
+				when enc.nil?
+					nil
+				when enc <= 64
+					:critical
+				when enc < 128
+					:error
 				end
 		cell enc, color
 	end
 
 	def cipher_enc_key_size_cell(enc)
 		color = case
-					when enc.nil?
-						nil
-					when enc < 128
-						:critical
+				when enc.nil?
+					nil
+				when enc < 128
+					:critical
 				end
 		cell enc, color
 	end
 
 	def cipher_enc_mode_cell(enc)
 		color = case enc
-					when :gcm, :ccm, :aead
-						:success
+				when :gcm, :ccm, :aead
+					:success
 				end
 		cell enc.to_s.upcase, color
 	end
 
 	def cipher_mac_type_cell(mac)
 		color = case mac
-					when :poly1305 then
-						:success
-					when :sha384, :sha256 then
-						nil
-					when :sha1 then
-						:warning
-					else
-						:critical
+				when :poly1305 then
+					:success
+				when :sha384, :sha256 then
+					nil
+				when :sha1 then
+					:warning
+				else
+					:critical
 				end
 		cell mac.to_s.upcase, color
 	end

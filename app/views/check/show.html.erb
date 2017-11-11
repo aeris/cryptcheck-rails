@@ -110,17 +110,13 @@
 					<thead>
 					<tr>
 						<th rowspan="2"><%= t 'Name' %></th>
-						<th colspan="2"><%= t 'Key exchange' %></th>
-						<th colspan="2"><%= t 'Authentication' %></th>
+						<th rowspan="2"><%= t 'Key exchange' %></th>
+						<th rowspan="2"><%= t 'Authentication' %></th>
 						<th colspan="4"><%= t 'Encryption' %></th>
 						<th colspan="2"><%= t 'MAC' %></th>
 						<th rowspan="2"><%= t 'PFS' %></th>
 					</tr>
 					<tr>
-						<th><%= t 'Type' %></th>
-						<th><%= t 'Key size' %></th>
-						<th><%= t 'Type' %></th>
-						<th><%= t 'Key size' %></th>
 						<th><%= t 'Type' %></th>
 						<th><%= t 'Key size' %></th>
 						<th><%= t 'Block size' %></th>
@@ -150,11 +146,7 @@
 								<tr>
 									<th><%= cipher_name_label cipher %></th>
 									<%= cipher_kex_type_cell kex %>
-									<th/>
-									<%#= cipher_kex_size_cell kex&.last %>
 									<%= cipher_auth_type_cell auth %>
-									<th/>
-									<%#= cipher_auth_size_cell auth&.last %>
 									<%= cipher_enc_type_cell enc[0] %>
 									<%= cipher_enc_key_size_cell enc[1] %>
 									<%= cipher_enc_block_size_cell enc[2] %>
