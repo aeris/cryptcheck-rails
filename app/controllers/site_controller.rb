@@ -34,4 +34,12 @@ class SiteController < ApplicationController
 		@suite = params[:id] || params.require(:suite)
 		@ciphers = CryptCheck::Tls::Cipher.list @suite
 	end
+
+	def help
+
+	end
+
+	def about
+
+	end
 end

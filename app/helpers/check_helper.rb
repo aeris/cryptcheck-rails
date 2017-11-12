@@ -54,7 +54,8 @@ module CheckHelper
 	end
 
 	def rank_label(rank)
-		label rank, rank_color(rank)
+		l = %i(V T).include? rank
+		label rank, rank_color(rank), !l
 	end
 
 	def protocol_label(protocol)

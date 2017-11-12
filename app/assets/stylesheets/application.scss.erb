@@ -35,11 +35,17 @@ body {
 	background-color: #000;
 }
 
-table.center td {
-	text-align: center;
+.label-critical, .progress-bar-critical {
+	background-color: #000;
+}
 
-	&.left {
-		text-align: left;
+table.center {
+	td, th {
+		text-align: center;
+
+		&.left {
+			text-align: left;
+		}
 	}
 }
 
@@ -51,9 +57,12 @@ td.primary {
 	background-color: $state-info-bg;
 }
 
+<% unless Rails.env == 'production' %>
 .translation_missing {
 	border: 1px solid red;
 }
+
+<% end %>
 
 .progress-bar-default {
 	background-color: $label-default-bg;
@@ -79,45 +88,70 @@ $color-great: #5cb85c;
 .label-state-critical {
 	background-color: $color-critical;
 }
+
 .label-state-error {
 	background-color: $color-error;
 }
+
 .label-state-warning {
 	background-color: $color-warning;
 	color: $text-color;
 }
+
 .label-state-good {
 	background-color: $color-good;
 	color: $text-color;
 }
+
 .label-state-best {
 	background-color: $color-best;
 }
+
 .label-state-great {
 	background-color: $color-great;
 }
 
 .label-state-default {
-	//background-color: #008000;
 	background-color: $label-default-bg;
 }
+
 .label-state-success {
 	background-color: $label-success-bg;
 }
 
-.alert-critical, .alert-error {
-	background-color: $alert-danger-bg;
-	color: $alert-danger-text;
-	border-color: $alert-danger-border
-}
-.alert-warning {
-	background-color: $alert-warning-bg;
-	color: $alert-warning-text;
-	border-color: $alert-warning-border
-}
-.alert-good, .alert-great, .alert-best {
-	background-color: $alert-success-bg;
-	color: $alert-success-text;
-	border-color: $alert-success-border
+$lighten-alert: 35%;
+.alert-critical {
+	background-color: lighten($color-critical, $lighten-alert);
+	color: $color-critical;
+	border-color: $color-critical;
 }
 
+.alert-error {
+	background-color: lighten($color-error, $lighten-alert);
+	color: $color-error;
+	border-color: $color-error;
+}
+
+.alert-warning {
+	background-color: lighten($color-warning, $lighten-alert);
+	color: $color-warning;
+	border-color: $color-warning;
+}
+
+.alert-good {
+	background-color: lighten($color-good, $lighten-alert);
+	color: $color-good;
+	border-color: $color-good;
+}
+
+.alert-best {
+	background-color: lighten($color-best, $lighten-alert);
+	color: $color-best;
+	border-color: $color-best;
+}
+
+.alert-great {
+	background-color: lighten($color-great, $lighten-alert);
+	color: $color-great;
+	border-color: $color-great;
+}

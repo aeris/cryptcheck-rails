@@ -26,6 +26,8 @@ Rails.application.routes.draw do
 		get ':id/refresh', action: :refresh, as: :refresh
 	end
 
+	get 'help' => 'site#help'
+	get 'about' => 'site#about'
 	get 'ciphers' => 'site#ciphers'
 	get 'suite' => 'site#suite_index'
 	get 'suite/:id' => 'site#suite'
