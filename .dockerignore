@@ -1,0 +1,6 @@
+Dockerfile
+.git/*
+.bundle/*
+db/*.sqlite
+log/*
+tmp/*

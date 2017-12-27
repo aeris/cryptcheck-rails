@@ -1,0 +1,32 @@
+x-aliases:
+    cryptcheck: &cryptcheck
+        image: aeris/cryptcheck-rails
+        links:
+            - mongo
+        depends_on:
+            - mongo
+        environment:
+            PORT: 3000
+            MONGO_DATABASE: cryptcheck
+            MONGO_URL: mongo:27017
+            REDIS_URL: redis://redis:6379/0
+            SECRET_KEY_BASE: 19bc5cb3a5265f4eb36634fb784a859a77aa3c270061fcb8522b53a19d01faea171f851fe01943e682f2945488569b9ea508736f959657d05171a358286d121e
+
+version: "3.4"
+services:
+    redis:
+        image: redis:4.0-alpine
+        ports:
+            - 6379:6379
+    mongo:
+        image: mongo:3.2
+        ports:
+            - 27017:27017
+    cryptcheck:
+        <<: *cryptcheck
+        ports:
+            - 3000:3000
+        command: bundle exec rails s
+    cryptcheck-worker:
+        <<: *cryptcheck
+        command: bundle exec sidekiq

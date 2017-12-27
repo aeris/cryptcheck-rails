@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 gem 'rails'
 
-gem 'cryptcheck', '~> 2.0.0', path: File.expand_path(File.join File.dirname(__FILE__), '../cryptcheck')
+gem 'cryptcheck', '~> 2.0.0', path: '../cryptcheck'
 
 gem 'dotenv-rails'
 gem 'http_accept_language'
@@ -22,6 +22,7 @@ group :assets do
 	gem 'font-awesome-sass'
 	gem 'jquery-rails'
 	gem 'sass-rails'
+	gem 'tzinfo-data'
 end
 
 group :development, :test do
@@ -38,4 +39,3 @@ group :development, :test do
 	gem 'rack-livereload'
 	gem 'guard-rails', require: false
 end
-
