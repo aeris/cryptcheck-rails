@@ -1,0 +1,301 @@
+<h1>Checks</h1>
+<h2>Protection</h2>
+<h3>Hard protection</h3>
+
+<p>
+	Such protection are hard or risky to deploy but give strong protection
+	against attack.<br/>
+	Deploying such protection can just break your service for a long time if you
+	don't understand what you are doing.<br/>
+	Service using such protection really tries to protect you and really know
+	what security is.
+</p>
+<hr/>
+
+<h4 id="hpkp">
+	<%= rank_label :A %>
+	HTTP Public Key Pinning (HPKP)
+	<span class="small">HTTPS only, incoming feature</span>
+</h4>
+
+<p>
+	HPKP protection, specified in <%= rfc_link_to 7469 %>, consists of putting
+	headers on HTTP response to specify which keys or certificats are allowe
+	for the encryption.
+	If pinning mismatches, for example because of a
+	<%= wikipedia_link_to 'man-in-the-middle attack', 'Man-in-the-middle_attack' %>
+	connection is rejected and no data at all is transfered.
+</p>
+
+<pre>
+	<code>
+$ curl -sI https://cryptcheck.fr/ | grep public-key-pins
+public-key-pins: report-uri="https://aeris.report-uri.io/r/default/hpkp/enforce"; max-age=5184000;
+		pin-sha256="wdkD38iQQzxE7g0RpmN8VoaIqX7YmPWwoueD9Iqawfg="; pin-sha256="EswdUzfH2N8sx6Nb4Vr9gamtNF5VWQxLWUG0gDIPVLw=";
+	</code>
+</pre>
+
+<p>
+	HPKP is difficult to deploy because has a redemption period of some days
+	(maximum allowed: 60). During this time, in case of misconfiguration,
+	returning visitors will faced a TLS error page, even if the configuration
+	was fixed.
+</p>
+
+<hr/>
+
+<h3>Medium protection</h3>
+
+<p>
+	Such protection is not so easy to deploy and can have hazardous side effects,
+	but provides quiet good protection against some attacks.<br/>
+	Broken service is unexpected or could be fixed in a small time range.<br/>
+	Using such protection is a clear sign the service try to protect you.
+</p>
+
+<hr/>
+
+<h4 id="hsts">
+	<%= rank_label :A %>&nbsp;<%= rank_label :B %>
+	HTTP Strict Transport Security (HSTS)
+	<span class="small">HTTPS only</span>
+</h4>
+
+<p>
+	HSTS protection, specified in <%= rfc_link_to 6797 %>, consists of putting
+	headers on HTTP response to specify the service supports HTTPS.<br/>
+	After the first connection (HSTS is
+	"<%= wikipedia_link_to 'Trust On First Use', 'Trust_on_first_use' %>" (TOFU)),
+	the browser automatically rewrite <code>http://</code> address to
+	<code>https://</code>, avoiding a plain request (with potential data leak)
+	to be asked by the service to redirect to the <code>https://</code> address.
+</p>
+
+<pre>
+	<code>
+curl -sI https://cryptcheck.fr/ | grep strict-transport-security
+strict-transport-security: max-age=31536000; includeSubDomains; preload;
+	</code>
+</pre>
+
+<p>
+	To have full score on HSTS, you need to have a long <code>max-age</code>
+	period, at least 1 year (<code>31536000</code> seconds).<br/>
+	If you correctly configure your service with HSTS, you can also ask for
+	<a href="https://hstspreload.org/" target="_blank">browser preloading</a>,
+	avoiding the trouble of the first connection.
+</p>
+
+<hr/>
+
+<h3>Easy protection</h3>
+
+<p>
+	Such protection is easy to deploy and without .<br/>
+	Broken service is unexpected or could be fixed in a small time range.<br/>
+	Using such protection is a clear sign the service try to protect you.
+</p>
+
+<hr/>
+
+<h4 id="aead">
+	<%= rank_label :C %>
+	Authentificated Encryption with Authenticated Data (AEAD)
+</h4>
+
+<p>
+	Since 2014, TLS (and SSL) suffers of
+	<a href="https://www.imperialviolet.org/2014/12/08/poodleagain.html" target="_blank">PODDLE</a>
+	vulnerability on the way padding is done during TLS handshake.
+	An attacker can play with this encrypted padding to guess underlying plain
+	data.<br/>
+
+	Any <%= wikipedia_link_to 'cipher mode operation', 'Block_cipher_mode_of_operation' %>
+	other than <%= wikipedia_link_to 'AEAD', 'Authenticated_encryption' %> is
+	vulnerable to this attack.
+</p>
+
+<p>
+	In practice, POODLE is a serious flaw for SSLv2/v3, which must be avoided
+	in all cases, but also for TLSv1.0/1.1.<br/>
+	Service operators must support AEAD cipher suite as soon as possible, to
+	avoid trouble when practical attack will be found on POODLE on TLS.<br/>
+	Such cipher suite is only available on TLSv1.2, so operators must disable
+	TLSv1.0 now, and TLSv1.1 as soon as possible.
+</p>
+
+<hr/>
+
+<h4 id="scsv">
+	<%= rank_label :C %>
+	TLS Fallback Signaling Cipher Suite Value (SCSV)
+</h4>
+
+<p>
+	SCSV, specify in <%= rfc_link_to 7507 %> is a TLS extension to allow a
+	client to signal to the server a previous hanshake attempt with higher TLS
+	version was done, but unsuccessfully.<br/>
+	This way, the server can detect a downgrade attack on the line, because
+	supporting better than the current TLS version.<br/>
+	Without this signaling value, the server has no way to distinguish between
+	a client supporting TLSv1.2 but downgraded to TLSv1.1 and a client TLSv1.1
+	only.<br/>
+	For example, this feature allows blocking of downgrade attack from TLSv1.2
+	(AEAD & PFS) to TLSv1.0 (nor AEAD nor PFS) to exploit POODLE vulnerability
+	more easily.
+</p>
+
+<p>
+	To activate SCSV, you just need a decent OpenSSL version (1.0.1j+).
+	LibreSSL currently doesn't have support for this.
+</p>
+
+<hr/>
+
+<h2>Weaknesses</h2>
+<h3>Future weakness</h3>
+
+<p>
+	This kind of weakness is theorical vulnerability but without practical
+	attack or with too much side effects to be able to patch it.
+</p>
+
+<hr/>
+
+<h3>Current weakness</h3>
+
+<p>
+	Such weakness knows practical attacks to break encryption.
+	Using such features is hightly discourage, and operators must take quick
+	actions to remove them.
+</p>
+
+<hr/>
+
+<h4 id="tlsv1.0">
+	<%= rank_label :F %>
+	TLSv1.0
+</h4>
+
+<p>
+	TLSv1.0 is vulnerable to
+</p>
+
+<hr/>
+
+<!--
+<h4 id="pfs">
+	<%= rank_label :F %>
+	Perfect Forward Secrecy (PFS)
+</h4>
+
+<p>
+	<%= wikipedia_link_to 'PFS', 'Forward_secrecy' %> is
+</p>
+
+<hr/>
+-->
+
+<h3>Deprecated feature</h3>
+
+<hr/>
+
+<h4 id="ssl">
+	<%= rank_label :G %>
+	SSLv2, SSLv3
+</h4>
+
+<p>
+	SSLv2 and SSLv3 are deprecated SSL protocol version.<br/>
+	Pratical attacks exist to decrypt SSL encrypted traffic to plain text in
+	some minutes with standard computer.
+	For SSLv3, it's
+	<a href="https://security.googleblog.com/2014/10/this-poodle-bites-exploiting-ssl-30.html" target="_blank">POODLE</a>
+	again.
+	For SSLv2, it's was supposed to never be in production because too bad and
+	broken cryptography under the hood.
+	<a href="https://drownattack.com/" target="_blank">DROWN</a> vulnerability
+	allows an attacker to decrypt encrypted traffic (even TLSv1.2!) as soon as
+	one of the servers used for the service supports SSLv2 with the same key.
+</p>
+
+<hr/>
+
+<!--
+<h4 id="rc4">
+	<%= rank_label :G %>
+	RC4
+</h4>
+
+<p>
+	<%= wikipedia_link_to 'RC4', 'RC4' %> is a stream cipher, recently known to
+	have
+</p>
+
+<hr/>
+-->
+
+<h4 id="sha1">
+	<%= rank_label :E %>&nbsp;<%= rank_label :G %>
+	SHA-1
+	<span class="small">incoming feature for HMAC</span>
+</h4>
+
+<p>
+	<%= wikipedia_link_to 'SHA-1', 'SHA-1' %> is a cryptographic hash function
+	used in TLS cipher suite.
+	<a href="https://shattered.io/" target="_blank">It was broken</a> in 2016.
+</p>
+
+<p>
+	SHA-1 is used in two parts of the handshake.<br/>
+	For <%= wikipedia_link_to 'HMAC', 'Hash-based_message_authentication_code' %>,
+	which protect each messages exchanged during handshake. Because lifetime of
+	such HMAC is very short (TCP/IP round trip), SHA-1 collision is not a real
+	trouble on this part.<br/>
+	For key exchange and authentication. Each certificate is signed by the issuer
+	certificate using a digest.
+	In this case, if SHA-1 digest is used and because certificate lifetime is
+	long (years to decades), collision on digest could allow an attacker to
+	forge a rogue certificate which match the real certificate digest, and so
+	to impersonate the TLS service behind.
+</p>
+
+<p>
+	SHA-1 signed certificates must be banned.<br/>
+	SHA-1 HMAC is currently quite safe, but operators must take action to ensure
+	SHA-2 compatibility with clients in case if SHA-1 must be revoked even for
+	HMAC.
+</p>
+
+<hr/>
+
+<h4 id="digest">
+	<%= rank_label :G %>
+	MD-5, MD-4, MD-2, MDC-2
+</h4>
+
+<p>
+	MD-5, MD-4, MD-2 and MDC-2 are completely broken hash function.
+	Just don't use it.
+</p>
+
+<h4 id="compression">
+	<%= rank_label :G %>
+	Compression
+	<span class="small">incoming feature</span>
+</h4>
+
+<p>
+	With TLS compression activated, some oracle attacks allow to decrypt the
+	content.
+	For example the
+	<a href="https://arstechnica.com/information-technology/2013/08/gone-in-30-seconds-new-attack-plucks-secrets-from-https-protected-pages/" target="_blank">BREACH</a>
+	or
+	<a href="https://threatpost.com/crime-attack-uses-compression-ratio-tls-requests-side-channel-hijack-secure-sessions-091312/77006/" target="_blank">CRIME</a>
+	attacks.
+</p>
+
+<p>
+	TLS compression must be disabled on the service.
+</p>

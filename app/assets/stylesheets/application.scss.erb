@@ -27,8 +27,17 @@
 	box-sizing: border-box;
 }
 
+$navbar-offset: $navbar-height + 10px;
 body {
-	padding-top: $navbar-height + 10px;
+	padding-top: $navbar-offset;
+}
+
+:target:before {
+	display: block;
+	content: " ";
+	margin-top: -$navbar-offset;
+	height: $navbar-offset;
+	visibility: hidden;
 }
 
 .label-error, .progress-bar-error {
@@ -40,7 +49,7 @@ body {
 }
 
 table.center {
-	td, th {
+	td {
 		text-align: center;
 
 		&.left {

@@ -54,7 +54,7 @@ module CheckHelper
 	end
 
 	def rank_label(rank)
-		l = %i(V T).include? rank
+		l = %i(0 V T X).include? rank
 		label rank, rank_color(rank), !l
 	end
 

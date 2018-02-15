@@ -19,8 +19,8 @@
 	the client and the server.
 	This is the case if the attacker is connected on the same network as the
 	client (hotspot, 3G…) with simple
-	<a href="https://en.wikipedia.org/wiki/ARP_spoofing">ARP spoofing</a>,
-	doable with tools like
+	<%= wikipedia_link_to 'ARP spoofing', 'ARP_spoofing' %>, doable with tools
+	like
 	<a href="https://forum.xda-developers.com/showthread.php?t=1593990">Droid Sheep</a>.<br/>
 </p>
 
@@ -37,22 +37,22 @@
 	<tr>
 		<th rowspan="2">Score</th>
 		<td rowspan="2"></td>
-		<td colspan="3">Protection</td>
-		<td colspan="3">Weakness</td>
+		<th colspan="3">Protection</th>
+		<th colspan="3">Weakness</th>
 	</tr>
 	<tr>
-		<td>Best</td>
-		<td>Great</td>
-		<td>Good</td>
+		<th>Hard</th>
+		<th>Medium</th>
+		<th>Easy</th>
 
-		<td>Future</td>
-		<td>Weak</td>
-		<td>Deprecated</td>
+		<th>Future</th>
+		<th>Weak</th>
+		<th>Deprecated</th>
 	</tr>
 	</thead>
 	<tbody>
 	<tr>
-		<th><%= rank_label :'A+' %></th>
+		<td><%= rank_label :'A+' %></td>
 		<td class="left">
 			Seriously take security into account and invest a lot on it.<br/>
 			Whatever the cost, encryption safety is implemented.
@@ -66,7 +66,7 @@
 		<td><%= image_tag 'check-empty.svg' %></td>
 	</tr>
 	<tr>
-		<th><%= rank_label :A %></th>
+		<td><%= rank_label :A %></td>
 		<td class="left">
 			Seriously take security into account and invest a lot on it.
 		</td>
@@ -78,7 +78,7 @@
 		<td><%= image_tag 'check-empty.svg' %></td>
 	</tr>
 	<tr>
-		<th><%= rank_label :'B+' %></th>
+		<td><%= rank_label :'B+' %></td>
 		<td class="left">
 			Seriously take security into account and invest on it.
 		</td>
@@ -90,7 +90,7 @@
 		<td><%= image_tag 'check-empty.svg' %></td>
 	</tr>
 	<tr>
-		<th><%= rank_label :B %></th>
+		<td><%= rank_label :B %></td>
 		<td class="left">
 			Take security into account and invest on it.
 		</td>
@@ -102,7 +102,7 @@
 		<td><%= image_tag 'check-empty.svg' %></td>
 	</tr>
 	<tr>
-		<th><%= rank_label :'C+' %></th>
+		<td><%= rank_label :'C+' %></td>
 		<td class="left">
 			Take security into account and invest a little on it.
 		</td>
@@ -114,7 +114,7 @@
 		<td><%= image_tag 'check-empty.svg' %></td>
 	</tr>
 	<tr>
-		<th><%= rank_label :C %></th>
+		<td><%= rank_label :C %></td>
 		<td class="left">
 			Take security into account but don't spend too much for it.
 		</td>
@@ -126,7 +126,7 @@
 		<td><%= image_tag 'check-empty.svg' %></td>
 	</tr>
 	<tr>
-		<th><%= rank_label :D %></th>
+		<td><%= rank_label :D %></td>
 		<td class="left">
 			Take security into account. Minimaly.<br/>
 			This is the worst score a decent service must have today.
@@ -139,7 +139,7 @@
 		<td><%= image_tag 'check-empty.svg' %></td>
 	</tr>
 	<tr>
-		<th><%= rank_label :E %></th>
+		<td><%= rank_label :E %></td>
 		<td class="left">
 			Take security into account. A little. Or not.
 		</td>
@@ -151,7 +151,7 @@
 		<td><%= image_tag 'check-empty.svg' %></td>
 	</tr>
 	<tr>
-		<th><%= rank_label :F %></th>
+		<td><%= rank_label :F %></td>
 		<td class="left">
 			Just don't take security into account.
 		</td>
@@ -163,7 +163,7 @@
 		<td><%= image_tag 'check-empty.svg' %></td>
 	</tr>
 	<tr>
-		<th><%= rank_label :G %></th>
+		<td><%= rank_label :G %></td>
 		<td class="left">
 			Just don't take security into account at all.<br/>
 			What the fuck you do, dude?
@@ -176,7 +176,7 @@
 		<td><%= image_tag 'cross-red.svg' %></td>
 	</tr>
 	<tr>
-		<th><%= rank_label :'0' %></th>
+		<td><%= rank_label :'0' %></td>
 		<td class="left">
 			No security at all. Just plain text.<br/>
 			Seriously, in <%= Date.today.year %>?
@@ -184,14 +184,14 @@
 		<td colspan="6"></td>
 	</tr>
 	<tr>
-		<th><%= rank_label :V %></th>
+		<td><%= rank_label :V %></td>
 		<td class="left">
 			Invalid certificate (wrong domain, expired…)
 		</td>
 		<td colspan="6"></td>
 	</tr>
 	<tr>
-		<th><%= rank_label :T %></th>
+		<td><%= rank_label :T %></td>
 		<td class="left">
 			Unstrusted certificate. Not issued by a trusted
 			<a href="https://ccadb-public.secure.force.com/mozilla/IncludedCACertificateReport">certificate authority</a>.
@@ -199,7 +199,7 @@
 		<td colspan="6"></td>
 	</tr>
 	<tr>
-		<th><%= rank_label :X %></th>
+		<td><%= rank_label :X %></td>
 		<td class="left">
 			Error occurs during the analysis. Try again later?
 		</td>
@@ -214,9 +214,9 @@
 			<%= image_tag 'check-full.svg' %> Fully implemented
 			<%= image_tag 'check-empty.svg' %> Partially implemented<br/>
 
-			Good: simple to implement, small protection<br/>
-			Great: quiet hard to implement, middle protection<br/>
-			Best: hard to implement, strong protection
+			Easy: simple to implement, small protection<br/>
+			Medium: quiet hard to implement, middle protection<br/>
+			Hard: hard to implement, strong protection
 		</td>
 		<td>
 			For weakness:<br/>
@@ -232,15 +232,14 @@
 
 <p>
 	<i>Note</i>: Unlike HTTPS or XMPP, SMTP uses
-	<a href="https://en.wikipedia.org/wiki/Opportunistic_TLS">opportunistic encryption</a>.<br/>
+	<%= wikipedia_link_to 'opportunistic encryption', 'Opportunistic_TLS' %>.<br/>
 	When you send an email, the server used to forward the mail (the
-	<a href="https://en.wikipedia.org/wiki/Message_transfer_agent">MTA</a>) to
-	the recipient has no way to guess in advance if recipient MTA supports or
-	not encryption and which cipher suite will be available.
+	<%= wikipedia_link_to 'MTA', 'Message_transfer_agent' %> to the recipient
+	has no way to guess in advance if recipient MTA supports or not encryption
+	and which cipher suite will be available.
 	To avoid your email returning to you in case of failure, the standard for
-	email encryption (<a href="https://tools.ietf.org/html/rfc3207">RFC 3207</a>)
-	requires to retry <b>in plain text</b> in case of encryption handshake
-	failure.<br/>
+	email encryption (<%= rfc_link_to 3207 %>) requires to retry
+	<b>in plain text</b> in case of encryption handshake failure.<br/>
 	So, for SMTP, there is a compromise to make between strong configuration,
 	leading to plain text fallback for old or badly configured MTA, and
 	compatibility with such MTA to use weak encryption better than plain text
