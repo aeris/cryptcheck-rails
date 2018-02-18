@@ -1,4 +1,0 @@
-#!/bin/bash
-DIR="$(readlink -e "$(dirname "${0}")")"
-export LD_LIBRARY_PATH="$(readlink -e "${DIR}/../../cryptcheck/lib")"
-"${0}.rb" $*

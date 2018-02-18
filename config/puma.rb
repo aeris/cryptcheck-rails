@@ -14,16 +14,18 @@ unless Rails.root
 	end
 end
 
-workers 4 if env == 'production'
+workers ENV.fetch('WORKER', 4).to_i
 
-port = ENV['PORT']
-if port
-	port(port)
-else
+if env == 'production'
 	listen = ENV.fetch('LISTEN') { 'unix://' + File.join(Rails.root, 'tmp/sockets/puma.sock') }
-	bind listen
+	port   = ENV['PORT']
+else
+	listen = ENV['LISTEN']
+	port   = ENV.fetch 'PORT', 3000
 end
 
+port(port) if port
+bind listen if listen
 
 pidfile File.join Rails.root, 'tmp/pids/puma.pid'
 

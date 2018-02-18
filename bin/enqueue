@@ -1,1 +1,20 @@
-runner
+#!/usr/bin/env ruby
+ENV['RAILS_ENV'] ||= 'development'
+require 'dotenv'
+Dotenv.load ".env.#{ENV['RAILS_ENV']}", '.env'
+
+if ENV['RAILS_ENV'] == 'development'
+	DIR = File.dirname File.dirname File.expand_path __FILE__
+	require File.join DIR, 'config/environment'
+	ENV['RAILS_ENV'] = 'test'
+	require 'sidekiq/testing/inline'
+end
+
+require 'sidekiq'
+redis = ENV['REDIS_URL']
+Sidekiq.configure_server { |c| c.redis = { url: redis } }
+Sidekiq.configure_client { |c| c.redis = { url: redis } }
+
+clazz, *args = ARGV
+clazz        += 'Worker'
+Sidekiq::Client.push({ 'class' => clazz, 'args' => args, 'retry' => false })

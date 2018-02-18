@@ -10,7 +10,6 @@ class CheckController < ApplicationController
 				return render :processing if @result.pending
 			end
 			format.json do
-				ap @result
 				render json: JSON.pretty_generate(JSON.parse @result.to_json)
 			end
 		end
