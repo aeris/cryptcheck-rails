@@ -1,41 +1,40 @@
 source 'https://rubygems.org'
 
-gem 'rails'
+gem 'cryptcheck', '~> 2.0.0', path: '../engine'
 
-gem 'cryptcheck', '~> 2.0.0', path: '../cryptcheck'
-
+gem 'rails', '~> 5.2.3'
 gem 'dotenv-rails'
-gem 'http_accept_language'
-gem 'mongoid'
-gem 'simpleidn'
-
-gem 'redis-namespace'
-gem 'sidekiq'
+gem 'bootsnap', require: false
 gem 'puma'
 
-group :assets do
-	gem 'therubyracer', platforms: :ruby
-	gem 'uglifier'
+gem 'sidekiq'
+gem 'pg'
+gem 'simpleidn'
+gem 'http_accept_language'
+gem 'recursive-open-struct'
 
-	gem 'bootstrap-sass'
-	gem 'coffee-rails'
-	gem 'font-awesome-sass'
-	gem 'jquery-rails'
-	gem 'sass-rails'
-	gem 'tzinfo-data'
-end
+gem 'uglifier'
+gem 'sass-rails'
+gem 'coffee-rails'
+gem 'jquery-rails'
+gem 'bootstrap-sass'
+gem 'font-awesome-sass'
 
-group :development, :test do
-	gem 'awesome_print'
+group :development do
 	gem 'web-console'
+	gem 'awesome_print'
+
+	gem 'spring'
+	gem 'spring-watcher-listen'
 
 	gem 'pry-rails'
+	gem 'pry-byebug'
 
 	gem 'better_errors'
 	gem 'binding_of_caller'
 
 	gem 'guard', require: false
+	gem 'guard-rails', require: false
 	gem 'guard-livereload', require: false
 	gem 'rack-livereload'
-	gem 'guard-rails', require: false
 end

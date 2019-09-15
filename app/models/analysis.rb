@@ -1,56 +1,36 @@
-class Analysis
-	include Mongoid::Document
-	include Mongoid::Timestamps
+class Analysis < ApplicationRecord
+	enum service: %i[https smtp xmpp tls ssh].collect { |e| [e, e.to_s] }.to_h
+	validates :service, presence: true
+	validates :host, presence: true
 
-	field :type, type: Symbol
-	field :host, type: String
-	field :port, type: Numeric
-	field :pending, type: Boolean
-	field :date, type: Time
-	field :result, type: Array
-
-	validates_presence_of :type
-	validates_presence_of :host
-	validates_presence_of :port
-	validates_uniqueness_of :type, scope: %i[host port]
-
-	index type: 1
-	index({ type: 1, host: 1, port: 1 }, { unique: true })
-
-	def self.[](type, host, port)
-		key = self.key type, host, port
-		self.where(key).first
+	def self.[](service, host, port)
+		key = self.key service, host, port
+		self.find_by key
 	end
 
-	def self.pending(type, host, port)
-		analysis = self[type, host, port]
-		if analysis
-			analysis.remove_attribute :result
-			analysis.update_attributes pending: true, date: Time.now
-			analysis
-		else
-			self.create! type: type, host: host, port: port, pending: true, date: Time.now
-		end
+	def self.pending!(service, host, port)
+		key      = self.key service, host, port
+		analysis = self.find_or_create_by! key
+		analysis.pending!
 	end
 
-	def self.result(type, host, port, result)
-		analysis = self[type, host, port]
-		if analysis
-			analysis.remove_attribute :pending
-			analysis.update_attributes result: result, date: Time.now
-			analysis
-		else
-			self.create! type: type, host: host, port: port, result: result, date: Time.now
-		end
+	def pending!
+		self.update! pending: true
+		self
 	end
 
-	def publish(result)
-		self.remove_attribute :pending
-		self.update_attribute :result, result
+	def self.post!(service, host, port, result)
+		analysis = self[service, host, port]
+		analysis.post! result
+	end
+
+	def post!(result)
+		self.update! pending: false, result: result
 	end
 
 	private
-	def self.key(type, host, port)
-		{ type: type, host: host, port: port }
+
+	def self.key(service, host, port)
+		{ service: service, host: host, port: port }
 	end
 end

@@ -1,14 +1,14 @@
 require File.expand_path('../boot', __FILE__)
 
 require 'rails'
-%w(
+%w[
+  active_model
+  active_record
   action_controller
   action_view
-  active_job
-  active_model
   rails/test_unit
   sprockets
-).each do |framework|
+].each do |framework|
 	begin
 		require "#{framework}/railtie"
 	rescue LoadError
@@ -17,15 +17,12 @@ end
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
-groups = Rails.groups
-unless Rails.env == 'production'
-	groups << :assets
-	Rails.env = 'production' if Rails.env == 'staging'
-end
-Bundler.require(*groups)
+Bundler.require *Rails.groups
 
 module CryptcheckRails
 	class Application < Rails::Application
+		config.load_defaults 5.2
+
 		# Settings in config/environments/* take precedence over those specified here.
 		# Application configuration should go into files in config/initializers
 		# -- all .rb files in that directory are automatically loaded.
@@ -36,11 +33,14 @@ module CryptcheckRails
 
 		# The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
 		# config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
-		config.i18n.default_locale = :en
-		config.i18n.available_locales = %i[en fr de]
-		config.i18n.fallbacks = true
+		config.i18n.default_locale                   = :fr
+		config.i18n.available_locales                = %w(en fr de)
 		config.action_controller.include_all_helpers = false
 
 		config.refresh_delay = 1.hour
+
+		config.generators do |g|
+			g.orm :active_record, primary_key_type: :uuid
+		end
 	end
 end

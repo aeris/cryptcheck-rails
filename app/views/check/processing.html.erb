@@ -9,7 +9,7 @@
 				[<%= self.type.to_s.upcase %>] <%= t 'Currently analysing %{host}', host: @host  %>
 			</h1>
 			<p class="small">
-				<%= t 'Start of analysis: %{date}', date: l(@result[:date]) %>
+				<%= t 'Start of analysis: %{date}', date: l(@analysis.updated_at) %>
 			</p>
 			<p class="pull-right">
 				<%= t('Please wait…') %>

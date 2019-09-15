@@ -2,107 +2,25 @@
 	<div class="row">
 		<div class="col-sm-11">
 			<h1>
-				[<%= self.type.to_s.upcase %>] <%= @host %> <span class="small">(<%= l @result.date %>)</span>
+				[<%= self.type.to_s.upcase %>] <%= @host %> <span class="small">(<%= l @analysis.updated_at %>)</span>
 			</h1>
 		</div>
-		<% if Time.now - @result.date >= Rails.configuration.refresh_delay %>
+		<% if Time.now - @analysis.updated_at >= Rails.configuration.refresh_delay %>
 			<div class="col-sm-1">
 				<%= link_to t('Refresh'), { action: :refresh }, class: %i(btn btn-default) %>
 			</div>
 		<% end %>
 	</div>
 
-	<% @result.result.each do |host| %>
+	<% @result.each do |host| %>
 		<div class="row">
 			<div class="col-sm-12">
 				<h2>
-					<%= rank_label host[:grade] %>
+					<%= rank_label host[:grade].to_sym %>
 					<%= host[:ip] %> : <%= host[:port] %>
 					<span class="small">(<%= host[:hostname] %>)</span></h2>
 			</div>
 		</div>
-
-		<div class="row">
-			<div class="col-sm-12">
-				<% ::CryptCheck::State.each do |level|
-					host[:states][level].each do |state, value|
-						next unless value
-				%>
-					<div class="alert alert-<%= level %>"><%= t "alert.#{level}.#{state}" %></div>
-				<% end
-				end %>
-				<!--
-				<h3><%= t 'Checks' %></h3>
-				<table class="table table-bordered table-condensed table-striped">
-					<thead>
-					<th><%= t 'Severity' %></th>
-					<td>
-						<%= t 'Checks' %>
-						(
-						<%= label 'OK', :success, false %>
-						<%= label 'KO', :danger, false %>
-						<%= label 'N/A', :default, false %>
-						)
-					</td>
-					</thead>
-					<tbody>
-					<% ::CryptCheck::State.each do |level| %>
-						<tr>
-							<th><%= label level, "state-#{level}", false %></th>
-							<td><%= labels level, host[:states][level], false %></td>
-						</tr>
-					<% end %>
-					</tbody>
-				</table>
-				-->
-			</div>
-		</div>
-
-		<!--div class="row">
-			<div class="col-sm-12">
-				<h3><%= t 'Certificates' %></h3>
-				<table class="table table-bordered table-condensed table-striped">
-					<thead>
-					<tr>
-						<th>
-							<%= t 'Subject' %>
-							<span class="small">[<%= t 'Serial' %>]</span>
-							<div class="small"><%= t 'Fingerprint' %></div>
-						</th>
-						<td><%= t 'Issuer' %></td>
-						<td><%= t 'Not before' %></td>
-						<td><%= t 'Not after' %></td>
-						<th></th>
-					</tr>
-					</thead>
-					<tbody>
-					<% host[:handshakes][:certs].each do |cert| %>
-						<tr>
-							<th>
-								<%= cert[:subject] %> [<%= cert[:serial] %>]
-								<div class="small"><%= cert[:fingerprint] %></div>
-							</th>
-							<td><%= cert[:issuer] %></td>
-							<td><%= l cert[:lifetime][:not_before] %></td>
-							<td><%= l cert[:lifetime][:not_after] %></td>
-							<td><%= states cert[:states] %></td>
-						</tr>
-						<% cert[:chain].each do |cert| %>
-							<tr>
-								<th>
-									<%= cert[:subject] %> [<%= cert[:serial] %>]
-									<div class="small"><%= cert[:fingerprint] %></div>
-								</th>
-								<td><%= cert[:issuer] %></td>
-								<td><%= l cert[:lifetime][:not_before] %></td>
-								<td><%= l cert[:lifetime][:not_after] %></td>
-							</tr>
-						<% end %>
-					<% end %>
-					</tbody>
-				</table>
-			</div>
-		</div-->
 
 		<div class="row">
 			<div class="col-sm-12">
@@ -130,7 +48,7 @@
 						handshakes = host[:handshakes]
 						all_ciphers = handshakes[:ciphers].group_by { |c| c[:protocol] }
 						CryptCheck::Tls::Method.each do |protocol|
-							ciphers = all_ciphers.fetch(protocol, [])
+							ciphers = all_ciphers.fetch(protocol.to_sym.to_s, [])
 									.collect { |c| CryptCheck::Tls::Cipher.new protocol, c[:name] }.sort
 							unless ciphers.empty? %>
 							<tr>

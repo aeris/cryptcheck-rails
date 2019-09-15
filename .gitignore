@@ -13,3 +13,4 @@ Gemfile.lock
 /public/assets/
 /deploy.sh
 /.excluded
+/vendor/bundle/

@@ -34,4 +34,6 @@ Rails.application.routes.draw do
 	post 'suite' => 'site#suite'
 	root 'site#index'
 	post '/' => 'site#check'
+
+	get 'sites' => 'site#sites'
 end

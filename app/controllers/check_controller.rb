@@ -3,22 +3,21 @@ class CheckController < ApplicationController
 	helper_method :tls_type, :type
 
 	def show
-		enqueue_host unless @result
-		@host = SimpleIDN.to_unicode @host
+		enqueue_host unless @analysis
+		@host   = SimpleIDN.to_unicode @host
 		respond_to do |format|
 			format.html do
-				return render :processing if @result.pending
+				return render :processing if @analysis.pending
+				@result = @analysis.result.collect { |r| RecursiveOpenStruct.new r, recurse_over_arrays: true }
 			end
-			format.json do
-				render json: JSON.pretty_generate(JSON.parse @result.to_json)
-			end
+			format.json { render json: @analysis }
 		end
 	end
 
 	def refresh
 		unless @result.pending
 			if Rails.env == 'production'
-				refresh_allowed = @result.date + Rails.configuration.refresh_delay
+				refresh_allowed = @result.updated_at + Rails.configuration.refresh_delay
 				if Time.now < refresh_allowed
 					flash[:warning] = "Merci d’attendre au moins #{l refresh_allowed} pour rafraîchir"
 					return redirect_to action: :show, id: @host
@@ -30,10 +29,12 @@ class CheckController < ApplicationController
 	end
 
 	protected
+	def default_port
+	end
 
 	def enqueue_host
-		@result = Analysis.pending self.type, @host, @port
-		self.worker.perform_async *(@port.blank? ? [@host] : [@host, @port])
+		@analysis = Analysis.pending! self.type, @host, (@port || self.default_port)
+		self.worker.perform_async @analysis.host, @analysis.port
 	end
 
 	def check_host
@@ -57,7 +58,7 @@ class CheckController < ApplicationController
 			@port = self.default_port
 		end
 
-		@result = Analysis[self.type, @host, @port]
+		@analysis = Analysis[self.type, @host, @port]
 		# file = File.join Rails.root, 'config/host.yml'
 		# File.write file, YAML.dump(@result)
 		# @result = YAML.load File.read file

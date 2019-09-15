@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>TLS status</title>
+	<link rel="stylesheet" href="knacss.css">
+</head>
+<body>
+<table class="table table--zebra table--auto">
+	<thead>
+	<tr>
+		<th rowspan="2">Domain</th>
+		<td rowspan="2">Grade</td>
+
+		<td colspan="2">Certificates</td>
+		<td colspan="5">Protocols</td>
+		<td colspan="4">Ciphers</td>
+		<td colspan="5">Best practices</td>
+	</tr>
+	<tr>
+		<td>Key</td>
+		<td>Sig</td>
+
+		<td class="alert--inverse">SSLv2</td>
+		<td class="alert--inverse">SSLv3</td>
+		<td class="alert--danger">TLSv1.0</td>
+		<td class="alert--warning">TLSv1.1</td>
+		<td>TLSv1.2</td>
+
+		<td class="alert--inverse">MD5</td>
+		<td class="alert--danger">SHA1</td>
+		<td class="alert--inverse">RC4</td>
+		<td class="alert--danger">DES/3DES</td>
+
+		<td class="alert--warning">DHE</td>
+		<td>PFS</td>
+		<td>AEAD</td>
+		<td>HSTS</td>
+		<td>SCSV</td>
+	</tr>
+	</thead>
+	<tbody>
+	<% @analysis.each do |analysis| %>
+		<tr>
+			<th colspan="18"><%= analysis.host %></th>
+		</tr>
+		<% analysis.result.sort { |a, b| a[:ip] <=> b[:ip] }.each do |result| %>
+			<tr>
+				<td><%= result[:ip] %></td>
+				<td class="<%= grade_color result[:grade] %>"><%= result[:grade] %></td>
+			</tr>
+		<% end %>
+	<% end %>
+	</tbody>
+</table>
+</body>
+</html>

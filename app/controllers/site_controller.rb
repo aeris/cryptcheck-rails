@@ -42,4 +42,7 @@ class SiteController < ApplicationController
 	def about
 
 	end
+
+	def sites
+	end
 end
