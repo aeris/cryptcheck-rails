@@ -3,7 +3,7 @@ class SMTPWorker < CheckWorker
 
 	protected
 	def analyze(host)
-		CryptCheck::Tls::Smtp.analyze_domain host
+		CryptCheck::Tls::Smtp.analyze host
 	end
 
 	def type

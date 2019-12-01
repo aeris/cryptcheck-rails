@@ -12,7 +12,7 @@ class HttpsController < CheckController
 		'HTTPS'
 	end
 
-	def default_port
+	def default_args
 		443
 	end
 end

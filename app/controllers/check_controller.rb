@@ -29,12 +29,12 @@ class CheckController < ApplicationController
 	end
 
 	protected
-	def default_port
+	def default_args
 	end
 
 	def enqueue_host
-		@analysis = Analysis.pending! self.type, @host, (@port || self.default_port)
-		self.worker.perform_async @analysis.host, @analysis.port
+		@analysis = Analysis.pending! self.type, @host, @args
+		self.worker.perform_async @analysis.host, *@analysis.args
 	end
 
 	def check_host
@@ -45,22 +45,15 @@ class CheckController < ApplicationController
 			request.format = :json
 		end
 
-		@host, @port = @id.split ':'
+		@host, @args = @id.split ':'
 		@host        = SimpleIDN.to_ascii @host.downcase
 		if /[^a-zA-Z0-9.-]/ =~ @host
 			flash[:danger] = "Hôte #{@host} invalide"
 			redirect_to action: :index
 			return false
 		end
-		if @port
-			@port = @port.to_i
-		else
-			@port = self.default_port
-		end
+		@args ||= default_args
 
-		@analysis = Analysis[self.type, @host, @port]
-		# file = File.join Rails.root, 'config/host.yml'
-		# File.write file, YAML.dump(@result)
-		# @result = YAML.load File.read file
+		@analysis = Analysis[self.type, @host, @args]
 	end
 end

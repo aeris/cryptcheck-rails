@@ -22,7 +22,7 @@ module SshHelper
 	end
 
 	private
-	def label(name, color)
-		"<span class=\"label label-#{color}\">&nbsp;</span>&nbsp;#{name}".html_safe
-	end
+	#def label(name, color)
+	#	"<span class=\"label label-#{color}\">&nbsp;</span>&nbsp;#{name}".html_safe
+	#end
 end

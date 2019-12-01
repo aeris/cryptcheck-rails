@@ -3,13 +3,13 @@ class Analysis < ApplicationRecord
 	validates :service, presence: true
 	validates :host, presence: true
 
-	def self.[](service, host, port)
-		key = self.key service, host, port
+	def self.[](service, host, args)
+		key = self.key service, host, args
 		self.find_by key
 	end
 
-	def self.pending!(service, host, port)
-		key      = self.key service, host, port
+	def self.pending!(service, host, args)
+		key      = self.key service, host, args
 		analysis = self.find_or_create_by! key
 		analysis.pending!
 	end
@@ -19,8 +19,8 @@ class Analysis < ApplicationRecord
 		self
 	end
 
-	def self.post!(service, host, port, result)
-		analysis = self[service, host, port]
+	def self.post!(service, host, args, result)
+		analysis = self[service, host, args]
 		analysis.post! result
 	end
 
@@ -30,7 +30,7 @@ class Analysis < ApplicationRecord
 
 	private
 
-	def self.key(service, host, port)
-		{ service: service, host: host, port: port }
+	def self.key(service, host, args)
+		{ service: service, host: host, args: args }
 	end
 end
