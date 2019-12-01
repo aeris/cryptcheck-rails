@@ -3,6 +3,8 @@ fr:
   Supported cipher suites: Chiffrements supportés
   Cipher suite: Suite de chiffrement
   "Cipher suite:": "Suite de chiffrement :"
+  Help: Aide
+  About: À propos
 
   Check your domain: Testez votre domaine
   Check your SSH server: Testez votre serveur SSH
