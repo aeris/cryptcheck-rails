@@ -15,9 +15,9 @@ class CheckController < ApplicationController
 	end
 
 	def refresh
-		unless @result.pending
+		unless @analysis.pending
 			if Rails.env == 'production'
-				refresh_allowed = @result.updated_at + Rails.configuration.refresh_delay
+				refresh_allowed = @analysis.updated_at + Rails.configuration.refresh_delay
 				if Time.now < refresh_allowed
 					flash[:warning] = "Merci d’attendre au moins #{l refresh_allowed} pour rafraîchir"
 					return redirect_to action: :show, id: @host
