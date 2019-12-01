@@ -1,4 +1,4 @@
-require File.expand_path('../boot', __FILE__)
+require_relative 'boot'
 
 require 'rails'
 %w[
@@ -6,8 +6,8 @@ require 'rails'
   active_record
   action_controller
   action_view
-  rails/test_unit
   sprockets
+  rails/test_unit
 ].each do |framework|
 	begin
 		require "#{framework}/railtie"
@@ -20,27 +20,24 @@ end
 Bundler.require *Rails.groups
 
 module CryptcheckRails
-	class Application < Rails::Application
-		config.load_defaults 5.2
+  class Application < Rails::Application
+    # Initialize configuration defaults for originally generated Rails version.
+    config.load_defaults 5.2
 
-		# Settings in config/environments/* take precedence over those specified here.
-		# Application configuration should go into files in config/initializers
-		# -- all .rb files in that directory are automatically loaded.
+    # Settings in config/environments/* take precedence over those specified here.
+    # Application configuration can go into files in config/initializers
+    # -- all .rb files in that directory are automatically loaded after loading
+    # the framework and any gems in your application.
 
-		# Set Time.zone default to the specified zone and make Active Record auto-convert to this zone.
-		# Run "rake -D time" for a list of tasks for finding time zone names. Default is UTC.
-		# config.time_zone = 'Central Time (US & Canada)'
+    # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
+    # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
+    config.i18n.default_locale    = :fr
+    config.i18n.available_locales = %w(en fr de)
 
-		# The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
-		# config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
-		config.i18n.default_locale                   = :fr
-		config.i18n.available_locales                = %w(en fr de)
-		config.action_controller.include_all_helpers = false
+    config.refresh_delay = 1.hour
 
-		config.refresh_delay = 1.hour
-
-		config.generators do |g|
-			g.orm :active_record, primary_key_type: :uuid
-		end
-	end
+    config.generators do |g|
+      g.orm :active_record, primary_key_type: :uuid
+    end
+  end
 end

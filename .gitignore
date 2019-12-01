@@ -4,6 +4,8 @@
 *.iml
 Gemfile.lock
 .env.production
+.env.*.local
+.env.local
 
 /db/*.sqlite3
 /db/*.sqlite3-journal
