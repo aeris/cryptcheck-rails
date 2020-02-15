@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html>
+<% data = Matomo.enabled? ? { matomo_url: Matomo.url, matomo_site: Matomo.site } : {} %>
+<%= content_tag :html, data: data do %>
 	<head>
 		<title>CryptCheck</title>
 		<%= stylesheet_link_tag 'application', media: 'all' %>
@@ -8,8 +9,9 @@
 		<%= yield :head %>
 	</head>
 	<body>
-		<%= render partial: 'headers' %>
-		<%= render partial: 'flash' %>
-		<%= yield %>
+	<%= render partial: 'headers' %>
+	<%= render partial: 'flash' %>
+	<%= yield %>
+	<%= render partial: 'matomo', locals: { config: Matomo } if Matomo.enabled? %>
 	</body>
-</html>
+<% end %>
