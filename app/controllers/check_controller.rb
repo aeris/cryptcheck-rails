@@ -41,7 +41,7 @@ class CheckController < ApplicationController
 
   def enqueue_host
     @analysis = Analysis.pending! self.type, @host, @args
-    CheckWorkflow.start! self.type, @analysis.host, *@analysis.args
+    CheckWorkflow.start! self.type.to_s, @analysis.host, *@analysis.args
   end
 
   def check_host
