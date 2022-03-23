@@ -1,0 +1,189 @@
+//@import "~bootstrap/scss/bootstrap";
+
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
+@import "~bootstrap/scss/mixins";
+@import "~bootstrap/scss/utilities";
+
+@import "~bootstrap/scss/root";
+@import "~bootstrap/scss/reboot";
+//@import "~bootstrap/scss/type";
+//@import "~bootstrap/scss/images";
+@import "~bootstrap/scss/containers";
+@import "~bootstrap/scss/grid";
+@import "~bootstrap/scss/tables";
+@import "~bootstrap/scss/forms";
+@import "~bootstrap/scss/buttons";
+//@import "~bootstrap/scss/transitions";
+//@import "~bootstrap/scss/dropdown";
+//@import "~bootstrap/scss/button-group";
+@import "~bootstrap/scss/nav";
+@import "~bootstrap/scss/navbar";
+//@import "~bootstrap/scss/card";
+//@import "~bootstrap/scss/accordion";
+//@import "~bootstrap/scss/breadcrumb";
+//@import "~bootstrap/scss/pagination";
+@import "~bootstrap/scss/badge";
+@import "~bootstrap/scss/alert";
+@import "~bootstrap/scss/progress";
+//@import "~bootstrap/scss/list-group";
+//@import "~bootstrap/scss/close";
+//@import "~bootstrap/scss/toasts";
+//@import "~bootstrap/scss/modal";
+//@import "~bootstrap/scss/tooltip";
+//@import "~bootstrap/scss/popover";
+//@import "~bootstrap/scss/carousel";
+//@import "~bootstrap/scss/spinners";
+//@import "~bootstrap/scss/offcanvas";
+//@import "~bootstrap/scss/placeholders";
+
+//@import "~bootstrap/scss/helpers";
+
+@import "~bootstrap/scss/utilities/api";
+
+$fa-font-path: "~font-awesome/fonts";
+@import "~font-awesome/scss/font-awesome";
+
+.badge-error, .progress-bar-error {
+	background-color: #000;
+}
+
+.badge-critical, .progress-bar-critical {
+	background-color: #000;
+}
+
+table.center {
+	td {
+		text-align: center;
+
+		&.left {
+			text-align: left;
+		}
+	}
+}
+
+td.error {
+	background-color: #ddd;
+}
+
+.progress {
+	margin: 0;
+}
+
+#check,
+#ssh_check,
+#tls_check {
+	margin-top: 100px;
+}
+
+$color-critical: #d9534f;
+$color-error: #e4804e;
+$color-warning: #f0ad4e;
+$color-good: #beb052;
+$color-best: #8db457;
+$color-great: #5cb85c;
+
+.badge-state-critical, td.badge-state-critical {
+	background-color: $color-critical;
+}
+
+.badge-state-error, td.badge-state-error {
+	background-color: $color-error;
+}
+
+.badge-state-warning, td.badge-state-warning {
+	background-color: $color-warning;
+}
+
+.badge-state-good, td.badge-state-good {
+	background-color: $color-good;
+}
+
+.badge-state-best, td.badge-state-best {
+	background-color: $color-best;
+}
+
+.badge-state-great, td.badge-state-great {
+	background-color: $color-great;
+}
+
+.badge-state-default {
+	background-color: $secondary;
+}
+
+.badge-state-success, td.badge-state-success {
+	background-color: $color-great;
+}
+
+$lighten-alert: 35%;
+.alert-critical {
+	background-color: lighten($color-critical, $lighten-alert);
+	color: $color-critical;
+	border-color: $color-critical;
+}
+
+.alert-error {
+	background-color: lighten($color-error, $lighten-alert);
+	color: $color-error;
+	border-color: $color-error;
+}
+
+.alert-warning {
+	background-color: lighten($color-warning, $lighten-alert);
+	color: $color-warning;
+	border-color: $color-warning;
+}
+
+.alert-good {
+	background-color: lighten($color-good, $lighten-alert);
+	color: $color-good;
+	border-color: $color-good;
+}
+
+.alert-best {
+	background-color: lighten($color-best, $lighten-alert);
+	color: $color-best;
+	border-color: $color-best;
+}
+
+.alert-great {
+	background-color: lighten($color-great, $lighten-alert);
+	color: $color-great;
+	border-color: $color-great;
+}
+
+table.scoring img {
+	width: 30px;
+}
+
+#about, #help {
+	margin-bottom: 20px;
+}
+
+#about, #help .scoring {
+	p {
+		font-size: 1.25em;
+	}
+}
+
+#donorbox {
+	background: #2d81c5 url("../images/donorbox.png") no-repeat 18px center;
+	color: #fff;
+	text-decoration: none;
+	font-family: Verdana, sans-serif;
+	display: inline-block;
+	font-size: 16px;
+	padding: 13px 17px 13px 56px;
+	-webkit-border-radius: 2px;
+	-moz-border-radius: 2px;
+	border-radius: 2px;
+	box-shadow: 0 1px 0 0 #1f5a89;
+	text-shadow: 0 1px rgba(0, 0, 0, 0.3);
+}
+
+#liberapay, #donorbox, #paypal {
+	img {
+		height: 50px;
+		max-width: 140px;
+	}
+}

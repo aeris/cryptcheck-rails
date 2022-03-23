@@ -8,7 +8,7 @@
 		</div>
 		<% if Time.now - @analysis.updated_at >= Rails.configuration.refresh_delay %>
 			<div class="col-sm-1">
-				<%= link_to t('Refresh'), { action: :refresh }, class: %i(btn btn-default) %>
+				<%= link_to t('Refresh'), { action: :refresh }, class: %i(btn btn-outline-secondary) %>
 			</div>
 		<% end %>
 	</div>

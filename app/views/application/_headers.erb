@@ -1,39 +1,18 @@
-<header>
-	<nav class="navbar navbar-inverse navbar-fixed-top">
-		<div class="container">
-			<div class="navbar-header">
-				<span>
-					<%= link_to 'CryptCheck', root_path, class: %i(navbar-brand) %>
-				</span>
-			</div>
-			<ul class="nav navbar-nav">
-				<li><%= link_to 'HTTPS / SMTP / XMPP', root_path %></li>
-				<li><%= link_to 'TLS', tls_path %></li>
-				<li><%= link_to 'SSH', ssh_path %></li>
-			</ul>
-			<ul class="nav navbar-nav navbar-right">
-				<li><%= link_to t('User agent compatibility'), suite_path %></li>
-				<li><%= link_to t('Supported cipher suites'), ciphers_path %></li>
-				<li><%= link_to t('Help'), help_path %></li>
-				<li><%= link_to t('About'), about_path %></li>
-				<!--
-				<li class="dropdown">
-					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-						Hall of f/sh·ame
-						<span class="caret"></span>
-					</a>
-					<ul class="dropdown-menu">
-						<li><a href="#">Misc</a></li>
-						<li><a href="#">Syndicats</a></li>
-						<li><a href="#">SecureDrop</a></li>
-						<li><a href="#">Presse</a></li>
-						<li><a href="#">Top 500 Alexa</a></li>
-						<li><a href="#">Porn</a></li>
-						<li><a href="#">US gov</a></li>
-					</ul>
-				</li>
-				-->
-			</ul>
-		</div>
-	</nav>
-</header>
+<nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
+	<div class="container-fluid">
+		<%= link_to 'CryptCheck', root_path, class: %i(navbar-brand) %>
+
+		<ul class="navbar-nav mr-auto me-auto mb-2 mb-lg-0">
+			<li class="nav-item"><%= link_to 'HTTPS / SMTP / XMPP', root_path, class: %i(nav-link) %></li>
+			<li class="nav-item"><%= link_to 'TLS', tls_path, class: %i(nav-link) %></li>
+			<li class="nav-item"><%= link_to 'SSH', ssh_path, class: %i(nav-link) %></li>
+		</ul>
+
+		<ul class="navbar-nav mr-auto ms-auto mb-2 mb-lg-0">
+			<li class="nav-item"><%= link_to t('User agent compatibility'), suite_path, class: %i(nav-link) %></li>
+			<li class="nav-item"><%= link_to t('Supported cipher suites'), ciphers_path, class: %i(nav-link) %></li>
+			<li class="nav-item"><%= link_to t('Help'), help_path, class: %i(nav-link) %></li>
+			<li class="nav-item"><%= link_to t('About'), about_path, class: %i(nav-link) %></li>
+		</ul>
+	</div>
+</nav>

@@ -2,17 +2,17 @@
 	<div class="row">
 		<div class="col-sm-11">
 			<h1>
-				[SSH] <%= @host %> <span class="small">(<%= l @result.date %>)</span>
+				[SSH] <%= @host %> <span class="small">(<%= l @analysis.updated_at %>)</span>
 			</h1>
 		</div>
-		<% if Time.now - @result.date >= Rails.configuration.refresh_delay %>
+		<% if Time.now - @analysis.updated_at >= Rails.configuration.refresh_delay %>
 		<div class="col-sm-1">
 			<%= link_to t('Refresh'), {action: :refresh}, class: %i(btn btn-default) %>
 		</div>
 		<% end %>
 	</div>
 	<%
-		@result.hosts.each do |host|
+		@result.each do |host|
 			if host.error
 				error, host = host.error, host.host
 	%>
@@ -25,11 +25,11 @@
 	</div>
 	<%
 		else
-			host, server = host.host, host.handshake
+			server = host.handshakes
 	%>
 	<div class="row">
 		<div class="col-sm-12">
-			<h2><%= host.name %> - <%= host.ip %> : <%= host.port %></h2>
+			<h2><%= host.hostname %> - <%= host.ip %> : <%= host.port %></h2>
 		</div>
 	</div>
 	<div class="row">
@@ -75,7 +75,7 @@
 					<tr>
 						<th><%= t 'Keys' %></th>
 					</tr>
-					<% server.key_.each do |key| %>
+					<% server.key.each do |key| %>
 					<tr>
 						<td><%= key_label key %></td>
 					</tr>

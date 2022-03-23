@@ -1,17 +1,17 @@
 <!DOCTYPE html>
-<% data = Matomo.enabled? ? { matomo_url: Matomo.url, matomo_site: Matomo.site } : {} %>
-<%= content_tag :html, data: data do %>
-	<head>
-		<title>CryptCheck</title>
-		<%= stylesheet_link_tag 'application', media: 'all' %>
-		<%= javascript_include_tag 'application' %>
-		<%= csrf_meta_tags %>
-		<%= yield :head %>
-	</head>
-	<body>
-	<%= render partial: 'headers' %>
+<html>
+<head>
+	<title>CryptCheck</title>
+	<%= stylesheet_pack_tag 'application', media: 'all' %>
+	<%= javascript_pack_tag 'application' %>
+	<%= csrf_meta_tags %>
+	<%= yield :head %>
+</head>
+<body>
+<%= render partial: 'headers' %>
+<main class="container">
 	<%= render partial: 'flash' %>
 	<%= yield %>
-	<%= render partial: 'matomo', locals: { config: Matomo } if Matomo.enabled? %>
-	</body>
-<% end %>
+</main>
+</body>
+</html>

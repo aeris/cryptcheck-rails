@@ -1,20 +1,17 @@
-<div id="check" class="container">
-	<div class="row">
-		<div class="col-sm-12">
-			<h1><%= t 'Check your domain' %></h1>
-			<%= form_tag root_path do %>
-				<div class="form-group">
-					<div class="col-sm-8">
-						<%= text_field_tag :host, nil, class: %i(form-control input-lg), placeholder: 'your-site.com' %>
-					</div>
-					<div class="col-sm-2">
-						<%= select_tag :type, options_for_select({'HTTPS' => :https, 'SMTP' => :smtp, 'XMPP' => :xmpp}), class: %i(form-control input-lg) %>
-					</div>
-					<div class="col-sm-2">
-						<%= submit_tag t('Test me!'), class: %i(form-control btn btn-primary input-lg pull-right) %>
-					</div>
-				</div>
-			<% end %>
+<h1><%= t 'Check your domain' %></h1>
+<%= form_tag root_path, class: %i[container-fluid] do %>
+	<div class="row input-group input-group-lg mb-3">
+		<div class="col input-group-lg">
+			<%= text_field_tag :host, nil, class: %i[form-control],
+							   placeholder:       'your-site.com', required: true %>
+		</div>
+
+		<div class="col-auto input-group-lg">
+			<%= select_tag :type, options_for_select({ 'HTTPS' => :https, 'SMTP' => :smtp, 'XMPP' => :xmpp }), class: %i[form-select] %>
+		</div>
+
+		<div class="col-auto input-group-lg">
+			<%= submit_tag t('Test me!'), class: %i[btn btn-outline-primary] %>
 		</div>
 	</div>
-</div>
+<% end %>
