@@ -4,10 +4,6 @@ class HttpsController < CheckController
 		:https
 	end
 
-	def worker
-		HTTPSWorker
-	end
-
 	def tls_type
 		'HTTPS'
 	end

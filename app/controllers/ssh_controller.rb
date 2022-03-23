@@ -4,10 +4,6 @@ class SshController < CheckController
 		:ssh
 	end
 
-	def worker
-		SSHWorker
-	end
-
 	def tls_type
 		'SSH'
 	end

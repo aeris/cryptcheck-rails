@@ -4,10 +4,6 @@ class SmtpController < CheckController
 		:smtp
 	end
 
-	def worker
-		SMTPWorker
-	end
-
 	def tls_type
 		'STARTTLS'
 	end

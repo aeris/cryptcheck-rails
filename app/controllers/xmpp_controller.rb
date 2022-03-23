@@ -5,10 +5,6 @@ class XmppController < CheckController
     :xmpp
   end
 
-  def worker
-    XMPPWorker
-  end
-
   def tls_type
     'STARTTLS'
   end
