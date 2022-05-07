@@ -1,5 +1,13 @@
 //@import "~bootstrap/scss/bootstrap";
 
+$dark: #3f4853;
+$link-color: #135262;
+$nav-pills-link-active-bg: #535d6c;
+$body-color: $dark;
+$body-bg: #fafafa;
+$input-border-color: $dark;
+
+
 @import "~bootstrap/scss/functions";
 @import "~bootstrap/scss/variables";
 @import "~bootstrap/scss/mixins";
