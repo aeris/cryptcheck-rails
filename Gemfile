@@ -28,7 +28,6 @@ gem 'cryptcheck', '~> 2.0.0', path: '../engine'
 
 group :development do
   gem 'foreman'
-  gem 'amazing_print'
 
   gem 'listen'
   gem 'spring'
@@ -41,4 +40,13 @@ group :development do
   gem 'guard-rails', require: false
   gem 'guard-livereload', require: false
   gem 'rack-livereload'
+end
+
+group :development, :test do
+  gem 'pry-byebug'
+  gem 'amazing_print'
+end
+
+group :test do
+  gem 'rspec-rails'
 end
