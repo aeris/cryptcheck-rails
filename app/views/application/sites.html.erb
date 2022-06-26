@@ -1,0 +1,50 @@
+<h1><%= @name.to_s.capitalize %></h1>
+
+<h2>Columns meaning</h2>
+
+<div class="container">
+	<div class="form-group row">
+		<div class="col-sm-1">TLS:</div>
+		<div class="col-sm-11">
+			<%= label(' ' + content_tag(:span, :success, class: %i[sr-only]), :success) %> TLS1.2 only supported
+			<%= label(' ' + content_tag(:span, :error, class: %i[sr-only]), :error) %> No TLS1.2 supported
+			<%= label(' ' + content_tag(:span, :critical, class: %i[sr-only]), :critical) %> SSLv2 or SSLv3 supported
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-sm-1">Ciphers:</div>
+		<div class="col-sm-11">
+			<%= label(' ' + content_tag(:span, :success, class: %i[sr-only]), :success) %> Only safe cipher supported
+			<%= label(' ' + content_tag(:span, :critical, class: %i[sr-only]), :critical) %> Unsafe cipher supported
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-sm-1">PFS:</div>
+		<div class="col-sm-11">
+			<%= label(' ' + content_tag(:span, :success, class: %i[sr-only]), :success) %> Only PFS cipher supported
+			<%= label(' ' + content_tag(:span, :error, class: %i[sr-only]), :error) %> PFS cipher but also no-PFS cipher supported
+			<%= label(' ' + content_tag(:span, :critical, class: %i[sr-only]), :critical) %> No PFS supported
+		</div>
+	</div>
+<br/>
+
+<table class="table table-sm">
+	<thead>
+	<tr>
+		<%= content_tag :th, t('.domain') %>
+		<%= content_tag :th, t('.tls'), class: %i[text-center] %>
+		<%= content_tag :th, t('.ciphers'), class: %i[text-center] %>
+		<%= content_tag :th, t('.pfs'), class: %i[text-center] %>
+	</tr>
+	</thead>
+	<tbody>
+	<% @sites.sort_by { _2.fetch('grade') || 'Z' }.each do |domain, stat| %>
+		<tr>
+			<%= domain_cell domain, stat.fetch('grade') %>
+			<%= tls_cell stat.fetch 'tls' %>
+			<%= ciphers_cell stat.fetch 'ciphers' %>
+			<%= pfs_cell stat.fetch 'pfs' %>
+		</tr>
+	<% end %>
+	</tbody>
+</table>

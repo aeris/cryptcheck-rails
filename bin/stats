@@ -1,0 +1,77 @@
+#!./bin/rails runner
+
+# Profit from open class to add stats methods only on this script
+class Analysis
+  def grade
+    grades = self.result.collect { _1['grade'] }.compact
+    CryptCheck::Grade.worst grades
+  end
+
+  def tls
+    return unless (result = self.result)
+    protocols = result.collect { |r| r.dig('handshakes', 'protocols')
+                                       &.collect { |p| p['protocol'].to_sym } }
+                      .compact.flatten.uniq
+
+    return :ssl unless (protocols & %i[SSLv2 SSLv3]).empty?
+    return :tls unless protocols.include? :TLSv1_2
+    return :tls1_2_only if protocols == %i[TLSv1_2]
+    :tls1_2
+  end
+
+  def ciphers
+    return unless (result = self.result)
+    status = result.collect do |r|
+      r.dig('handshakes', 'ciphers')&.collect do |c|
+        s = CryptCheck::Tls::Cipher
+              .new(nil, c.fetch('name')).status
+        CryptCheck::State.good_or_bad s
+      end
+    end.compact.flatten.uniq
+
+    return :bad if status.include? :bad
+    :good
+  end
+
+  def pfs
+    return unless (result = self.result)
+    ciphers = result.collect do |r|
+      r.dig('handshakes', 'ciphers')&.collect do |c|
+        CryptCheck::Tls::Cipher
+          .new(nil, c.fetch('name'))
+          .pfs?
+      end
+    end.compact.flatten.uniq
+
+    return :no_pfs unless ciphers.include? true
+    return :pfs_only unless ciphers.include? false
+    :pfs
+  end
+end
+
+sites = YAML.load_file Rails.root.join 'config/sites.yml'
+
+workflows = []
+sites.each do |type, domains|
+  domains.each do |domain|
+    puts "Refreshing #{domain}"
+    @analysis = Analysis.pending! :https, domain, 443
+    workflows << CheckWorkflow.start!(:https, @analysis.host, *@analysis.args)
+  end
+end
+workflows.each &:wait
+
+sites.each do |type, domains|
+  domains = domains.collect do |domain|
+    analysis = Analysis[:https, domain, 443]
+    stats    = {
+      grade:   analysis.grade,
+      tls:     analysis.tls,
+      ciphers: analysis.ciphers,
+      pfs:     analysis.pfs
+    }
+    [domain, stats]
+  end.to_h
+
+  Stat.create! :"sites_#{type}", domains
+end

@@ -1,16 +1,14 @@
 module CheckHelper
-  private def __label(value, color, state = true)
-    color = :default unless color
-    color = "state-#{color}" if state
-    "<span class=\"badge badge-#{color}\">#{value}</span>"
-  end
+  include ActionView::Helpers::TagHelper
 
   def label(value, color, state = true)
-    __label(value, color, state).html_safe
+    color = :default unless color
+    color = "state-#{color}" if state
+    content_tag :span, value.to_s.html_safe, class: [:badge, :"badge-#{color}"]
   end
 
   def cell(value, color, state = true)
-    "<td class=\"badge-state-#{color}\">#{value}</td>".html_safe
+    content_tag :td, value, class: :"table-#{color}"
   end
 
   def labels(level, states, state = true)
@@ -22,7 +20,7 @@ module CheckHelper
               else
                 value ? :success : :danger
               end
-      __label name, color, state
+      label name, color, state
     end.join(' ').html_safe
   end
 
@@ -30,7 +28,7 @@ module CheckHelper
     ::CryptCheck::State.collect do |level|
       states[level].each_pair
                    .select { |_, v| v == true }
-                   .collect { |name, _| __label name, level }
+                   .collect { |name, _| label name, level }
     end.flatten(1).join(' ').html_safe
   end
 
@@ -54,6 +52,7 @@ module CheckHelper
   end
 
   def rank_label(rank)
+    rank = rank&.to_sym
     l = %i(0 V T X).include? rank
     label rank, rank_color(rank), !l
   end

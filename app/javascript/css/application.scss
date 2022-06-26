@@ -91,27 +91,27 @@ $color-good: #beb052;
 $color-best: #8db457;
 $color-great: #5cb85c;
 
-.badge-state-critical, td.badge-state-critical {
+.badge-state-critical, td.table-critical {
 	background-color: $color-critical;
 }
 
-.badge-state-error, td.badge-state-error {
+.badge-state-error, td.table-error {
 	background-color: $color-error;
 }
 
-.badge-state-warning, td.badge-state-warning {
+.badge-state-warning {
 	background-color: $color-warning;
 }
 
-.badge-state-good, td.badge-state-good {
+.badge-state-good, td.table-good {
 	background-color: $color-good;
 }
 
-.badge-state-best, td.badge-state-best {
+.badge-state-best, td.table-best {
 	background-color: $color-best;
 }
 
-.badge-state-great, td.badge-state-great {
+.badge-state-great, td.table-great {
 	background-color: $color-great;
 }
 
