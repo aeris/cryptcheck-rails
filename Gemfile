@@ -17,6 +17,8 @@ gem 'sidekiq-workflow', git: 'https://git.imirhil.fr/aeris/sidekiq-workflow.git'
 gem 'simpleidn'
 gem 'http_accept_language'
 gem 'recursive-open-struct'
+gem 'ruby-progressbar'
+gem 'public_suffix'
 
 gem 'uglifier'
 gem 'sass-rails'

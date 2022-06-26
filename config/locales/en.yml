@@ -18,6 +18,7 @@ en:
 
   "Error during analysis:": "Error during analysis:"
   Refresh: Refresh
+  Refresh not available: Refresh available at %{date}
 
   Protocol: Protocol
   Protocols: Protocols
@@ -78,3 +79,10 @@ en:
     great:
       hsts: This server supports HSTS with long duration
 
+
+  time:
+    formats:
+      default: "%d/%m/%Y %H:%M:%S %:z"
+      long: "%d/%m/%Y %H:%M:%S"
+      short: "%d %b %Hh%M"
+      time: "%H:%M:%S"
