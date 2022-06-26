@@ -1,16 +1,19 @@
 <div class="container">
 	<div class="row">
-		<div class="col-sm-11">
+		<div class="col-sm-10">
 			<h1>
 				[<%= self.type.to_s.upcase %>] <%= @host %>
 				<span class="small">(<%= l @analysis.updated_at %>)</span>
 			</h1>
 		</div>
-		<% if Time.now - @analysis.updated_at >= Rails.configuration.refresh_delay %>
-			<div class="col-sm-1">
-				<%= link_to t('Refresh'), { action: :refresh }, class: %i(btn btn-outline-secondary) %>
-			</div>
+		<div class="col-sm-2 text-end">
+		<% if @analysis.refresh_at.nil? || Time.now >= @analysis.refresh_at %>
+			<%= link_to t('Refresh'), { action: :refresh }, class: %i(btn btn-outline-secondary) %>
+		<% else %>
+			<%= button_tag t('Refresh not available', date: l(@analysis.refresh_at, format: :time)),
+							   type: :button, class: %i(btn btn-outline-secondary), disabled: true %>
 		<% end %>
+		</div>
 	</div>
 
 	<% @result.each do |host|

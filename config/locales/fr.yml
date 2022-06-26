@@ -18,6 +18,7 @@ fr:
 
   "Error during analysis:": "Erreur durant l’analyse :"
   Refresh: Rafraîchir
+  Refresh not available: Rafraîchissement disponible à %{date}
 
   Protocol: Protocole
   Protocols: Protocoles
@@ -262,5 +263,7 @@ fr:
     am: am
     formats:
       default: "%d/%m/%Y %H:%M:%S %:z"
+      long: "%d/%m/%Y %H:%M:%S"
       short: "%d %b %Hh%M"
+      time: "%H:%M:%S"
     pm: pm

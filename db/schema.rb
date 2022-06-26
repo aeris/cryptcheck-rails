@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_03_26_181216) do
+ActiveRecord::Schema[7.0].define(version: 2022_06_26_133648) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -23,6 +23,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_26_181216) do
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
     t.jsonb "args"
+    t.datetime "refresh_at", precision: nil
     t.index ["service", "host", "args"], name: "index_analyses_on_service_and_host_and_args", unique: true
   end
 
