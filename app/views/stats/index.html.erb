@@ -1,0 +1,167 @@
+<% colors = {
+		"A+"          => 'great',
+		"good"        => 'great',
+		"A"           => 'great',
+		"B+"          => 'best',
+		"B"           => 'best',
+		"C+"          => 'good',
+		"C"           => 'good',
+		"D"           => 'effort',
+		"E"           => 'warning',
+		"F"           => 'error',
+		"G"           => 'critical',
+		"bad"         => 'critical',
+		"ssl"         => 'critical',
+		"tls"         => 'error',
+		"tls1_2"      => 'effort',
+		"tls1_2_only" => 'great'
+} %>
+
+<ul class="nav nav-pills nav-fill" id="pills-tab" role="Navigation stats list">
+	<% %i[https smtp tls xmpp].each do |service| %>
+		<li class="nav-item" role="presentation">
+			<button class="nav-link<%= " active btn-dark" if service.to_s == "https" %>"
+					id="nav-<%= service %>-pill" data-bs-toggle="pill"
+					data-bs-target="#nav-<%= service %>" type="button" role="Button to show <%= service %> stats" aria-controls="nav-<%= service %>" aria-selected="true">
+				<%= service.to_s.upcase %>
+			</button>
+		</li>
+	<% end %>
+</ul>
+
+<div class="tab-content p-2 mb-4" id="nav-pillsContent">
+	<% %i[https smtp tls xmpp].each do |service| %>
+		<div class="tab-pane fade show <%= "active" if service.to_s == "https" %>"
+			 id="nav-<%= service %>" role="<%= service.to_s %>> stats"
+			 aria-labelledby="nav-<%= service %>-pill">
+			<h2>Grades for service <%= service.to_s.upcase %></h2>
+
+			<%
+				grades = Stat["grades_for_#{service}"]
+				total = grades.data.collect { _2 }.sum
+			%>
+
+			<p>Over <%= total %> URL tested with a grade.</p>
+
+			<table class="table table-bordered table-striped">
+				<thead class="bg-dark text-light">
+				<tr>
+					<th>Grade</th>
+					<th>Count</th>
+					<th></th>
+				</tr>
+				</thead>
+				<tbody>
+				<% sorted_grades = grades.data.keys.sort &CryptCheck::Grade.method(:compare)
+				   sorted_grades.each do |grade|
+					 unless %w(T V).include?(grade)
+					   count   = grades.data[grade].to_i
+					   percent = (count.to_f / total.to_f) * 100.0
+					   color   = CryptCheck::Grade::GRADE_STATUS.fetch grade.to_sym %>
+						<tr>
+							<td class="col-4"><%= grade.capitalize %></td>
+							<td class="col-4"><%= count %>
+								(<%= percent.round %>%)
+							</td>
+							<td class="col-4">
+								<div class="progress bg-light">
+									<div class="progress-bar progress-<%= color %> border-dark"
+										 style="width: <%= percent.round %>%" role="progressbar"
+										 aria-valuenow="<%= percent.round %>" aria-valuemin="0"
+										 aria-valuemax="100"></div>
+								</div>
+							</td>
+						</tr>
+					<% end
+					   end %>
+				</tbody>
+			</table>
+
+			<h2>Ciphers for service <%= service.to_s.upcase %></h2>
+
+			<%
+				name = "ciphers_for_#{service}"
+				ciphers = Stat[name]
+				total = ciphers.data.collect { _2 }.sum
+			%>
+			<p>Over <%= total %> URL tested with a cipher.</p>
+
+			<table class="table table-bordered table-striped">
+				<thead class="bg-dark text-light">
+				<tr>
+					<%= content_tag :th, t(:'.ciphers.title') %>
+					<th>Count</th>
+					<th></th>
+				</tr>
+				</thead>
+				<tbody>
+				<%
+					ciphers = ciphers.data
+					%w[good bad].each do |grade|
+					  count   = ciphers.fetch grade
+					  percent = (count.to_f / total.to_f) * 100.0
+					  color   = colors[grade]
+				%>
+					<tr>
+						<td class="col-4"><%= t ".ciphers.#{grade}" %></td>
+						<td class="col-4"><%= count %> (<%= percent.round %>
+							%)
+						</td>
+						<td class="col-4">
+							<div class="progress bg-light">
+								<div class="progress-bar progress-<%= color %>"
+									 style="width: <%= percent.round %>%" role="progressbar"
+									 aria-valuenow="<%= percent.round %>" aria-valuemin="0"
+									 aria-valuemax="100"></div>
+							</div>
+						</td>
+					</tr>
+				<% end %>
+				</tbody>
+			</table>
+
+			<h2>TLS for service <%= service.to_s.upcase %></h2>
+
+			<%
+				name = "tls_for_#{service}"
+				tls = Stat[name]
+				total = tls.data.collect { _2 }.sum
+			%>
+			<p>Over <%= total %> URL tested with TLS.</p>
+
+			<table class="table table-bordered table-striped">
+				<thead class="bg-dark text-light">
+				<tr>
+					<%= content_tag :th, t(:'.tls.title') %>
+					<th>Count</th>
+					<th></th>
+				</tr>
+				</thead>
+				<tbody>
+				<%
+					tls = tls.data
+					%w[tls1_2_only tls1_2 tls ssl].each do |grade|
+					  count   = tls.fetch grade
+					  percent = (count.to_f / total.to_f) * 100.0
+					  color   = colors[grade]
+				%>
+					<tr>
+						<td class="col-4"><%= t ".tls.#{grade}" %></td>
+						<td class="col-4"><%= count %> (<%= percent.round %>
+							%)
+						</td>
+						<td class="col-4">
+							<div class="progress bg-light">
+								<div class="progress-bar progress-<%= color %>"
+									 style="width: <%= percent.round %>%" role="progressbar"
+									 aria-valuenow="<%= percent.round %>" aria-valuemin="0"
+									 aria-valuemax="100"></div>
+							</div>
+						</td>
+					</tr>
+				<% end %>
+				</tbody>
+			</table>
+		</div>
+	<% end %>
+</div>

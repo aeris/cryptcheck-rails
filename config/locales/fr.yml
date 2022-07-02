@@ -61,6 +61,19 @@ fr:
   Fingerprint: Empreinte
   "Fingerprint: %{fingerprint}": "Empreinte : %{fingerprint}"
 
+  stats:
+    index:
+      ciphers:
+        title: Suites de chiffrement supportées
+        good: Uniquement des sécurisées
+        bad: Au moins une non sécurisée
+      tls:
+        title: Versions de SSL/TLS supportées
+        tls1_2_only: TLSv1.2+
+        tls1_2: TLSv1.2 supporté
+        tls: TLSv1.0+ mais pas TLSv1.2
+        ssl: SSLv2 ou SSLv3 supporté
+
   date:
     abbr_day_names:
     - dim

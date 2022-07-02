@@ -33,5 +33,4 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_26_133648) do
     t.jsonb "data"
     t.index ["name", "date"], name: "index_stats_on_name_and_date", unique: true
   end
-
 end

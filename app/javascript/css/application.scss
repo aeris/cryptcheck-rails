@@ -87,6 +87,7 @@ td.error {
 $color-critical: #d9534f;
 $color-error: #e4804e;
 $color-warning: #f0ad4e;
+$color-effort: #6c757d;
 $color-good: #beb052;
 $color-best: #8db457;
 $color-great: #5cb85c;
@@ -194,4 +195,72 @@ table.scoring img {
 		height: 50px;
 		max-width: 140px;
 	}
+}
+
+/** Navigation tabs */
+.tab-content {
+	border: 1px solid $nav-pills-link-active-bg;
+	border-bottom-left-radius: .3rem;
+	border-bottom-right-radius: .3rem;
+}
+
+.nav-pills .nav-link {
+	border-radius: .3rem;
+	font-weight: bold;
+}
+
+.nav-pills .nav-link.active {
+	border-bottom-left-radius: 0;
+	border-bottom-right-radius: 0;
+	font-weight: bolder;
+}
+
+/** Chart CSS */
+.cumulative-datas {
+	position: relative;
+	display: flex;
+	flex-direction: row;
+	width: 100%;
+
+	&-content {
+		position: absolute;
+		height: 2rem;
+	}
+}
+
+.cumulative-data {
+	height: 2rem;
+	line-height: 2rem;
+	display: inline-block;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	margin-right: .1rem;
+	padding-left: .3rem;
+}
+
+/** Progress bar */
+.progress {
+	box-shadow: 0 0 .1rem $dark;
+	height: 1.4rem;
+}
+.progress-critical {
+	background-color: $color-critical;
+}
+.progress-error {
+	background-color: $color-error;
+}
+.progress-warning {
+	background-color: $color-warning;
+}
+.progress-effort {
+	background-color: $color-effort;
+}
+.progress-good {
+	background-color: $color-good;
+}
+.progress-best {
+	background-color: $color-best;
+}
+.progress-great {
+	background-color: $color-great;
 }

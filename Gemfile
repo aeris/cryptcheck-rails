@@ -19,6 +19,7 @@ gem 'http_accept_language'
 gem 'recursive-open-struct'
 gem 'ruby-progressbar'
 gem 'public_suffix'
+gem 'amazing_print'
 
 gem 'uglifier'
 gem 'sass-rails'
@@ -46,7 +47,6 @@ end
 
 group :development, :test do
   gem 'pry-byebug'
-  gem 'amazing_print'
 end
 
 group :test do
