@@ -49,29 +49,73 @@ class Analysis
   end
 end
 
-sites = YAML.load_file Rails.root.join 'config/sites.yml'
+# sites = YAML.load_file Rails.root.join 'config/sites.yml'
+#
+# workflows = []
+# sites.each do |type, domains|
+#   domains.each do |domain|
+#     puts "Refreshing #{domain}"
+#     @analysis = Analysis.pending! :https, domain, 443
+#     workflows << CheckWorkflow.start!(:https, @analysis.host, *@analysis.args)
+#   end
+# end
+# workflows.each &:wait
+#
+# sites.each do |type, domains|
+#   domains = domains.collect do |domain|
+#     analysis = Analysis[:https, domain, 443]
+#     stats    = {
+#       grade:   analysis.grade,
+#       tls:     analysis.tls,
+#       ciphers: analysis.ciphers,
+#       pfs:     analysis.pfs
+#     }
+#     [domain, stats]
+#   end.to_h
+#
+#   Stat.create! :"sites_#{type}", domains
+# end
 
-workflows = []
-sites.each do |type, domains|
-  domains.each do |domain|
-    puts "Refreshing #{domain}"
-    @analysis = Analysis.pending! :https, domain, 443
-    workflows << CheckWorkflow.start!(:https, @analysis.host, *@analysis.args)
+# general stat
+services = Analysis.group(:service).order(service: :asc).count
+Stat.create! :request_per_service, { labels: services.keys, dataset: services.values }
+
+# grade per service for https, smtp, tls and xmpp
+%i[https smtp tls xmpp].each do |name|
+  services = Analysis.where service: name, pending: false
+
+  grades  = Hash.new 0
+  tls     = %i[tls1_2_only tls1_2 tls ssl].to_h { [_1, 0] }
+  ciphers = %i[good bad].to_h { [_1, 0] }
+  pfs     = %i[pfs_only pfs no_pfs].to_h { [_1, 0] }
+
+  services.each do |service|
+    if (g = service.grade)
+      grades[g] += 1
+    end
+
+    if (t = service.tls)
+      tls[t] += 1
+    end
+
+    if (c = service.ciphers)
+      ciphers[c] += 1
+    end
+
+    if (p = service.pfs)
+      pfs[p] += 1
+    end
   end
-end
-workflows.each &:wait
 
-sites.each do |type, domains|
-  domains = domains.collect do |domain|
-    analysis = Analysis[:https, domain, 443]
-    stats    = {
-      grade:   analysis.grade,
-      tls:     analysis.tls,
-      ciphers: analysis.ciphers,
-      pfs:     analysis.pfs
-    }
-    [domain, stats]
-  end.to_h
+  ap "grades_for_#{name}" => grades
+  Stat.create! "grades_for_#{name}", grades
 
-  Stat.create! :"sites_#{type}", domains
+  ap "tls_for_#{name}" => tls
+  Stat.create! "tls_for_#{name}", tls
+
+  ap "ciphers_for_#{name}" => ciphers
+  Stat.create! "ciphers_for_#{name}", ciphers
+
+  ap "pfs_for_#{name}" => pfs
+  Stat.create! "pfs_for_#{name}", pfs
 end

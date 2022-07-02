@@ -16,7 +16,7 @@ Rails.application.routes.draw do
   root 'site#index'
   post '/' => 'site#check'
 
-  get 'sites' => 'site#sites'
+  resources :stats, only: %i[index]
 
   %i[banks insurances gouv.fr].each do |name|
     get name, controller: :sites, action: name
