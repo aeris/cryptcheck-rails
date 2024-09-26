@@ -12,7 +12,7 @@ gem 'sentry-sidekiq'
 
 gem 'pg'
 gem 'sidekiq'
-gem 'sidekiq-workflow', git: 'https://git.imirhil.fr/aeris/sidekiq-workflow.git', branch: :master
+gem 'sidekiq-workflow', git: 'https://git.imirhil.fr/aeris/sidekiq-workflow.git', branch: 'ruby-2.3'
 
 gem 'simpleidn'
 gem 'http_accept_language'

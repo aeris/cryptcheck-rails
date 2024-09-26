@@ -1,7 +1,7 @@
 GIT
   remote: https://git.imirhil.fr/aeris/sidekiq-workflow.git
-  revision: 9600075c17e83f2013f0b7d6e35698bea6b0ee40
-  branch: master
+  revision: 867809a75f46eba9b00c2ab33a6c6c23373cf656
+  branch: ruby-2.3
   specs:
     sidekiq-workflow (0.0.0)
       colorize (~> 0.8)
@@ -44,8 +44,8 @@ GEM
     rack-protection (2.2.0)
       rack
     redis (4.4.0)
-    redlock (1.2.2)
-      redis (>= 3.0.0, < 5.0)
+    redlock (1.3.2)
+      redis (>= 3.0.0, < 6.0)
     ruby-progressbar (1.11.0)
     sidekiq (5.2.8)
       connection_pool (~> 2.2, >= 2.2.2)
@@ -60,7 +60,7 @@ GEM
     unf (0.1.4)
       unf_ext
     unf_ext (0.0.8.1)
-    unicode-display_width (2.1.0)
+    unicode-display_width (2.3.0)
 
 PLATFORMS
   x86_64-linux
@@ -74,4 +74,4 @@ DEPENDENCIES
   simpleidn
 
 BUNDLED WITH
-   2.3.10
+   2.3.14
